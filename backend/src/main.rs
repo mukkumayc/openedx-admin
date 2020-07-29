@@ -1,6 +1,7 @@
 use std::env;
+use actix_cors::Cors;
 use actix_web::{
-    web, App, HttpServer,
+    http, web, App, HttpServer,
     middleware::Logger,
 };
 use env_logger::Env;
@@ -23,8 +24,12 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
-            .route("/hello", web::get().to(api::auth::hello))
+            .wrap(Cors::new().finish())
             .wrap(Logger::default())
+            .service(
+                web::resource("/hello")
+                    .route(web::get().to(api::auth::hello))
+            )
     })
         .bind(&address)?
         .run()
