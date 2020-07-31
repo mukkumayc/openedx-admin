@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import config from "../config";
 
-export default class Home extends Component {
+export default class Hello extends Component {
   constructor() {
     super();
     this.state = {
@@ -25,7 +25,7 @@ export default class Home extends Component {
 
   render() {
     return (
-      <div className="Home">
+      <div className="hello">
         {this.state.loading
           ? "Loading..."
           : this.state.ok && this.state.text
