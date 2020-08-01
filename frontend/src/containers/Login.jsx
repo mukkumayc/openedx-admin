@@ -38,23 +38,24 @@ class Login extends Component {
     );
   }
 
-  handleSubmit = async (values, setSubmitting) => {
-    const req = await fetch(Config.serverUrl + "/login", {
+  handleSubmit = (values, setSubmitting) => {
+    fetch(Config.serverUrl + "/login", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({
         credentials: values,
       }),
+    }).then((res) => {
+      if (res.ok) {
+        this.props.userHasAuthenticated(true);
+      } else {
+        console.log("Login request failed");
+        setSubmitting(false);
+      }
     });
-
-    if (req.ok) {
-      this.props.userHasAuthenticated(true);
-    } else {
-      console.log("Login request failed");
-      setSubmitting(false);
-    }
   };
 }
 
