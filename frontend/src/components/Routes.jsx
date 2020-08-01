@@ -3,6 +3,7 @@ import { Switch, Route } from "react-router-dom";
 import Hello from "../containers/Hello";
 import Home from "../containers/Home";
 import Login from "../containers/Login";
+import NotFound from "../containers/NotFound";
 
 const Routes = ({ appProps }) => {
   return (
@@ -10,6 +11,7 @@ const Routes = ({ appProps }) => {
       <Route path="/" exact component={Home} />
       <Route path="/hello" exact component={Hello} />
       <Route path="/login" exact component={Login} />
+      <Route component={NotFound} />
     </Switch>
   );
 };
