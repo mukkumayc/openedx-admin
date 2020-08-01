@@ -50,7 +50,7 @@ class Login extends Component {
     });
 
     if (req.ok) {
-      this.props.history.push("/");
+      this.props.userHasAuthenticated(true);
     } else {
       console.log("Login request failed");
       setSubmitting(false);
