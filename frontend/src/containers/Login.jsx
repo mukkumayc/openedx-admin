@@ -39,16 +39,22 @@ class Login extends Component {
   }
 
   handleSubmit = async (values, setSubmitting) => {
-    console.log(values);
-    await fetch(Config.serverUrl + "/hello", {
-      method: "get",
-    })
-      .then((res) => res.text())
-      .then((res) => console.log(res));
+    const req = await fetch(Config.serverUrl + "/login", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        credentials: values,
+      }),
+    });
 
-    setSubmitting(false);
-
-    this.props.history.push("/");
+    if (req.ok) {
+      this.props.history.push("/");
+    } else {
+      console.log("Login request failed");
+      setSubmitting(false);
+    }
   };
 }
 
