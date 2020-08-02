@@ -1,22 +1,30 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const NavBar = () => {
+const NavBar = ({ appProps }) => {
+  const { isAuthenticated } = appProps;
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <Link className="navbar-brand" to="/">
         Open edX Admin
       </Link>
       <CollapseController>
-        <div className="nav-item">
-          <Link className="nav-link" to="/hello">
-            Hello
-          </Link>
-        </div>
-        <div className="nav-item">
-          <Link className="nav-link" to="/login">
-            Login
-          </Link>
-        </div>
+        {isAuthenticated ? (
+          <>
+            <div className="nav-item">
+              <Link className="nav-link" to="/hello">
+                Hello
+              </Link>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="nav-item">
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
+            </div>
+          </>
+        )}
       </CollapseController>
     </nav>
   );

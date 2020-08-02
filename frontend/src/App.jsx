@@ -6,6 +6,7 @@ import Config from "./config";
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setAuthenticating] = useState(false);
+  const appProps = { isAuthenticated, userHasAuthenticated };
 
   useEffect(() => {
     setAuthenticating(true);
@@ -25,8 +26,8 @@ function App() {
   return (
     !isAuthenticating && (
       <div className="App">
-        <NavBar />
-        <Routes appProps={{ isAuthenticated, userHasAuthenticated }} />
+        <NavBar appProps={appProps} />
+        <Routes appProps={appProps} />
       </div>
     )
   );
