@@ -15,6 +15,21 @@ const NavBar = ({ appProps }) => {
                 Hello
               </Link>
             </div>
+            <div className="nav-item">
+              <Link className="nav-link" to="/proctoring-links">
+                Retrieve proctoring links
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link className="nav-link" to="/register-users">
+                Register new users
+              </Link>
+            </div>
+            <div className="nav-item">
+              <Link className="nav-link" to="/grades">
+                Retrieve grades
+              </Link>
+            </div>
           </>
         ) : (
           <>
