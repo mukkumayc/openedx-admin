@@ -1,13 +1,17 @@
 import React, { Component } from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Config from "../config";
+import "./Login.css";
 
 class Login extends Component {
+  state = {
+    errorMsg: "",
+  };
+
   render() {
     return (
-      <div className="Login">
-        Login page
+      <div className="login container">
         <Formik
           initialValues={{ email: "", password: "" }}
           validationSchema={Yup.object().shape({
@@ -22,15 +26,36 @@ class Login extends Component {
         >
           {({ isSubmitting }) => (
             <Form>
-              <label htmlFor="login-email">Email</label>
-              <Field type="email" name="email" id="login-email" />
-              <ErrorMessage name="email" component="div" />
-              <label htmlFor="login-password">Password</label>
-              <Field type="password" name="password" id="login-password" />
-              <ErrorMessage name="password" component="div" />
-              <button type="submit" disabled={isSubmitting}>
+              <div className="form-group">
+                <label htmlFor="login-email">Email</label>
+                <Field
+                  className="form-control"
+                  type="email"
+                  name="email"
+                  id="login-email"
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="login-password">Password</label>
+                <Field
+                  className="form-control"
+                  type="password"
+                  name="password"
+                  id="login-password"
+                />
+              </div>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={isSubmitting}
+              >
                 Sign in
               </button>
+              {this.state.errorMsg ? (
+                <div className="alert alert-danger m-3">
+                  {this.state.errorMsg}
+                </div>
+              ) : null}
             </Form>
           )}
         </Formik>
@@ -48,14 +73,21 @@ class Login extends Component {
       body: JSON.stringify({
         credentials: values,
       }),
-    }).then((res) => {
-      if (res.ok) {
-        this.props.userHasAuthenticated(true);
-      } else {
-        console.log("Login request failed");
+    })
+      .then((res) => {
+        if (res.ok) {
+          this.props.userHasAuthenticated(true);
+        } else {
+          res.json().then((json) => {
+            this.setState({ errorMsg: json.error });
+            setSubmitting(false);
+          });
+        }
+      })
+      .catch((err) => {
+        this.setState({ errorMsg: err.toString() });
         setSubmitting(false);
-      }
-    });
+      });
   };
 }
 

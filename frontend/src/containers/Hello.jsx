@@ -25,7 +25,7 @@ export default class Hello extends Component {
 
   render() {
     return (
-      <div className="hello">
+      <div className="hello container">
         {this.state.loading
           ? "Loading..."
           : this.state.ok && this.state.text

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
+import "./Home.css";
 
 class Home extends Component {
   render() {
-    return <div className="home">{this.renderLander()}</div>;
+    return <div className="home container">{this.renderLander()}</div>;
   }
 
   renderLander = () => {
