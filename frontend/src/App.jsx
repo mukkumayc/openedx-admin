@@ -5,12 +5,10 @@ import Config from "./config";
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
-  const [isAuthenticating, setAuthenticating] = useState(false);
+  const [isAuthenticating, setAuthenticating] = useState(true);
   const appProps = { isAuthenticated, userHasAuthenticated };
 
   useEffect(() => {
-    setAuthenticating(true);
-    console.log(document.cookie);
     fetch(Config.serverUrl + "/checktoken", {
       credentials: "include",
     })
