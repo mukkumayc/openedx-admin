@@ -78,16 +78,7 @@ class Grade extends Component {
                   </button>
                   {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
                 </Form>
-                <div className="courses-list">
-                  {this.state.requestCompleted &&
-                    (this.state.courses.length > 0 ? (
-                      this.state.courses.map((course) =>
-                        this.parseCourse(course)
-                      )
-                    ) : (
-                      <h1>No courses</h1>
-                    ))}
-                </div>
+                {this.formatCourses()}
               </>
             );
           }}
@@ -97,7 +88,11 @@ class Grade extends Component {
   }
 
   handleSubmit = (values, setSubmitting) => {
-    const params = "?" + "username=" + values.credential;
+    const isEmail = Yup.string().email().isValidSync(values.credential);
+    const params = "?".concat(
+      isEmail ? "email=" : "username=",
+      values.credential
+    );
     fetch(Config.serverUrl + "/grade" + params, {
       credentials: "include",
     })
@@ -106,19 +101,28 @@ class Grade extends Component {
           res
             .json()
             .then((json) => {
-              this.setState({ courses: json.courses });
-              this.setState({ requestCompleted: true });
+              this.setState({
+                courses: json.courses,
+                requestCompleted: true,
+                errorMsg: "",
+              });
             })
             .catch((err) => console.error(err));
           setSubmitting(false);
         } else {
+          if (res.status === 401) {
+            this.props.userHasAuthenticated(false);
+          }
           res
-            .json()
-            .then((json) => {
-              this.setState({ errorMsg: json.error });
+            .text()
+            .then((res) => {
+              this.setState({ errorMsg: res, requestCompleted: true });
               setSubmitting(false);
             })
-            .catch((err) => console.error(err));
+            .catch((err) => {
+              console.error(err);
+              setSubmitting(false);
+            });
         }
       })
       .catch((err) => {
@@ -148,9 +152,26 @@ class Grade extends Component {
               ))}
             </div>
           ) : (
-            <h2>No grades</h2>
+            <div className="font-weight-bold">No grades</div>
           )}
         </div>
+      </div>
+    );
+  };
+
+  formatCourses = () => {
+    return (
+      <div className="courses-list">
+        {this.state.requestCompleted &&
+          (this.state.errorMsg.length > 0 ? (
+            <div className="alert alert-danger">{this.state.errorMsg}</div>
+          ) : this.state.courses.length > 0 ? (
+            this.state.courses.map((course) => this.parseCourse(course))
+          ) : (
+            <div className="alert alert-warning">
+              There are no courses for this user
+            </div>
+          ))}
       </div>
     );
   };
