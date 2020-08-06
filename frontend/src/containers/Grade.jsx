@@ -97,13 +97,9 @@ class Grade extends Component {
   }
 
   handleSubmit = (values, setSubmitting) => {
-    fetch(Config.serverUrl + "/grade", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const params = "?" + "username=" + values.credential;
+    fetch(Config.serverUrl + "/grade" + params, {
       credentials: "include",
-      body: JSON.stringify({ username: values.credential }),
     })
       .then((res) => {
         if (res.ok) {
