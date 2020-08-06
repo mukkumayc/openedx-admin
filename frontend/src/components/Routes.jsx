@@ -7,6 +7,8 @@ import NotFound from "../containers/NotFound";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UnauthenticatedRoute from "./UnauthenticatedRoute";
 import Grade from "../containers/Grade";
+import ProctoringLinks from "../containers/ProctoringLinks";
+import Registration from "../containers/Registration";
 
 const Routes = ({ appProps }) => {
   return (
@@ -22,6 +24,18 @@ const Routes = ({ appProps }) => {
         path="/grade"
         exact
         component={Grade}
+        appProps={appProps}
+      />
+      <AuthenticatedRoute
+        path="/proctoring-links"
+        exact
+        component={ProctoringLinks}
+        appProps={appProps}
+      />
+      <AuthenticatedRoute
+        path="/registration"
+        exact
+        component={Registration}
         appProps={appProps}
       />
       <UnauthenticatedRoute

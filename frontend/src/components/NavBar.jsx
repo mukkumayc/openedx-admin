@@ -22,7 +22,7 @@ const NavBar = ({ appProps }) => {
               </Link>
             </div>
             <div className="nav-item">
-              <Link className="nav-link" to="/register-users">
+              <Link className="nav-link" to="/registration">
                 Register new users
               </Link>
             </div>
