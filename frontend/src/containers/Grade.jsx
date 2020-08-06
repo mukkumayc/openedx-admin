@@ -78,16 +78,16 @@ class Grade extends Component {
                   </button>
                   {/* <pre>{JSON.stringify(props, null, 2)}</pre> */}
                 </Form>
-                {this.state.requestCompleted &&
-                  (this.state.courses.length > 0 ? (
-                    <div className="courses-list">
-                      {this.state.courses.map((course) =>
+                <div className="courses-list">
+                  {this.state.requestCompleted &&
+                    (this.state.courses.length > 0 ? (
+                      this.state.courses.map((course) =>
                         this.parseCourse(course)
-                      )}
-                    </div>
-                  ) : (
-                    <h1>No courses</h1>
-                  ))}
+                      )
+                    ) : (
+                      <h1>No courses</h1>
+                    ))}
+                </div>
               </>
             );
           }}
@@ -135,6 +135,7 @@ class Grade extends Component {
     return (
       <div key={course.course_id} className="alert alert-primary">
         <div>{course.course_id}</div>
+        <hr />
         <div>
           {course.grades ? (
             <div>
