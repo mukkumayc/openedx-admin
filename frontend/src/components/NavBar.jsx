@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 const NavBar = ({ appProps }) => {
   const { isAuthenticated } = appProps;
   return (
@@ -26,7 +27,7 @@ const NavBar = ({ appProps }) => {
               </Link>
             </div>
             <div className="nav-item">
-              <Link className="nav-link" to="/grades">
+              <Link className="nav-link" to="/grade">
                 Retrieve grades
               </Link>
             </div>

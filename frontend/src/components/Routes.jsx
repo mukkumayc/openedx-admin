@@ -6,6 +6,7 @@ import Login from "../containers/Login";
 import NotFound from "../containers/NotFound";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UnauthenticatedRoute from "./UnauthenticatedRoute";
+import Grade from "../containers/Grade";
 
 const Routes = ({ appProps }) => {
   return (
@@ -15,6 +16,12 @@ const Routes = ({ appProps }) => {
         path="/hello"
         exact
         component={Hello}
+        appProps={appProps}
+      />
+      <AuthenticatedRoute
+        path="/grade"
+        exact
+        component={Grade}
         appProps={appProps}
       />
       <UnauthenticatedRoute
