@@ -13,7 +13,9 @@ const initialUser = {
 };
 
 class Registration extends Component {
-  state = {};
+  state = {
+    statuses: [],
+  };
   render() {
     return (
       <div className="container">
@@ -22,7 +24,7 @@ class Registration extends Component {
             users: [initialUser],
           }}
           onSubmit={(values, { setSubmitting }) =>
-            handleSubmit(values, setSubmitting)
+            this.handleSubmit(values, setSubmitting)
           }
         >
           {({ values, isSubmitting }) => (
@@ -47,6 +49,7 @@ class Registration extends Component {
                         isSubmitting={isSubmitting}
                         remove={remove}
                         index={index}
+                        status={this.state.statuses[index]}
                       />
                     ))}
                   </>
@@ -58,85 +61,96 @@ class Registration extends Component {
       </div>
     );
   }
+
+  handleSubmit = (values, setSubmitting) => {
+    fetch(Config.serverUrl.concat("/massregister"), {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(values),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        alert(JSON.stringify(json, null, 2));
+        this.setState({ statuses: json.statuses });
+        setSubmitting(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setSubmitting(false);
+      });
+  };
 }
 
 const UserForm = (props) => {
-  const { isSubmitting, remove, index } = props;
+  const { isSubmitting, remove, index, status } = props;
+  const alertClass = status
+    ? status.status !== "success"
+      ? "alert-danger"
+      : "alert-success"
+    : "alert-primary";
   return (
-    <div className="row form-group alert alert-primary">
-      <div className="col">
-        <Field
-          className="form-control"
-          name={`users[${index}].email`}
-          type="email"
-          placeholder="email"
-        />
+    <div className={"form-group alert ".concat(alertClass)}>
+      <div className="row">
+        <div className="col">
+          <Field
+            className="form-control"
+            name={`users[${index}].email`}
+            type="email"
+            placeholder="email"
+          />
+        </div>
+        <div className="col">
+          <Field
+            className="form-control"
+            name={`users[${index}].username`}
+            type="text"
+            placeholder="username"
+          />
+        </div>
+        <div className="col">
+          <Field
+            className="form-control"
+            name={`users[${index}].password`}
+            type="password"
+            placeholder="password"
+          />
+        </div>
+        <div className="w-100"></div>
+        <div className="col">
+          <Field
+            className="form-control"
+            name={`users[${index}].first_name`}
+            type="text"
+            placeholder="first name"
+          />
+        </div>
+        <div className="col">
+          <Field
+            className="form-control"
+            name={`users[${index}].second_name`}
+            type="text"
+            placeholder="last name"
+          />
+        </div>
+        <div className="col">
+          <button
+            type="button"
+            className="btn btn-danger form-control"
+            disabled={isSubmitting}
+            onClick={() => remove(index)}
+          >
+            Delete
+          </button>
+        </div>
       </div>
-      <div className="col">
-        <Field
-          className="form-control"
-          name={`users[${index}].username`}
-          type="text"
-          placeholder="username"
-        />
-      </div>
-      <div className="col">
-        <Field
-          className="form-control"
-          name={`users[${index}].password`}
-          type="password"
-          placeholder="password"
-        />
-      </div>
-      <div className="w-100"></div>
-      <div className="col">
-        <Field
-          className="form-control"
-          name={`users[${index}].first_name`}
-          type="text"
-          placeholder="first name"
-        />
-      </div>
-      <div className="col">
-        <Field
-          className="form-control"
-          name={`users[${index}].second_name`}
-          type="text"
-          placeholder="last name"
-        />
-      </div>
-      <div className="col">
-        <button
-          type="button"
-          className="btn btn-danger form-control"
-          disabled={isSubmitting}
-          onClick={() => remove(index)}
-        >
-          Delete
-        </button>
+      <div className="row">
+        {status?.message && <div>{status.message}</div>}
       </div>
     </div>
   );
-};
-
-const handleSubmit = (values, setSubmitting) => {
-  fetch(Config.serverUrl.concat("/massregister"), {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-    body: JSON.stringify(values),
-  })
-    .then((res) => res.json())
-    .then((json) => {
-      alert(JSON.stringify(json, null, 2));
-      setSubmitting(false);
-    })
-    .catch((err) => {
-      console.log(err);
-      setSubmitting(false);
-    });
 };
 
 export default Registration;
