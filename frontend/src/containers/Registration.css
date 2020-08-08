@@ -1,0 +1,9 @@
+.col {
+  padding: 0 5px;
+}
+
+@media all and (min-width: 480px) {
+  .w-100 {
+    display: none;
+  }
+}
