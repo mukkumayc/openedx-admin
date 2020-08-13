@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Formik, Form, Field, FieldArray } from "formik";
+import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./Registration.css";
 import Config from "../config";
@@ -26,33 +26,52 @@ class Registration extends Component {
           onSubmit={(values, { setSubmitting }) =>
             this.handleSubmit(values, setSubmitting)
           }
+          validationSchema={Yup.object().shape({
+            users: Yup.array().of(
+              Yup.object({
+                email: Yup.string()
+                  .required("Required")
+                  .email("Wrong email format"),
+                username: Yup.string().required("Required"),
+                password: Yup.string().required("Required").min(8),
+                first_name: Yup.string().required("Required"),
+                second_name: Yup.string().required("Required"),
+              })
+            ),
+          })}
         >
-          {({ values, isSubmitting }) => (
+          {({ errors, touched, values, isSubmitting }) => (
             <Form>
               <FieldArray name="users">
                 {({ push, remove }) => (
-                  <>
-                    <button type="submit" className="btn btn-primary">
-                      Submit
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-primary"
-                      onClick={() => push(initialUser)}
-                    >
-                      Add user
-                    </button>
+                  <div className="container">
+                    <div className="row buttons-row d-flex justify-content-between">
+                      <button type="submit" className="btn btn-primary col-sm">
+                        Submit
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-success col-sm"
+                        onClick={() => push(initialUser)}
+                      >
+                        Add user
+                      </button>
+                    </div>
 
-                    {values.users?.map((user, index) => (
-                      <UserForm
-                        key={index}
-                        isSubmitting={isSubmitting}
-                        remove={remove}
-                        index={index}
-                        status={this.state.statuses[index]}
-                      />
-                    ))}
-                  </>
+                    <div className="row">
+                      {values.users?.map((user, index) => (
+                        <UserForm
+                          key={index}
+                          isSubmitting={isSubmitting}
+                          remove={remove}
+                          index={index}
+                          status={this.state.statuses[index]}
+                          errors={errors[index]}
+                          touched={touched[index]}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 )}
               </FieldArray>
             </Form>
@@ -90,7 +109,7 @@ const UserForm = (props) => {
     ? status.status !== "success"
       ? "alert-danger"
       : "alert-success"
-    : "alert-primary";
+    : "alert-secondary";
   return (
     <div className={"form-group alert ".concat(alertClass)}>
       <div className="row">
@@ -101,6 +120,9 @@ const UserForm = (props) => {
             type="email"
             placeholder="email"
           />
+          <ErrorMessage name={`users[${index}].email`}>
+            {(msg) => <small className="text-danger">{msg}</small>}
+          </ErrorMessage>
         </div>
         <div className="col">
           <Field
@@ -109,6 +131,9 @@ const UserForm = (props) => {
             type="text"
             placeholder="username"
           />
+          <ErrorMessage name={`users[${index}].username`}>
+            {(msg) => <small className="text-danger">{msg}</small>}
+          </ErrorMessage>
         </div>
         <div className="col">
           <Field
@@ -117,6 +142,9 @@ const UserForm = (props) => {
             type="password"
             placeholder="password"
           />
+          <ErrorMessage name={`users[${index}].password`}>
+            {(msg) => <small className="text-danger">{msg}</small>}
+          </ErrorMessage>
         </div>
         <div className="w-100"></div>
         <div className="col">
@@ -126,6 +154,9 @@ const UserForm = (props) => {
             type="text"
             placeholder="first name"
           />
+          <ErrorMessage name={`users[${index}].first_name`}>
+            {(msg) => <small className="text-danger">{msg}</small>}
+          </ErrorMessage>
         </div>
         <div className="col">
           <Field
@@ -134,6 +165,9 @@ const UserForm = (props) => {
             type="text"
             placeholder="last name"
           />
+          <ErrorMessage name={`users[${index}].second_name`}>
+            {(msg) => <small className="text-danger">{msg}</small>}
+          </ErrorMessage>
         </div>
         <div className="col">
           <button
