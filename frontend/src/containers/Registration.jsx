@@ -13,9 +13,17 @@ const initialUser = {
 };
 
 class Registration extends Component {
+  state = {};
+  render() {
+    return <UsersForm />;
+  }
+}
+
+class UsersForm extends Component {
   state = {
     statuses: [],
   };
+
   render() {
     return (
       <div className="container">
@@ -63,7 +71,15 @@ class Registration extends Component {
                         <UserForm
                           key={index}
                           isSubmitting={isSubmitting}
-                          remove={remove}
+                          remove={(index) => {
+                            let statuses = this.state.statuses.slice();
+                            statuses.splice(index, 1);
+                            console.log("statuses", statuses);
+                            this.setState({
+                              statuses: statuses,
+                            });
+                            remove(index);
+                          }}
                           index={index}
                           status={this.state.statuses[index]}
                           errors={errors[index]}
