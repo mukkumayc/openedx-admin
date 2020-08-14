@@ -106,7 +106,15 @@ class UsersForm extends Component {
       credentials: "include",
       body: JSON.stringify(values),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        if (res.status === 401) {
+          this.props.userHasAuthenticated(false);
+        }
+        return res.json();
+      })
       .then((json) => {
         alert(JSON.stringify(json, null, 2));
         this.setState({ statuses: json.statuses });
