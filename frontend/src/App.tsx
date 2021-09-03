@@ -3,7 +3,7 @@ import Routes from "./components/Routes";
 import NavBar from "./components/NavBar";
 import Config from "./config";
 
-function App() {
+const App = () => {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
   const [isAuthenticating, setAuthenticating] = useState(true);
   const appProps = { isAuthenticated, userHasAuthenticated };
@@ -22,13 +22,15 @@ function App() {
       });
   }, []);
   return (
-    !isAuthenticating && (
-      <div className="App">
-        <NavBar appProps={appProps} />
-        <Routes appProps={appProps} />
-      </div>
-    )
+    <>
+      {!isAuthenticating && (
+        <div className="App">
+          <NavBar appProps={appProps} />
+          <Routes appProps={appProps} />
+        </div>
+      )}
+    </>
   );
-}
+};
 
 export default App;

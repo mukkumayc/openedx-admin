@@ -9,8 +9,14 @@ import UnauthenticatedRoute from "./UnauthenticatedRoute";
 import Grade from "../containers/Grade";
 import ProctoringLinks from "../containers/ProctoringLinks";
 import Registration from "../containers/Registration";
+import { AppProps } from "../types";
+import MakeRequest from "../containers/MakeRequest";
 
-const Routes = ({ appProps }) => {
+interface RoutesProps {
+  appProps: AppProps;
+}
+
+const Routes = ({ appProps }: RoutesProps) => {
   return (
     <Switch>
       <AuthenticatedRoute path="/" exact component={Home} appProps={appProps} />
@@ -36,6 +42,12 @@ const Routes = ({ appProps }) => {
         path="/registration"
         exact
         component={Registration}
+        appProps={appProps}
+      />
+      <AuthenticatedRoute
+        path="/makerequest"
+        exact
+        component={MakeRequest}
         appProps={appProps}
       />
       <UnauthenticatedRoute

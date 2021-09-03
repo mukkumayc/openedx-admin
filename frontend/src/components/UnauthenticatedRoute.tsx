@@ -1,12 +1,17 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, RouteProps } from "react-router-dom";
+import { AppProps } from "../types";
+
+interface UnauthenticatedRouteProps extends RouteProps {
+  component(props: any): JSX.Element;
+  appProps: AppProps;
+}
 
 const UnauthenticatedRoute = ({
   component: C,
   appProps,
-  isAuthenticated,
   ...rest
-}) => {
+}: UnauthenticatedRouteProps) => {
   return (
     <Route
       {...rest}

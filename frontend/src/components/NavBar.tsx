@@ -1,7 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { AppProps } from "../types";
 
-const NavBar = ({ appProps }) => {
+interface NavBarProps {
+  appProps: AppProps;
+}
+
+const NavBar = ({ appProps }: NavBarProps) => {
   const { isAuthenticated } = appProps;
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,6 +36,11 @@ const NavBar = ({ appProps }) => {
                 Retrieve grades
               </Link>
             </div>
+            <div>
+              <Link className="nav-link" to="/makerequest">
+                Make request
+              </Link>
+            </div>
           </>
         ) : (
           <>
@@ -46,7 +56,11 @@ const NavBar = ({ appProps }) => {
   );
 };
 
-const CollapseController = (props) => {
+interface CollapseControllerProps {
+  children: JSX.Element;
+}
+
+const CollapseController = (props: CollapseControllerProps) => {
   return (
     <>
       <button
