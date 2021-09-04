@@ -10,7 +10,6 @@ import Grade from "../containers/Grade";
 import ProctoringLinks from "../containers/ProctoringLinks";
 import Registration from "../containers/Registration";
 import { AppProps } from "../types";
-import MakeRequest from "../containers/MakeRequest";
 
 interface RoutesProps {
   appProps: AppProps;
@@ -42,12 +41,6 @@ const Routes = ({ appProps }: RoutesProps) => {
         path="/registration"
         exact
         component={Registration}
-        appProps={appProps}
-      />
-      <AuthenticatedRoute
-        path="/makerequest"
-        exact
-        component={MakeRequest}
         appProps={appProps}
       />
       <UnauthenticatedRoute
