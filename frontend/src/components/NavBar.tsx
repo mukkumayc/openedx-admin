@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { AppProps } from "../types";
+import { Navbar, Nav } from "react-bootstrap";
+import requestsWrapper from "../RequestsWrapper";
 
 interface NavBarProps {
   appProps: AppProps;
@@ -9,50 +11,52 @@ interface NavBarProps {
 const NavBar = ({ appProps }: NavBarProps) => {
   const { isAuthenticated } = appProps;
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <Link className="navbar-brand" to="/">
-        Open edX Admin
-      </Link>
-      <CollapseController>
-        {isAuthenticated ? (
-          <>
-            <div className="nav-item">
-              <Link className="nav-link" to="/hello">
-                Hello
-              </Link>
-            </div>
-            <div className="nav-item">
-              <Link className="nav-link" to="/proctoring-links">
-                Retrieve proctoring links
-              </Link>
-            </div>
-            <div className="nav-item">
-              <Link className="nav-link" to="/registration">
-                Register new users
-              </Link>
-            </div>
-            <div className="nav-item">
-              <Link className="nav-link" to="/grade">
-                Retrieve grades
-              </Link>
-            </div>
-            <div>
-              <Link className="nav-link" to="/makerequest">
-                Make request
-              </Link>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="nav-item">
-              <Link className="nav-link" to="/login">
-                Login
-              </Link>
-            </div>
-          </>
-        )}
-      </CollapseController>
-    </nav>
+    <Navbar variant="dark" bg="dark" expand="lg">
+      <Nav>
+        <Link className="navbar-brand" to="/">
+          Open edX Admin
+        </Link>
+        <CollapseController>
+          {isAuthenticated ? (
+            <>
+              {/* <div className="nav-item">
+                <Link className="nav-link" to="/proctoring-links">
+                  Proctoring links
+                </Link>
+              </div> */}
+              <div className="nav-item">
+                <a
+                  className="nav-link"
+                  href={`${requestsWrapper.serverUrl}/upload_registration_file`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Register new users
+                </a>
+              </div>
+              <div className="nav-item">
+                <Link className="nav-link" to="/grades">
+                  Grades
+                </Link>
+              </div>
+              {/* <div className="nav-item">
+                <Link className="nav-link" to="/students-list">
+                  Students list
+                </Link>
+              </div> */}
+            </>
+          ) : (
+            <>
+              <div className="nav-item">
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
+              </div>
+            </>
+          )}
+        </CollapseController>
+      </Nav>
+    </Navbar>
   );
 };
 

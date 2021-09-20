@@ -1,0 +1,25 @@
+@media all and (min-width: 480px) {
+  .grade {
+    padding: 60px 0;
+  }
+}
+
+.users-list {
+  padding: 1em 0;
+  width: 576px;
+  margin: 0 auto;
+}
+
+.form-card {
+  width: 576px;
+}
+
+@media(max-width: 576px) {
+  .form-card {
+    width: 100%;
+  }
+
+  .users-list {
+    width: 100%;
+  }
+}

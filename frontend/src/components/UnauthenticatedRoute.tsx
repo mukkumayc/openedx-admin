@@ -11,19 +11,17 @@ const UnauthenticatedRoute = ({
   component: C,
   appProps,
   ...rest
-}: UnauthenticatedRouteProps) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        !appProps.isAuthenticated ? (
-          <C {...props} {...appProps} />
-        ) : (
-          <Redirect to="/" />
-        )
-      }
-    />
-  );
-};
+}: UnauthenticatedRouteProps) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      !appProps.isAuthenticated ? (
+        <C {...props} {...appProps} />
+      ) : (
+        <Redirect to="/" />
+      )
+    }
+  />
+);
 
 export default UnauthenticatedRoute;

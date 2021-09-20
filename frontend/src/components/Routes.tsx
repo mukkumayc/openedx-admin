@@ -6,52 +6,57 @@ import Login from "../containers/Login";
 import NotFound from "../containers/NotFound";
 import AuthenticatedRoute from "./AuthenticatedRoute";
 import UnauthenticatedRoute from "./UnauthenticatedRoute";
-import Grade from "../containers/Grade";
 import ProctoringLinks from "../containers/ProctoringLinks";
 import Registration from "../containers/Registration";
 import { AppProps } from "../types";
+import StudentsList from "../containers/courses/StudentsList";
+import Grades from "../containers/Grades";
 
 interface RoutesProps {
   appProps: AppProps;
 }
 
-const Routes = ({ appProps }: RoutesProps) => {
-  return (
-    <Switch>
-      <AuthenticatedRoute path="/" exact component={Home} appProps={appProps} />
-      <AuthenticatedRoute
-        path="/hello"
-        exact
-        component={Hello}
-        appProps={appProps}
-      />
-      <AuthenticatedRoute
-        path="/grade"
-        exact
-        component={Grade}
-        appProps={appProps}
-      />
-      <AuthenticatedRoute
-        path="/proctoring-links"
-        exact
-        component={ProctoringLinks}
-        appProps={appProps}
-      />
-      <AuthenticatedRoute
-        path="/registration"
-        exact
-        component={Registration}
-        appProps={appProps}
-      />
-      <UnauthenticatedRoute
-        path="/login"
-        exact
-        component={Login}
-        appProps={appProps}
-      />
-      <Route component={NotFound} />
-    </Switch>
-  );
-};
+const Routes = ({ appProps }: RoutesProps) => (
+  <Switch>
+    <AuthenticatedRoute path="/" exact component={Home} appProps={appProps} />
+    <AuthenticatedRoute
+      path="/hello"
+      exact
+      component={Hello}
+      appProps={appProps}
+    />
+    <AuthenticatedRoute
+      path="/grades"
+      exact
+      component={Grades}
+      appProps={appProps}
+    />
+    <AuthenticatedRoute
+      path="/proctoring-links"
+      exact
+      component={ProctoringLinks}
+      appProps={appProps}
+    />
+    <AuthenticatedRoute
+      path="/registration"
+      exact
+      component={Registration}
+      appProps={appProps}
+    />
+    <AuthenticatedRoute
+      path="/students-list"
+      exact
+      component={StudentsList}
+      appProps={appProps}
+    />
+    <UnauthenticatedRoute
+      path="/login"
+      exact
+      component={Login}
+      appProps={appProps}
+    />
+    <Route component={NotFound} />
+  </Switch>
+);
 
 export default Routes;

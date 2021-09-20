@@ -3,6 +3,7 @@ import { Formik, Form, Field, FieldArray, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "./Registration.css";
 import Config from "../config";
+import { Button, Row, Col, Container } from "react-bootstrap";
 
 interface IUser {
   email: string;
@@ -63,7 +64,7 @@ const UsersForm = (props: RegistrationProps) => {
   );
 
   return (
-    <div className="container">
+    <Container>
       <Formik
         initialValues={{
           users: [initialUser],
@@ -89,21 +90,21 @@ const UsersForm = (props: RegistrationProps) => {
           <Form>
             <FieldArray name="users">
               {({ push, remove }) => (
-                <div className="container">
-                  <div className="row buttons-row d-flex justify-content-between">
-                    <button type="submit" className="btn btn-primary col-sm">
+                <Container>
+                  <Row className="buttons-row d-flex justify-content-between">
+                    <Button type="submit" className="col-sm">
                       Submit
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-success col-sm"
+                    </Button>
+                    <Button
+                      className="col-sm"
+                      variant="success"
                       onClick={() => push(initialUser)}
                     >
                       Add user
-                    </button>
-                  </div>
+                    </Button>
+                  </Row>
 
-                  <div className="row">
+                  <Row>
                     {values.users?.map((_user, index) => (
                       <UserForm
                         key={index}
@@ -117,18 +118,16 @@ const UsersForm = (props: RegistrationProps) => {
                         }}
                         index={index}
                         status={statuses[index]}
-                        // errors={errors.users && errors.users[index]}
-                        // touched={touched.users && touched.users[index]}
                       />
                     ))}
-                  </div>
-                </div>
+                  </Row>
+                </Container>
               )}
             </FieldArray>
           </Form>
         )}
       </Formik>
-    </div>
+    </Container>
   );
 };
 
@@ -148,8 +147,8 @@ const UserForm = (props: UserFormProps) => {
     : "alert-secondary";
   return (
     <div className={"form-group alert ".concat(alertClass)}>
-      <div className="row">
-        <div className="col">
+      <Row>
+        <Col>
           <Field
             className="form-control"
             name={`users[${index}].email`}
@@ -159,8 +158,8 @@ const UserForm = (props: UserFormProps) => {
           <ErrorMessage name={`users[${index}].email`}>
             {(msg) => <small className="text-danger">{msg}</small>}
           </ErrorMessage>
-        </div>
-        <div className="col">
+        </Col>
+        <Col>
           <Field
             className="form-control"
             name={`users[${index}].username`}
@@ -170,8 +169,8 @@ const UserForm = (props: UserFormProps) => {
           <ErrorMessage name={`users[${index}].username`}>
             {(msg) => <small className="text-danger">{msg}</small>}
           </ErrorMessage>
-        </div>
-        <div className="col">
+        </Col>
+        <Col>
           <Field
             className="form-control"
             name={`users[${index}].password`}
@@ -181,9 +180,9 @@ const UserForm = (props: UserFormProps) => {
           <ErrorMessage name={`users[${index}].password`}>
             {(msg) => <small className="text-danger">{msg}</small>}
           </ErrorMessage>
-        </div>
+        </Col>
         <div className="w-100"></div>
-        <div className="col">
+        <Col>
           <Field
             className="form-control"
             name={`users[${index}].first_name`}
@@ -193,8 +192,8 @@ const UserForm = (props: UserFormProps) => {
           <ErrorMessage name={`users[${index}].first_name`}>
             {(msg) => <small className="text-danger">{msg}</small>}
           </ErrorMessage>
-        </div>
-        <div className="col">
+        </Col>
+        <Col>
           <Field
             className="form-control"
             name={`users[${index}].second_name`}
@@ -204,21 +203,20 @@ const UserForm = (props: UserFormProps) => {
           <ErrorMessage name={`users[${index}].second_name`}>
             {(msg) => <small className="text-danger">{msg}</small>}
           </ErrorMessage>
-        </div>
-        <div className="col">
-          <button
+        </Col>
+        <Col>
+          <Button
             type="button"
-            className="btn btn-danger form-control"
+            className="form-control"
+            variant="danger"
             disabled={isSubmitting}
             onClick={() => remove(index)}
           >
             Delete
-          </button>
-        </div>
-      </div>
-      <div className="row">
-        {status?.message && <div>{status.message}</div>}
-      </div>
+          </Button>
+        </Col>
+      </Row>
+      <Row>{status?.message && <div>{status.message}</div>}</Row>
     </div>
   );
 };

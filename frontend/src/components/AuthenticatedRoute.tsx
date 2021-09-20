@@ -11,19 +11,17 @@ const AuthenticatedRoute = ({
   component: C,
   appProps,
   ...rest
-}: AuthenticatedRouteProps) => {
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        appProps.isAuthenticated ? (
-          <C {...props} {...appProps} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
-};
+}: AuthenticatedRouteProps) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      appProps.isAuthenticated ? (
+        <C {...props} {...appProps} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
+  />
+);
 
 export default AuthenticatedRoute;
