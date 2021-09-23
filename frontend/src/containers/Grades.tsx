@@ -3,10 +3,22 @@ import { Formik, Form, Field } from "formik";
 import "./Grades.css";
 import { ICourseGrades } from "../types";
 import requestsWrapper from "../RequestsWrapper";
-import { Alert, Card, Container, Form as BForm } from "react-bootstrap";
+import {
+  Alert,
+  Card,
+  Container,
+  Form as BForm,
+  Spinner,
+} from "react-bootstrap";
+
+const courseNames = [
+  "Demonstration Course",
+  "Xe Xe",
+  "E2E Test Course",
+] as const;
 
 interface FormValues {
-  courseName: string;
+  courseName: typeof courseNames[number] | "";
   allUsers: "all" | "notall";
   username: string;
 }
@@ -39,27 +51,31 @@ const Grades = () => {
   const [requestCompleted, setRequestCompleted] = useState(false);
   const [courses, setCourses] = useState<ICourseGrades[]>([]);
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = useCallback(
     async ({ courseName, allUsers, username }: FormValues, setSubmitting) => {
       setRequestCompleted(false);
+      setLoading(true);
       setErrorMsg("");
       const res = await (allUsers === "all"
-        ? requestsWrapper.getGradesForCourse(courseName)
-        : requestsWrapper.getGradesForStudent(username, courseName));
+        ? requestsWrapper.gradesForCourse(courseName)
+        : requestsWrapper.gradesForStudent(username, courseName));
       if (res._tag === "Left") {
         setErrorMsg(res.left.toString());
         setRequestCompleted(true);
         setSubmitting(false);
+        setLoading(false);
         return;
       }
       setCourses(res.right);
       setRequestCompleted(true);
+      setLoading(false);
     },
     []
   );
 
-  const formatCourses = useCallback(() => {
+  const FormattedCourses = useCallback(() => {
     return (
       <div className="users-list">
         {requestCompleted &&
@@ -99,13 +115,21 @@ const Grades = () => {
               <Card.Body>
                 <Form>
                   <BForm.Group className="my-3">
-                    <label htmlFor="courseName">Enter course name</label>
+                    <label htmlFor="courseName">Select course</label>
                     <Field
-                      className="form-control"
-                      type="text"
+                      className="form-select"
+                      as="select"
                       name="courseName"
-                      id="courseName"
-                    />
+                    >
+                      <option value="" disabled>
+                        -- Select course --
+                      </option>
+                      {courseNames.map((name) => (
+                        <option key={name} value={name}>
+                          {name}
+                        </option>
+                      ))}
+                    </Field>
                   </BForm.Group>
                   <BForm.Group className="my-3">
                     <label className="me-3">
@@ -147,7 +171,19 @@ const Grades = () => {
                 </Form>
               </Card.Body>
             </Card>
-            {formatCourses()}
+            {loading ? (
+              <div className="d-flex justify-content-center m-3">
+                <Spinner
+                  animation="border"
+                  role="status"
+                  style={{ width: "150px", height: "150px" }}
+                >
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : (
+              <FormattedCourses />
+            )}
           </main>
         )}
       </Formik>

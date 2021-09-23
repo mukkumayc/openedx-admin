@@ -1,147 +1,108 @@
-import { Either, left, right } from "fp-ts/lib/Either";
+import { mapLeft, fold, Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import { CourseGradesC, ICourseGrades } from "./types";
+import { hasOwnProperty, validationErrorsToString } from "./utils";
 
 class RequestsWrapper {
   readonly serverUrl =
     "http://vmi625775.contaboserver.net:18000/admin_room/api/v1";
 
-  async getStudents(course: string): Promise<Either<Error, string[]>> {
-    return await fetch(`${this.serverUrl}/courses/get_students/${course}`, {
-      credentials: "include",
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return res.text().then((txt) => left(new Error(txt)));
-        } else {
-          return res.json().then((json) => {
-            const decoded = t.type({ students: t.string }).decode(json);
-            // if response json has structure {students: string}
-            if (decoded._tag === "Right") {
-              const studentsString = decoded.right.students;
-              if (studentsString === "no students") {
-                return right([]);
-              }
-              try {
-                const decodedStudents = t
-                  .array(t.string)
-                  .decode(JSON.parse(studentsString.replaceAll("'", '"')));
-                // if students in response json have structure string[]
-                if (decodedStudents._tag === "Right") {
-                  return decodedStudents;
-                } else {
-                  // if students in response json not string[]
-                  return left(
-                    new Error("Decode error, students field has wrong format")
-                  );
-                }
-              } catch (err) {
-                // JSON.parse thrown error
-                return left(
-                  new Error(`JSON parse error, string: '${studentsString}'`)
-                );
-              }
-              // if response json isn't {students: string[]}
-            } else {
-              console.log(decoded.left);
-              return left(
-                new Error("Decode error, response json has wrong format")
-              );
-            }
-          });
-        }
-      })
-      .catch((err) => left(err));
+  async _fetch<A>(
+    url: string,
+    method: "get" | "post",
+    validator: t.Decoder<unknown, A>
+  ): Promise<Either<string, A>> {
+    const res = await fetch(url, { method, credentials: "include" });
+
+    if (!res.ok) {
+      return left(await res.text());
+    }
+
+    try {
+      const val =
+        res.headers.get("Content-Type") === "application/json"
+          ? await res.json()
+          : await res.text();
+      return mapLeft<t.ValidationError[], string>(validationErrorsToString)(
+        validator.decode(val)
+      );
+    } catch (err) {
+      return left((err as Error).toString());
+    }
   }
 
-  private _getGrades = (url: string): Promise<Either<Error, ICourseGrades[]>> =>
-    fetch(url, {
-      credentials: "include",
-    })
-      .then(async (res) => {
-        if (res.ok) {
-          try {
-            const json = await res.json();
-            const decoded = t.array(CourseGradesC).decode(json);
-            if (decoded._tag === "Right") {
-              return decoded;
-            } else {
-              return left(new Error(`Decode error`));
-            }
-          } catch (err) {
-            return left(
-              new Error(`JSON parse error, response body: '${res.body}'`)
-            );
-          }
-        } else {
-          return res
-            .text()
-            .then((txt) => ({ _tag: "Left" as const, left: new Error(txt) }));
+  async getStudents(course: string): Promise<Either<string, string[]>> {
+    const validate = (u: any): t.Validation<string[]> => {
+      if (hasOwnProperty(u, "students") && typeof u.students === "string") {
+        try {
+          return t.array(t.string).decode(u.students);
+        } catch (err) {
+          return left([]);
         }
-      })
-      .catch((err) => left(new Error(err.toString())));
+      }
+      return left([]);
+    };
+    const StudentsListC: t.Type<string[]> = new t.Type(
+      "StudentsList",
+      (u): u is string[] =>
+        fold(
+          () => false,
+          () => true
+        )(validate(u)),
+      validate,
+      (a) => a
+    );
 
-  getGradesForStudent = (
+    return this._fetch(
+      `${this.serverUrl}/courses/get_students/${course}`,
+      "get",
+      StudentsListC
+    );
+  }
+
+  private _grades = (url: string): Promise<Either<string, ICourseGrades[]>> =>
+    this._fetch(url, "get", t.array(CourseGradesC));
+
+  gradesForStudent = (
     username: string,
     courseName: string
-  ): Promise<Either<Error, ICourseGrades[]>> =>
-    this._getGrades(
+  ): Promise<Either<string, ICourseGrades[]>> =>
+    this._grades(
       `${this.serverUrl}/students/get_grades/${username}/${courseName}`
     );
 
-  getGradesForCourse = (
+  gradesForCourse = (
     courseName: string
-  ): Promise<Either<Error, ICourseGrades[]>> =>
-    this._getGrades(`${this.serverUrl}/courses/get_grades/${courseName}`);
+  ): Promise<Either<string, ICourseGrades[]>> =>
+    this._grades(`${this.serverUrl}/courses/get_grades/${courseName}`);
 
-  async getCourses(username: string): Promise<Either<Error, string[]>> {
-    return await fetch(`${this.serverUrl}/students/get_courses/${username}`, {
-      credentials: "include",
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return res
-            .text()
-            .then((txt) => ({ _tag: "Left" as const, left: new Error(txt) }));
-        } else {
-          return res.json().then((json) => {
-            const decoded = t.type({ students: t.string }).decode(json);
-            // if response json has structure {students: string}
-            if (decoded._tag === "Right") {
-              const studentsString = decoded.right.students;
-              if (studentsString === "no students") {
-                return right([]);
-              }
-              try {
-                const decodedStudents = t
-                  .array(t.string)
-                  .decode(JSON.parse(studentsString.replaceAll("'", '"')));
-                // if students in response json have structure string[]
-                if (decodedStudents._tag === "Right") {
-                  return decodedStudents;
-                } else {
-                  // if students in response json not string[]
-                  return left(
-                    new Error("Decode error, students field has wrong format")
-                  );
-                }
-              } catch (err) {
-                // JSON.parse thrown error
-                return left(
-                  new Error(`JSON parse error, string: '${studentsString}'`)
-                );
-              }
-              // if response json isn't {students: string[]}
-            } else {
-              console.log(decoded.left);
-              return left(
-                new Error("Decode error, response json has wrong format")
-              );
-            }
-          });
+  async getCourses(username: string): Promise<Either<string, string[]>> {
+    const validate = (u: any): t.Validation<string[]> => {
+      if (hasOwnProperty(u, "courses") && typeof u.courses === "string") {
+        try {
+          return t.array(t.string).decode(u.courses);
+        } catch (err) {
+          return left([]);
         }
-      })
-      .catch((err) => left(err));
+      }
+      return left([]);
+    };
+    const CoursesListC: t.Type<string[]> = new t.Type(
+      "CoursesList",
+      (u): u is string[] =>
+        fold(
+          () => false,
+          () => true
+        )(validate(u)),
+      validate,
+      (a) => a
+    );
+
+    return this._fetch(
+      `${this.serverUrl}/students/get_courses/${username}`,
+      "get",
+      CoursesListC
+    );
   }
 
   async addStudent(
