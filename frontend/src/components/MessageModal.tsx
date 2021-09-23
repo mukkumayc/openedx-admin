@@ -9,7 +9,7 @@ export interface MessageModalProps {
 }
 
 const MessageModal = (props: MessageModalProps) => (
-  <Modal>
+  <Modal show={props.show}>
     <Modal.Header>{props.header}</Modal.Header>
     <Modal.Body>{props.body}</Modal.Body>
     <Modal.Footer className="d-flex justify-content-right">
