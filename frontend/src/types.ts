@@ -41,13 +41,19 @@ export const CourseGradesC = t.type({
 
 export type ICourseGrades = t.TypeOf<typeof CourseGradesC>;
 
-// export interface IGrade {
-//   course_id: string;
-//   email: string;
-//   user_id: number;
-//   username: string;
-//   passed: boolean;
-//   percent: number;
-//   letter_grade: null;
-//   section_breakdown: any[];
-// }
+export const EmailC = new t.Type<string, string, unknown>(
+  "Email",
+  (input: unknown): input is string =>
+    typeof input === "string" &&
+    /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      input
+    ),
+  (input, context) =>
+    typeof input === "string" &&
+    /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      input
+    )
+      ? t.success(input)
+      : t.failure(input, context),
+  t.identity
+);

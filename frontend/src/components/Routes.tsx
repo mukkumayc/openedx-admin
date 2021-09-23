@@ -11,6 +11,7 @@ import Registration from "../containers/Registration";
 import { AppProps } from "../types";
 import StudentsList from "../containers/courses/StudentsList";
 import Grades from "../containers/Grades";
+import Registration2 from "../containers/Registration2";
 
 interface RoutesProps {
   appProps: AppProps;
@@ -41,6 +42,12 @@ const Routes = ({ appProps }: RoutesProps) => (
       path="/registration"
       exact
       component={Registration}
+      appProps={appProps}
+    />
+    <AuthenticatedRoute
+      path="/registration2"
+      exact
+      component={Registration2}
       appProps={appProps}
     />
     <AuthenticatedRoute

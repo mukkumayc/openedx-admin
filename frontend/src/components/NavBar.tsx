@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { AppProps } from "../types";
 import { Navbar, Nav } from "react-bootstrap";
-import requestsWrapper from "../RequestsWrapper";
 
 interface NavBarProps {
   appProps: AppProps;
@@ -27,12 +26,17 @@ const NavBar = ({ appProps }: NavBarProps) => {
               <div className="nav-item">
                 <a
                   className="nav-link"
-                  href={`${requestsWrapper.serverUrl}/upload_registration_file`}
+                  href="http://vmi625775.contaboserver.net:18000/admin_room/v1/upload_registration_file/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Register new users
                 </a>
+              </div>
+              <div className="nav-item">
+                <Link className="nav-link" to="/registration2">
+                  Register new users(form)
+                </Link>
               </div>
               <div className="nav-item">
                 <Link className="nav-link" to="/grades">
