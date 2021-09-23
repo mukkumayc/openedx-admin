@@ -28,7 +28,7 @@ const Registration2 = (props: Registration2Props) => {
     <Container id="registration" className="page d-flex justify-content-center">
       <Card id="create-many-card" className="form-card">
         <Card.Header>
-          <h4>Create many certificates</h4>
+          <h4>Register new users</h4>
         </Card.Header>
         <Card.Body>
           {!users ? (
@@ -100,9 +100,9 @@ const Registration2 = (props: Registration2Props) => {
               {({ isSubmitting, setFieldValue }) => (
                 <Form>
                   <div className="form-group mt-3 mb-3">
-                    Select file that contains a list of users for whom you want
-                    to make a certificate. It must have the following columns:
-                    Email, Course ID, Session ID
+                    Select file that contains a list of users who you want to
+                    register. It must have the following columns: Email,
+                    Username, Name, Surname, Password
                     <BForm.Control
                       type="file"
                       name="file"
