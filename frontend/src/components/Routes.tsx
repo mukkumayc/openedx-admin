@@ -12,50 +12,33 @@ import { AppProps } from "../types";
 import StudentsList from "../containers/courses/StudentsList";
 import Grades from "../containers/Grades";
 import Registration2 from "../containers/Registration2";
+import FileLinks from "../containers/FileLinks";
 
 interface RoutesProps {
   appProps: AppProps;
 }
 
+const authenticatedRoutes: [string, (props?: any) => JSX.Element][] = [
+  ["/", Home],
+  ["/hello", Hello],
+  ["/grades", Grades],
+  ["/proctoring-links", ProctoringLinks],
+  ["/registration", Registration],
+  ["/registration2", Registration2],
+  ["/students-list", StudentsList],
+  ["/files", FileLinks],
+];
+
 const Routes = ({ appProps }: RoutesProps) => (
   <Switch>
-    <AuthenticatedRoute path="/" exact component={Home} appProps={appProps} />
-    <AuthenticatedRoute
-      path="/hello"
-      exact
-      component={Hello}
-      appProps={appProps}
-    />
-    <AuthenticatedRoute
-      path="/grades"
-      exact
-      component={Grades}
-      appProps={appProps}
-    />
-    <AuthenticatedRoute
-      path="/proctoring-links"
-      exact
-      component={ProctoringLinks}
-      appProps={appProps}
-    />
-    <AuthenticatedRoute
-      path="/registration"
-      exact
-      component={Registration}
-      appProps={appProps}
-    />
-    <AuthenticatedRoute
-      path="/registration2"
-      exact
-      component={Registration2}
-      appProps={appProps}
-    />
-    <AuthenticatedRoute
-      path="/students-list"
-      exact
-      component={StudentsList}
-      appProps={appProps}
-    />
+    {authenticatedRoutes.map((route) => (
+      <AuthenticatedRoute
+        path={route[0]}
+        exact
+        component={route[1]}
+        {...{ appProps }}
+      />
+    ))}
     <UnauthenticatedRoute
       path="/login"
       exact

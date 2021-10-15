@@ -10,7 +10,7 @@ interface NavBarProps {
 const NavBar = ({ appProps }: NavBarProps) => {
   const { isAuthenticated } = appProps;
   return (
-    <Navbar variant="dark" bg="dark" expand="lg">
+    <Navbar variant="dark" bg="dark" expand="md">
       <Nav>
         <Link className="navbar-brand" to="/">
           Open edX Admin
@@ -41,6 +41,11 @@ const NavBar = ({ appProps }: NavBarProps) => {
               <div className="nav-item">
                 <Link className="nav-link" to="/grades">
                   Grades
+                </Link>
+              </div>
+              <div className="nav-item">
+                <Link className="nav-link" to="/files">
+                  Files
                 </Link>
               </div>
               {/* <div className="nav-item">

@@ -3,6 +3,7 @@ import Routes from "./components/Routes";
 import NavBar from "./components/NavBar";
 import MessageModal, { MessageModalProps } from "./components/MessageModal";
 import { AppProps } from "./types";
+import { curry2 } from "./utils";
 
 const App = () => {
   const [isAuthenticated, userHasAuthenticated] = useState(true);
@@ -12,10 +13,10 @@ const App = () => {
     header: "",
     body: "",
   });
-  const showMessage = (
-    header: MessageModalProps["header"],
-    body: MessageModalProps["body"]
-  ) => setMessage({ show: true, header, body });
+  const showMessage = curry2(
+    (header: MessageModalProps["header"], body: MessageModalProps["body"]) =>
+      setMessage({ show: true, header, body })
+  );
 
   const setShow = (show: boolean) => {
     setMessage({ ...message, show });

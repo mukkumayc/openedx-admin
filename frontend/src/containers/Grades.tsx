@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from "react";
 import { Formik, Form, Field } from "formik";
 import "./Grades.css";
-import { ICourseGrades } from "../types";
+import { courseNames, ICourseGrades } from "../types";
 import requestsWrapper from "../RequestsWrapper";
 import {
   Alert,
@@ -10,12 +10,7 @@ import {
   Form as BForm,
   Spinner,
 } from "react-bootstrap";
-
-const courseNames = [
-  "Demonstration Course",
-  "Xe Xe",
-  "E2E Test Course",
-] as const;
+import { fold } from "fp-ts/Either";
 
 interface FormValues {
   courseName: typeof courseNames[number] | "";
@@ -58,18 +53,15 @@ const Grades = () => {
       setRequestCompleted(false);
       setLoading(true);
       setErrorMsg("");
+
       const res = await (allUsers === "all"
         ? requestsWrapper.gradesForCourse(courseName)
         : requestsWrapper.gradesForStudent(username, courseName));
-      if (res._tag === "Left") {
-        setErrorMsg(res.left.toString());
-        setRequestCompleted(true);
-        setSubmitting(false);
-        setLoading(false);
-        return;
-      }
-      setCourses(res.right);
+
+      fold(setErrorMsg, setCourses)(res);
+
       setRequestCompleted(true);
+      setSubmitting(false);
       setLoading(false);
     },
     []
@@ -82,7 +74,9 @@ const Grades = () => {
           (errorMsg.length > 0 ? (
             <div className="alert alert-danger">{errorMsg}</div>
           ) : courses.length > 0 ? (
-            courses.map((course) => <ParsedCourse {...{ course }} />)
+            courses.map((course, ind) => (
+              <ParsedCourse key={ind} {...{ course }} />
+            ))
           ) : (
             <div className="alert alert-warning">
               There are no users for this course
@@ -93,7 +87,7 @@ const Grades = () => {
   }, [requestCompleted, errorMsg, courses]);
 
   return (
-    <Container className="grade d-flex justify-content-center">
+    <Container className="grade page d-flex justify-content-center">
       <Formik
         initialValues={
           {
@@ -110,7 +104,7 @@ const Grades = () => {
           <main>
             <Card className="form-card">
               <Card.Header>
-                <h5>Course users and grades</h5>
+                <h4>Course users and grades</h4>
               </Card.Header>
               <Card.Body>
                 <Form>
@@ -158,7 +152,7 @@ const Grades = () => {
                       type="text"
                       name="username"
                       id="username"
-                      {...(values.allUsers === "all" ? { disabled: true } : {})}
+                      disabled={values.allUsers === "all"}
                     />
                   </BForm.Group>
                   <button

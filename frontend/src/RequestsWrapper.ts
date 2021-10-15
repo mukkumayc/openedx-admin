@@ -1,6 +1,6 @@
 import { mapLeft, fold, Either, left, right } from "fp-ts/lib/Either";
 import * as t from "io-ts";
-import { CourseGradesC, ICourseGrades } from "./types";
+import { CourseGradesC, IFileLinks, ICourseGrades } from "./types";
 import { hasOwnProperty, validationErrorsToString } from "./utils";
 
 class RequestsWrapper {
@@ -19,10 +19,9 @@ class RequestsWrapper {
     }
 
     try {
-      const val =
-        res.headers.get("Content-Type") === "application/json"
-          ? await res.json()
-          : await res.text();
+      const val = await (res.headers.get("Content-Type") === "application/json"
+        ? res.json()
+        : res.text());
       return mapLeft<t.ValidationError[], string>(validationErrorsToString)(
         validator.decode(val)
       );
@@ -103,6 +102,26 @@ class RequestsWrapper {
       "get",
       CoursesListC
     );
+  }
+
+  fileLinks(
+    username: string,
+    course: string
+  ): Promise<Either<string, IFileLinks>> {
+    return new Promise((r) =>
+      r(
+        right({
+          course_id: "dfafdafdasdsadgas",
+          username: "kek",
+          links: ["kek.com", "kek.com", "kek.com", "kek.com"],
+        })
+      )
+    );
+    // return this._fetch(
+    //   `${this.serverUrl}/courses/docs_loader/${username}/${course}`,
+    //   "get",
+    //   FileLinksC
+    // );
   }
 
   async addStudent(

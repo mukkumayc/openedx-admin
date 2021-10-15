@@ -6,3 +6,12 @@
   width: 90px;
   height: 90px;
 }
+
+.page .form-card form > * {
+  margin-bottom: 1em;
+}
+
+.main-column {
+  flex-basis: 100%;
+  max-width: 576px;
+}
