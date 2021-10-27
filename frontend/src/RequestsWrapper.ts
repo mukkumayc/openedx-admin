@@ -163,15 +163,6 @@ class RequestsWrapper {
   }
 
   async isAuthenticated(): Promise<boolean> {
-    const isAdmin = await fetch(
-      "http://vmi625775.contaboserver.net:18000/admin/",
-      {
-        credentials: "include",
-      }
-    ).then((res) => new URL(res.url).pathname === "/admin/" /* no redirects */);
-    if (!isAdmin) {
-      return false;
-    }
     const isInEdx = await fetch(
       "http://vmi625775.contaboserver.net:18000/account/settings",
       {
