@@ -41,7 +41,7 @@ const App = ({ history }: RouteComponentProps) => {
         setTimeout(
           () =>
             (window.location.href =
-              "http://vmi625775.contaboserver.net:18000/admin"),
+              "http://vmi625775.contaboserver.net:18000/login"),
           2000
         );
       }
