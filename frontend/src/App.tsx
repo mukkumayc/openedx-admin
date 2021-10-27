@@ -34,15 +34,17 @@ const App = ({ history }: RouteComponentProps) => {
   };
 
   useEffect(() => {
-    requestsWrapper.isAuthenticated().then((res) => {
-      userHasAuthenticated(res);
+    requestsWrapper.isAuthenticated().then((authenticated) => {
+      userHasAuthenticated(authenticated);
       setAuthenticating(false);
-      setTimeout(
-        () =>
-          (window.location.href =
-            "http://vmi625775.contaboserver.net:18000/admin"),
-        2000
-      );
+      if (!authenticated) {
+        setTimeout(
+          () =>
+            (window.location.href =
+              "http://vmi625775.contaboserver.net:18000/admin"),
+          2000
+        );
+      }
     });
   }, []);
 
