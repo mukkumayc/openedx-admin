@@ -33,6 +33,7 @@ const Routes = ({ appProps }: RoutesProps) => (
   <Switch>
     {authenticatedRoutes.map((route) => (
       <AuthenticatedRoute
+        key={route[0]}
         path={route[0]}
         exact
         component={route[1]}

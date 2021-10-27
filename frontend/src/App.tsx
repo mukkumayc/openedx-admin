@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Routes from "./components/Routes";
 import NavBar from "./components/NavBar";
 import MessageModal, { MessageModalProps } from "./components/MessageModal";
 import { AppProps } from "./types";
 import { curry2 } from "./utils";
+import requestsWrapper from "./RequestsWrapper";
+import LoadingPage from "./containers/LoadingPage";
+import { RouteComponentProps, withRouter } from "react-router";
 
-const App = () => {
-  const [isAuthenticated, userHasAuthenticated] = useState(true);
-  // const [isAuthenticating, setAuthenticating] = useState(false);
+const App = ({ history }: RouteComponentProps) => {
+  const [isAuthenticated, userHasAuthenticated] = useState(false);
+  const [isAuthenticating, setAuthenticating] = useState(true);
   const [message, setMessage] = useState<Omit<MessageModalProps, "setShow">>({
     show: false,
     header: "",
@@ -26,33 +29,49 @@ const App = () => {
     showMessage,
     isAuthenticated,
     userHasAuthenticated,
+    isAuthenticating,
+    setAuthenticating,
   };
 
-  // useEffect(() => {
-  //   fetch(Config.serverUrl + "/checktoken", {
-  //     credentials: "include",
-  //   })
-  //     .then((res) => {
-  //       userHasAuthenticated(res.ok);
-  //       setAuthenticating(false);
-  //     })
-  //     .catch((e) => {
-  //       console.error(e);
-  //       setAuthenticating(false);
-  //     });
-  // }, []);
+  useEffect(() => {
+    requestsWrapper.isAuthenticated().then((res) => {
+      userHasAuthenticated(res);
+      setAuthenticating(false);
+      setTimeout(
+        () =>
+          (window.location.href =
+            "http://vmi625775.contaboserver.net:18000/admin"),
+        2000
+      );
+    });
+  }, []);
+
   return (
     <>
-      {/* {!isAuthenticating && ( */}
-      {true && (
-        <div className="App">
-          <NavBar appProps={appProps} />
-          <Routes appProps={appProps} />
-          <MessageModal {...{ ...message, setShow }} />
-        </div>
-      )}
+      <div className="App">
+        <NavBar appProps={appProps} />
+        {isAuthenticating ? <LoadingPage /> : <Routes appProps={appProps} />}
+        {!isAuthenticating && !isAuthenticated && (
+          <MessageModal
+            show
+            setShow={() => {}}
+            header={<h4>You are not authenticated</h4>}
+            showButtons={false}
+            body={
+              <p>
+                You'll be redirected to{" "}
+                <a href="http://vmi625775.contaboserver.net:18000/admin">
+                  login page
+                </a>{" "}
+                soon...
+              </p>
+            }
+          />
+        )}
+        <MessageModal {...{ ...message, setShow }} />
+      </div>
     </>
   );
 };
 
-export default App;
+export default withRouter(App);

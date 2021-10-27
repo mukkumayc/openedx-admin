@@ -161,6 +161,29 @@ class RequestsWrapper {
       })
       .catch((err) => left(new Error(err.toString())));
   }
+
+  async isAuthenticated(): Promise<boolean> {
+    const isAdmin = await fetch(
+      "http://vmi625775.contaboserver.net:18000/admin/",
+      {
+        credentials: "include",
+      }
+    ).then((res) => new URL(res.url).pathname === "/admin/" /* no redirects */);
+    if (!isAdmin) {
+      return false;
+    }
+    const isInEdx = await fetch(
+      "http://vmi625775.contaboserver.net:18000/account/settings",
+      {
+        credentials: "include",
+      }
+    ).then(
+      (res) =>
+        new URL(res.url).pathname === "/account/settings" /* no redirects */
+    );
+
+    return isInEdx;
+  }
 }
 
 const requestsWrapper = new RequestsWrapper();

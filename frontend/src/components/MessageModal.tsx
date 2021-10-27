@@ -6,14 +6,15 @@ export interface MessageModalProps {
   setShow(b: boolean): void;
   header: string | JSX.Element;
   body: string | JSX.Element;
+  showButtons?: boolean;
 }
 
-const MessageModal = (props: MessageModalProps) => (
+const MessageModal = ({ showButtons = true, ...props }: MessageModalProps) => (
   <Modal show={props.show}>
     <Modal.Header>{props.header}</Modal.Header>
     <Modal.Body>{props.body}</Modal.Body>
     <Modal.Footer className="d-flex justify-content-right">
-      <Button onClick={() => props.setShow(false)}>OK</Button>
+      {showButtons && <Button onClick={() => props.setShow(false)}>OK</Button>}
     </Modal.Footer>
   </Modal>
 );
