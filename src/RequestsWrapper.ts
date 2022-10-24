@@ -18,7 +18,9 @@ class RequestsWrapper {
 		}
 
 		try {
-			const val = await (res.headers.get('Content-Type') === 'application/json'
+			const val = await (res.headers
+				.get('Content-Type')
+				?.indexOf('application/json') !== -1
 				? res.json()
 				: res.text())
 			return mapLeft<t.ValidationError[], string>(validationErrorsToString)(
