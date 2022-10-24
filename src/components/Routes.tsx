@@ -1,5 +1,6 @@
 import { Route, Routes as Switch } from 'react-router-dom'
 
+import { useAuth } from '../AuthenticationContext'
 import FileLinks from '../containers/FileLinks'
 import Grades from '../containers/Grades'
 import Hello from '../containers/Hello'
@@ -27,33 +28,36 @@ const authenticatedRoutes: [string, (props: AppProps) => JSX.Element][] = [
 	['/files', FileLinks]
 ]
 
-const Routes = ({ appProps }: RoutesProps) => (
-	<Switch>
-		{authenticatedRoutes.map((route) => (
+const Routes = ({ appProps }: RoutesProps) => {
+	const [isAuthenticated] = useAuth()
+	return (
+		<Switch>
+			{authenticatedRoutes.map((route) => (
+				<Route
+					key={route[0]}
+					path={route[0]}
+					element={
+						<AuthenticatedRoute
+							isAuthenticated={isAuthenticated}
+							redirectPath="/login">
+							{route[1](appProps)}
+						</AuthenticatedRoute>
+					}
+				/>
+			))}
 			<Route
-				key={route[0]}
-				path={route[0]}
+				path="/login"
 				element={
-					<AuthenticatedRoute
-						isAuthenticated={appProps.isAuthenticated}
-						redirectPath="/login">
-						{route[1](appProps)}
-					</AuthenticatedRoute>
+					<UnauthenticatedRoute
+						isAuthenticated={isAuthenticated}
+						redirectPath="/">
+						<Login />
+					</UnauthenticatedRoute>
 				}
 			/>
-		))}
-		<Route
-			path="/login"
-			element={
-				<UnauthenticatedRoute
-					isAuthenticated={appProps.isAuthenticated}
-					redirectPath="/">
-					<Login {...appProps} />
-				</UnauthenticatedRoute>
-			}
-		/>
-		<Route element={<NotFound />} />
-	</Switch>
-)
+			<Route element={<NotFound />} />
+		</Switch>
+	)
+}
 
 export default Routes

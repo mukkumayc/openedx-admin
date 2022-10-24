@@ -2,19 +2,17 @@ import { Field, Form, Formik, FormikHelpers } from 'formik'
 import { useCallback, useState } from 'react'
 import * as Yup from 'yup'
 
+import { useAuth } from '../AuthenticationContext'
 import { adminAPIEndpoint } from '../config'
 import './Login.css'
-
-interface LoginProps {
-	userHasAuthenticated(b: boolean): void
-}
 
 interface FormValues {
 	email: string
 	password: string
 }
 
-const Login = (props: LoginProps) => {
+const Login = () => {
+	const [, setAuthenticated] = useAuth()
 	const [errorMsg, setErrorMsg] = useState('')
 
 	const handleSubmit = useCallback(
@@ -31,7 +29,7 @@ const Login = (props: LoginProps) => {
 			})
 				.then((res) => {
 					if (res.ok) {
-						props.userHasAuthenticated(true)
+						setAuthenticated(true)
 					} else {
 						res.json().then((json) => {
 							setErrorMsg(json.error)
@@ -44,7 +42,7 @@ const Login = (props: LoginProps) => {
 					setSubmitting(false)
 				})
 		},
-		[props]
+		[setAuthenticated]
 	)
 
 	return (

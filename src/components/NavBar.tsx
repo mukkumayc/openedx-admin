@@ -1,15 +1,15 @@
 import { Nav, Navbar } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
+import { useAuth } from '../AuthenticationContext'
 import { adminAPIEndpoint } from '../config'
-import { AppProps } from '../types'
 
 interface NavBarProps {
-	appProps: AppProps
+	isAuthenticating: boolean
 }
 
-const NavBar = ({ appProps }: NavBarProps) => {
-	const { isAuthenticated, isAuthenticating } = appProps
+const NavBar = ({ isAuthenticating }: NavBarProps) => {
+	const [isAuthenticated] = useAuth()
 	return (
 		<Navbar variant="dark" bg="dark" expand="md">
 			<Nav>

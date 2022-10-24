@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { useAuth } from './AuthenticationContext'
 import requestsWrapper from './RequestsWrapper'
 import MessageModal, { MessageModalProps } from './components/MessageModal'
 import NavBar from './components/NavBar'
@@ -10,7 +11,7 @@ import { AppProps } from './types'
 import { curry2 } from './utils'
 
 const App = () => {
-	const [isAuthenticated, userHasAuthenticated] = useState(false)
+	const [isAuthenticated, setAuthenticated] = useAuth()
 	const [isAuthenticating, setAuthenticating] = useState(true)
 	const [message, setMessage] = useState<Omit<MessageModalProps, 'setShow'>>({
 		show: false,
@@ -27,16 +28,12 @@ const App = () => {
 	}
 
 	const appProps: AppProps = {
-		showMessage,
-		isAuthenticated,
-		userHasAuthenticated,
-		isAuthenticating,
-		setAuthenticating
+		showMessage
 	}
 
 	useEffect(() => {
 		requestsWrapper.isAuthenticated().then((authenticated) => {
-			userHasAuthenticated(authenticated)
+			setAuthenticated(authenticated)
 			setAuthenticating(false)
 			if (!authenticated) {
 				setTimeout(() => (window.location.href = `${edxEndpoint}/login`), 2000)
@@ -47,7 +44,7 @@ const App = () => {
 	return (
 		<>
 			<div className="App">
-				<NavBar appProps={appProps} />
+				<NavBar {...{ appProps, isAuthenticating }} />
 				{isAuthenticating ? <LoadingPage /> : <Routes appProps={appProps} />}
 				{!isAuthenticating && !isAuthenticated && (
 					<MessageModal

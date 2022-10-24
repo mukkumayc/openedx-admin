@@ -3,10 +3,6 @@ import * as t from 'io-ts'
 import { MessageModalProps } from './components/MessageModal'
 
 export interface AppProps {
-	isAuthenticated: boolean
-	userHasAuthenticated(b: boolean): void
-	isAuthenticating: boolean
-	setAuthenticating(b: boolean): void
 	showMessage: CurriedFunction2<
 		MessageModalProps['header'],
 		MessageModalProps['body'],

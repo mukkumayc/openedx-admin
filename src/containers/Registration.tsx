@@ -24,7 +24,7 @@ const initialUser: IUser = {
 
 interface RegistrationProps {
 	isSubmitting: boolean
-	userHasAuthenticated(b: boolean): void
+	setAuthenticated(b: boolean): void
 }
 
 const Registration = (props: RegistrationProps) => <UsersForm {...props} />
@@ -47,7 +47,7 @@ const UsersForm = (props: RegistrationProps) => {
 						return res.json()
 					}
 					if (res.status === 401) {
-						props.userHasAuthenticated(false)
+						props.setAuthenticated(false)
 					}
 					return res.json()
 				})
