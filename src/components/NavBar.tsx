@@ -34,21 +34,21 @@ const NavBar: React.FC<Props> = ({ isAuthenticating }) => {
 										Register new users
 									</a>
 								</div>
-								<div className="nav-item">
+								{/* <div className="nav-item">
 									<Link className="nav-link" to="/registration2">
 										Register new users(form)
 									</Link>
-								</div>
+								</div> */}
 								<div className="nav-item">
 									<Link className="nav-link" to="/grades">
 										Grades
 									</Link>
 								</div>
-								<div className="nav-item">
+								{/* <div className="nav-item">
 									<Link className="nav-link" to="/files">
 										Files
 									</Link>
-								</div>
+								</div> */}
 								{/* <div className="nav-item">
                 <Link className="nav-link" to="/students-list">
                   Students list
