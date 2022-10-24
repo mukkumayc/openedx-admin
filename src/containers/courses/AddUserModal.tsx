@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 
 import requestsWrapper from '../../RequestsWrapper'
@@ -9,7 +9,7 @@ interface Props {
 	courseName: string
 }
 
-const AddUserModal: FC<Props> = ({ show, setShow, courseName }) => {
+const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 	const [username, setUsername] = useState('')
 	const [message, setMessage] = useState<{
 		header: string

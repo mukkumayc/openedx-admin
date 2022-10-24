@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik'
-import { FC, useCallback, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import * as Yup from 'yup'
 
@@ -27,9 +27,9 @@ interface Props {
 	setAuthenticated(b: boolean): void
 }
 
-const Registration: FC<Props> = (props: Props) => <UsersForm {...props} />
+const Registration: React.FC<Props> = (props: Props) => <UsersForm {...props} />
 
-const UsersForm: FC<Props> = (props) => {
+const UsersForm: React.FC<Props> = (props) => {
 	const [statuses, setStatuses] = useState<any[]>([])
 
 	const handleSubmit = useCallback(
@@ -137,7 +137,7 @@ interface UserFormProps {
 	status: any
 }
 
-const UserForm: FC<UserFormProps> = (props) => {
+const UserForm: React.FC<UserFormProps> = (props) => {
 	const { isSubmitting, remove, index, status } = props
 	const alertClass = status
 		? status.status !== 'success'

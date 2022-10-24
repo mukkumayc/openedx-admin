@@ -1,27 +1,27 @@
 import { Field, Formik, Form as FormikForm, FormikHelpers } from 'formik'
 import { fold } from 'fp-ts/Either'
-import { FC, useState } from 'react'
+import { useState } from 'react'
 import { Alert, Button, Card, Container, Form } from 'react-bootstrap'
 
 import requestsWrapper from '../RequestsWrapper'
-import { AppProps, IFileLinks, courseNames } from '../types'
+import MessageModal, { useModal } from '../components/MessageModal'
+import { IFileLinks, courseNames } from '../types'
 
 interface Values {
 	username: string
 	course: typeof courseNames[number] | ''
 }
 
-const FileLinks: FC<AppProps> = ({ showMessage }) => {
+const FileLinks: React.FC = () => {
 	const [links, setLinks] = useState<IFileLinks | null>(null)
+	const [modalProps, showModal] = useModal()
+	const showError = (body: string) => showModal('Error', body)
 
 	const handleSubmit = async (
 		{ username, course }: Values,
 		{ setSubmitting }: FormikHelpers<Values>
 	) => {
-		fold(
-			showMessage('Error'),
-			setLinks
-		)(await requestsWrapper.fileLinks(username, course))
+		fold(showError, setLinks)(await requestsWrapper.fileLinks(username, course))
 		setSubmitting(false)
 	}
 
@@ -56,6 +56,7 @@ const FileLinks: FC<AppProps> = ({ showMessage }) => {
 					{links && links.links.map((link, i) => <Alert key={i}>{link}</Alert>)}
 				</div>
 			</div>
+			<MessageModal {...modalProps} />
 		</Container>
 	)
 }

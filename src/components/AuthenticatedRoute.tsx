@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import { Navigate } from 'react-router-dom'
 
 interface Props extends PropsWithChildren {
@@ -6,7 +6,7 @@ interface Props extends PropsWithChildren {
 	redirectPath: string
 }
 
-const AuthenticatedRoute: FC<Props> = ({
+const AuthenticatedRoute: React.FC<Props> = ({
 	children,
 	isAuthenticated,
 	redirectPath

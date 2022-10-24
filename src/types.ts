@@ -1,15 +1,5 @@
 import * as t from 'io-ts'
 
-import { Props as MessageModalProps } from './components/MessageModal'
-
-export interface AppProps {
-	showMessage: CurriedFunction2<
-		MessageModalProps['header'],
-		MessageModalProps['body'],
-		void
-	>
-}
-
 export interface ICourse {
 	courseId: number
 	grades: ICourseGrades[]

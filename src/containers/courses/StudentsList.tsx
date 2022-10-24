@@ -5,7 +5,7 @@ import { Button, Container, Form, Spinner, Table } from 'react-bootstrap'
 import requestsWrapper from '../../RequestsWrapper'
 import AddUserModal from './AddUserModal'
 
-const StudentsList = () => {
+const StudentsList: React.FC = () => {
 	const [students, setStudents] = useState<string[] | null>(null)
 	const [loading, setLoading] = useState(false)
 	const [addingUser, setAddingUser] = useState(false)

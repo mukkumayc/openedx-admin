@@ -5,17 +5,20 @@ import Papa from 'papaparse'
 import { useState } from 'react'
 import { Form as BForm, Button, Card, Container, Table } from 'react-bootstrap'
 
-import { AppProps, EmailC } from '../types'
+import MessageModal, { useModal } from '../components/MessageModal'
+import { EmailC } from '../types'
 import { validationErrorsToString } from '../utils'
 
 const UserLineC = t.tuple([EmailC, t.string, t.string, t.string, t.string])
 
 type UserString = t.TypeOf<typeof UserLineC>
 
-const Registration2: React.FC<AppProps> = ({ showMessage }) => {
+const Registration2: React.FC = () => {
 	const [users, setUsers] = useState<Array<UserString> | null>(null)
-	// const [file, setFile] = useState<File | null>(null)
 	const [loading, setLoading] = useState(false)
+
+	const [modalProps, showModal] = useModal()
+
 	return (
 		<Container id="registration" className="page d-flex justify-content-center">
 			<Card id="create-many-card" className="form-card">
@@ -44,7 +47,7 @@ const Registration2: React.FC<AppProps> = ({ showMessage }) => {
 									const UserListC = t.array(UserLineC)
 									if (!(parsed.data[0] instanceof Array)) {
 										alert('Failed to parse list')
-										showMessage(
+										showModal(
 											'Error while loading file',
 											'Failed to parse file'
 										)
@@ -55,7 +58,7 @@ const Registration2: React.FC<AppProps> = ({ showMessage }) => {
 									const res = UserListC.decode(parsed.data)
 									if (res._tag === 'Left') {
 										console.error(validationErrorsToString(res.left))
-										showMessage(
+										showModal(
 											'Error while loading file',
 											<>
 												<p>Failed to parse file:</p>
@@ -155,7 +158,7 @@ const Registration2: React.FC<AppProps> = ({ showMessage }) => {
 											setTimeout(() => resolve(), 500)
 										)
 
-										showMessage(
+										showModal(
 											'Result',
 											<Table striped bordered hover>
 												<thead>
@@ -178,6 +181,7 @@ const Registration2: React.FC<AppProps> = ({ showMessage }) => {
 					)}
 				</Card.Body>
 			</Card>
+			<MessageModal {...modalProps} />
 		</Container>
 	)
 }

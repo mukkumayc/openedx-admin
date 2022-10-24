@@ -10,15 +10,10 @@ import NotFound from '../containers/NotFound'
 import ProctoringLinks from '../containers/ProctoringLinks'
 import Registration2 from '../containers/Registration2'
 import StudentsList from '../containers/courses/StudentsList'
-import { AppProps } from '../types'
 import AuthenticatedRoute from './AuthenticatedRoute'
 import UnauthenticatedRoute from './UnauthenticatedRoute'
 
-interface Props {
-	appProps: AppProps
-}
-
-const authenticatedRoutes: [string, React.FC<AppProps>][] = [
+const authenticatedRoutes: [string, React.FC][] = [
 	['/', Home],
 	['/hello', Hello],
 	['/grades', Grades],
@@ -28,7 +23,7 @@ const authenticatedRoutes: [string, React.FC<AppProps>][] = [
 	['/files', FileLinks]
 ]
 
-const Routes: React.FC<Props> = ({ appProps }) => {
+const Routes: React.FC = () => {
 	const [isAuthenticated] = useAuth()
 	return (
 		<Switch>
@@ -40,7 +35,7 @@ const Routes: React.FC<Props> = ({ appProps }) => {
 						<AuthenticatedRoute
 							isAuthenticated={isAuthenticated}
 							redirectPath="/login">
-							{route[1](appProps)}
+							{route[1]({})}
 						</AuthenticatedRoute>
 					}
 				/>
