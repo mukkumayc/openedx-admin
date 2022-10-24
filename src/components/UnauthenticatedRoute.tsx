@@ -1,27 +1,21 @@
-import React from "react";
-import { Route, Redirect, RouteProps } from "react-router-dom";
-import { AppProps } from "../types";
+import { FC, PropsWithChildren } from 'react'
+import { Navigate } from 'react-router-dom'
 
-interface UnauthenticatedRouteProps extends RouteProps {
-  component(props: any): JSX.Element;
-  appProps: AppProps;
+interface Props extends PropsWithChildren {
+	isAuthenticated: boolean
+	redirectPath: string
 }
 
-const UnauthenticatedRoute = ({
-  component: C,
-  appProps,
-  ...rest
-}: UnauthenticatedRouteProps) => (
-  <Route
-    {...rest}
-    render={(props) =>
-      !appProps.isAuthenticated ? (
-        <C {...props} {...appProps} />
-      ) : (
-        <Redirect to="/" />
-      )
-    }
-  />
-);
+const UnauthenticatedRoute: FC<Props> = ({
+	children,
+	isAuthenticated,
+	redirectPath
+}: Props) => {
+	if (isAuthenticated) {
+		return <Navigate to={redirectPath} replace />
+	}
 
-export default UnauthenticatedRoute;
+	return <>{children}</>
+}
+
+export default UnauthenticatedRoute

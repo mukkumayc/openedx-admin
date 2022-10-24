@@ -1,10 +1,9 @@
-import React from "react";
-import { Container } from "react-bootstrap";
+import { Container } from 'react-bootstrap'
 
 const ProctoringLinks = () => (
-  <Container className="page d-flex justify-content-center">
-    <h1>Proctoring Links (not implemented yet)</h1>
-  </Container>
-);
+	<Container className="page d-flex justify-content-center">
+		<h1>Proctoring Links (not implemented yet)</h1>
+	</Container>
+)
 
-export default ProctoringLinks;
+export default ProctoringLinks
