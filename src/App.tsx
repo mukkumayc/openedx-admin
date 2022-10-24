@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 
 import { useAuth } from './AuthenticationContext'
 import requestsWrapper from './RequestsWrapper'
-import MessageModal, { MessageModalProps } from './components/MessageModal'
+import MessageModal, {
+	Props as MessageModalProps
+} from './components/MessageModal'
 import NavBar from './components/NavBar'
 import Routes from './components/Routes'
 import { loginAPIEndpoint as edxEndpoint } from './config'

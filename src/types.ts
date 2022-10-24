@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 
-import { MessageModalProps } from './components/MessageModal'
+import { Props as MessageModalProps } from './components/MessageModal'
 
 export interface AppProps {
 	showMessage: CurriedFunction2<

@@ -1,6 +1,6 @@
 import { Field, Formik, Form as FormikForm, FormikHelpers } from 'formik'
 import { fold } from 'fp-ts/Either'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { Alert, Button, Card, Container, Form } from 'react-bootstrap'
 
 import requestsWrapper from '../RequestsWrapper'
@@ -11,9 +11,7 @@ interface Values {
 	course: typeof courseNames[number] | ''
 }
 
-type FileLinksProps = AppProps
-
-const FileLinks = ({ showMessage }: FileLinksProps) => {
+const FileLinks: FC<AppProps> = ({ showMessage }) => {
 	const [links, setLinks] = useState<IFileLinks | null>(null)
 
 	const handleSubmit = async (

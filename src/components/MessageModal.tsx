@@ -1,6 +1,6 @@
 import { Button, Modal } from 'react-bootstrap'
 
-export interface MessageModalProps {
+export interface Props {
 	show: boolean
 	setShow(b: boolean): void
 	header: string | JSX.Element
@@ -8,7 +8,7 @@ export interface MessageModalProps {
 	showButtons?: boolean
 }
 
-const MessageModal = ({ showButtons = true, ...props }: MessageModalProps) => (
+const MessageModal: React.FC<Props> = ({ showButtons = true, ...props }) => (
 	<Modal show={props.show}>
 		<Modal.Header>{props.header}</Modal.Header>
 		<Modal.Body>{props.body}</Modal.Body>

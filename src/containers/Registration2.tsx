@@ -12,7 +12,7 @@ const UserLineC = t.tuple([EmailC, t.string, t.string, t.string, t.string])
 
 type UserString = t.TypeOf<typeof UserLineC>
 
-const Registration2 = (props: AppProps) => {
+const Registration2: React.FC<AppProps> = ({ showMessage }) => {
 	const [users, setUsers] = useState<Array<UserString> | null>(null)
 	// const [file, setFile] = useState<File | null>(null)
 	const [loading, setLoading] = useState(false)
@@ -44,7 +44,7 @@ const Registration2 = (props: AppProps) => {
 									const UserListC = t.array(UserLineC)
 									if (!(parsed.data[0] instanceof Array)) {
 										alert('Failed to parse list')
-										props.showMessage(
+										showMessage(
 											'Error while loading file',
 											'Failed to parse file'
 										)
@@ -55,7 +55,7 @@ const Registration2 = (props: AppProps) => {
 									const res = UserListC.decode(parsed.data)
 									if (res._tag === 'Left') {
 										console.error(validationErrorsToString(res.left))
-										props.showMessage(
+										showMessage(
 											'Error while loading file',
 											<>
 												<p>Failed to parse file:</p>
@@ -155,7 +155,7 @@ const Registration2 = (props: AppProps) => {
 											setTimeout(() => resolve(), 500)
 										)
 
-										props.showMessage(
+										showMessage(
 											'Result',
 											<Table striped bordered hover>
 												<thead>

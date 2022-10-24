@@ -14,11 +14,11 @@ import { AppProps } from '../types'
 import AuthenticatedRoute from './AuthenticatedRoute'
 import UnauthenticatedRoute from './UnauthenticatedRoute'
 
-interface RoutesProps {
+interface Props {
 	appProps: AppProps
 }
 
-const authenticatedRoutes: [string, (props: AppProps) => JSX.Element][] = [
+const authenticatedRoutes: [string, React.FC<AppProps>][] = [
 	['/', Home],
 	['/hello', Hello],
 	['/grades', Grades],
@@ -28,7 +28,7 @@ const authenticatedRoutes: [string, (props: AppProps) => JSX.Element][] = [
 	['/files', FileLinks]
 ]
 
-const Routes = ({ appProps }: RoutesProps) => {
+const Routes: React.FC<Props> = ({ appProps }) => {
 	const [isAuthenticated] = useAuth()
 	return (
 		<Switch>

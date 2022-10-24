@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../AuthenticationContext'
 import { adminAPIEndpoint } from '../config'
 
-interface NavBarProps {
+interface Props {
 	isAuthenticating: boolean
 }
 
-const NavBar = ({ isAuthenticating }: NavBarProps) => {
+const NavBar: React.FC<Props> = ({ isAuthenticating }) => {
 	const [isAuthenticated] = useAuth()
 	return (
 		<Navbar variant="dark" bg="dark" expand="md">
