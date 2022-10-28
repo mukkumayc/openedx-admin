@@ -2,6 +2,7 @@ import { isLeft } from 'fp-ts/lib/Either'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+import Spinner from '../components/Spinner'
 
 import requestsWrapper from '../RequestsWrapper'
 
@@ -16,7 +17,7 @@ const GetCourseStudents: React.FC = () => {
 	const [courses, setCourses] = useState<string[]>([])
 	const onSubmit: SubmitHandler<FormInput> = async ({ course }) => {
 		setLoading(true)
-		const res = await requestsWrapper.getCourses(username)
+		const res = await requestsWrapper.getCourses(course)
 		if (isLeft(res)) {
 			return navigate('/error')
 		}
@@ -37,7 +38,7 @@ const GetCourseStudents: React.FC = () => {
 			) : (
 				<form className="add-student-form" onSubmit={handleSubmit(onSubmit)}>
 					<label htmlFor="username">Username</label>
-					<input id="username" {...register('username')} required />
+					<input id="username" {...register('course')} required />
 					<button type="submit">Submit</button>
 				</form>
 			)}
