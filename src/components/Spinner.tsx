@@ -1,12 +1,15 @@
-import { Spinner as BSpinner } from 'react-bootstrap'
+import './Spinner.scss'
 
 const Spinner = () => (
-	<BSpinner
-		animation="border"
-		role="status"
-		style={{ width: '150px', height: '150px' }}>
-		<span className="visually-hidden">Loading...</span>
-	</BSpinner>
+	<svg className="spinner" viewBox="0 0 50 50">
+		<circle
+			className="path"
+			cx="25"
+			cy="25"
+			r="20"
+			fill="none"
+			strokeWidth="5"></circle>
+	</svg>
 )
 
 export default Spinner

@@ -1,7 +1,7 @@
 import { Field, Formik, Form as FormikForm, FormikHelpers } from 'formik'
 import { fold } from 'fp-ts/Either'
 import { useState } from 'react'
-import { Alert, Button, Card, Container, Form } from 'react-bootstrap'
+import { Alert, Button, Card, Form } from 'react-bootstrap'
 
 import requestsWrapper from '../RequestsWrapper'
 import MessageModal, { useModal } from '../components/MessageModal'
@@ -12,8 +12,14 @@ interface Values {
 	course: typeof courseNames[number] | ''
 }
 
+interface FileLinks {
+	course_id: string
+	username: string
+	links: string[]
+}
+
 const FileLinks: React.FC = () => {
-	const [links, setLinks] = useState<IFileLinks | null>(null)
+	const [links, setLinks] = useState<FileLinks | null>(null)
 	const [modalProps, showModal] = useModal()
 	const showError = (body: string) => showModal('Error', body)
 
@@ -21,14 +27,16 @@ const FileLinks: React.FC = () => {
 		{ username, course }: Values,
 		{ setSubmitting }: FormikHelpers<Values>
 	) => {
-		fold(showError, setLinks)(await requestsWrapper.fileLinks(username, course))
+		fold<string, IFileLinks, void>(showError, (res) =>
+			setLinks({ ...res, links: JSON.parse(res.links.replaceAll("'", '"')) })
+		)(await requestsWrapper.fileLinks(username, course))
 		setSubmitting(false)
 	}
 
 	return (
-		<Container className="page d-flex justify-content-center">
-			<div className="main-column">
-				<Card className="form-card mb-3">
+		<>
+			<section className="container-md page">
+				<Card className="mb-3">
 					<Card.Header>
 						<h4>Get additional user files</h4>
 					</Card.Header>
@@ -52,12 +60,31 @@ const FileLinks: React.FC = () => {
 						</Formik>
 					</Card.Body>
 				</Card>
+			</section>
+			<section className="container-md results">
 				<div className="links-list">
-					{links && links.links.map((link, i) => <Alert key={i}>{link}</Alert>)}
+					{links &&
+						links.links.map((link, i) => (
+							<Alert key={i}>
+								<a
+									className="text-truncate d-inline-block"
+									href={link}
+									rel="noreferrer"
+									target="_blank"
+									style={{ width: '100%' }}>
+									{link}
+								</a>
+							</Alert>
+						))}
+					{links && links.links.length === 0 && (
+						<Alert variant="warning">
+							No files found for this user and course
+						</Alert>
+					)}
 				</div>
-			</div>
+			</section>
 			<MessageModal {...modalProps} />
-		</Container>
+		</>
 	)
 }
 

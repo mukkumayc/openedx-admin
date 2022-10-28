@@ -46,7 +46,7 @@ const Login = () => {
 	)
 
 	return (
-		<div className="login container">
+		<div className="login container-md">
 			<Formik
 				initialValues={{ email: '', password: '' }}
 				validationSchema={Yup.object().shape({

@@ -20,7 +20,9 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 		<>
 			<Modal show={show}>
 				<Modal.Header>
-					<Modal.Title>Adding user to &quot;{courseName}&quot;</Modal.Title>
+					<Modal.Title>
+						Adding a student to &quot;{courseName}&quot;
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					Enter username
@@ -40,12 +42,12 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 						onClick={async () => {
 							const res = await requestsWrapper.addStudent(username, courseName)
 							if (res._tag === 'Right') {
-								setMessage({ header: 'Success', message: res.right })
+								setMessage({ header: 'Success', message: res.right.message })
 							} else {
 								setMessage({ header: 'Error', message: res.left.toString() })
 							}
 						}}>
-						Add user
+						Submit
 					</Button>
 				</Modal.Footer>
 			</Modal>

@@ -1,9 +1,14 @@
-import { Either, fold, left, mapLeft, right } from 'fp-ts/lib/Either'
+import { Either, left, mapLeft, right } from 'fp-ts/lib/Either'
 import * as t from 'io-ts'
 
 import { adminAPIEndpoint, loginAPIEndpoint } from './config'
-import { CourseGradesC, ICourseGrades, IFileLinks } from './types'
-import { hasOwnProperty, validationErrorsToString } from './utils'
+import { CourseGradesC, FileLinksC, ICourseGrades, IFileLinks } from './types'
+import { validationErrorsToString } from './utils'
+
+interface StatusResponse {
+	status: string
+	message: string
+}
 
 class RequestsWrapper {
 	async _fetch<A>(
@@ -14,7 +19,10 @@ class RequestsWrapper {
 		const res = await fetch(url, { method, credentials: 'include' })
 
 		if (!res.ok) {
-			return left(await res.text())
+			console.log(res.status)
+			return res.status < 500
+				? left(await res.text())
+				: left('Unknown server error, probably some parameters not found')
 		}
 
 		try {
@@ -31,37 +39,13 @@ class RequestsWrapper {
 		}
 	}
 
-	async getStudents(course: string): Promise<Either<string, string[]>> {
-		const validate = (u: unknown): t.Validation<string[]> => {
-			if (
-				typeof u === 'object' &&
-				u !== null &&
-				hasOwnProperty(u, 'students') &&
-				typeof u.students === 'string'
-			) {
-				try {
-					return t.array(t.string).decode(u.students)
-				} catch (err) {
-					return left([])
-				}
-			}
-			return left([])
-		}
-		const StudentsListC: t.Type<string[]> = new t.Type(
-			'StudentsList',
-			(u): u is string[] =>
-				fold(
-					() => false,
-					() => true
-				)(validate(u)),
-			validate,
-			(a) => a
-		)
-
+	async getStudents(
+		course: string
+	): Promise<Either<string, { students: string[] }>> {
 		return this._fetch(
 			`${adminAPIEndpoint}/courses/get_students/${course}`,
 			'get',
-			StudentsListC
+			t.type({ students: t.array(t.string) })
 		)
 	}
 
@@ -81,32 +65,12 @@ class RequestsWrapper {
 	): Promise<Either<string, ICourseGrades[]>> =>
 		this._grades(`${adminAPIEndpoint}/courses/get_grades/${courseName}`)
 
-	async getCourses(username: string): Promise<Either<string, string[]>> {
-		const validate = (u: unknown): t.Validation<string[]> => {
-			if (
-				typeof u === 'object' &&
-				u !== null &&
-				hasOwnProperty(u, 'courses') &&
-				typeof u.courses === 'string'
-			) {
-				try {
-					return t.array(t.string).decode(u.courses)
-				} catch (err) {
-					return left([])
-				}
-			}
-			return left([])
-		}
-		const CoursesListC: t.Type<string[]> = new t.Type(
-			'CoursesList',
-			(u): u is string[] =>
-				fold(
-					() => false,
-					() => true
-				)(validate(u)),
-			validate,
-			(a) => a
-		)
+	async getCourses(
+		username: string
+	): Promise<Either<string, { courses: string[] }>> {
+		const CoursesListC = t.type({
+			courses: t.array(t.string)
+		})
 
 		return this._fetch(
 			`${adminAPIEndpoint}/students/get_courses/${username}`,
@@ -119,27 +83,26 @@ class RequestsWrapper {
 		username: string,
 		course: string
 	): Promise<Either<string, IFileLinks>> {
-		console.trace(`${username}, ${course}`)
-		return new Promise((r) =>
-			r(
-				right({
-					course_id: 'dfafdafdasdsadgas',
-					username: 'kek',
-					links: ['kek.com', 'kek.com', 'kek.com', 'kek.com']
-				})
-			)
+		// return new Promise((r) =>
+		// 	r(
+		// 		right({
+		// 			course_id: 'dfafdafdasdsadgas',
+		// 			username: 'kek',
+		// 			links: ['kek.com', 'kek.com', 'kek.com', 'kek.com']
+		// 		})
+		// 	)
+		// )
+		return this._fetch(
+			`${adminAPIEndpoint}/courses/docs_loader/${course}/${username}`,
+			'get',
+			FileLinksC
 		)
-		// return this._fetch(
-		//   `${adminAPIEndpoint}/courses/docs_loader/${username}/${course}`,
-		//   "get",
-		//   FileLinksC
-		// );
 	}
 
 	async addStudent(
 		username: string,
 		courseName: string
-	): Promise<Either<Error, string>> {
+	): Promise<Either<string, StatusResponse>> {
 		const form = new FormData()
 		form.append('username', username)
 		form.append('course_name', courseName)
@@ -149,16 +112,21 @@ class RequestsWrapper {
 			body: form
 		})
 			.then(async (res) => {
-				const txt = await res.text()
-				return res.ok ? right(txt) : left(new Error(txt))
+				if (res.ok) {
+					return right(await res.json())
+				}
+				if (res.status < 500) {
+					return left(await res.text())
+				}
+				return left('Unknown server error')
 			})
-			.catch((err) => left(new Error(err.toString())))
+			.catch((err: Error) => left(err.toString()))
 	}
 
-	async deleteStudent(
+	async removeStudent(
 		username: string,
 		courseName: string
-	): Promise<Either<Error, string>> {
+	): Promise<Either<string, StatusResponse>> {
 		const form = new FormData()
 		form.append('username', username)
 		form.append('course_name', courseName)
@@ -168,10 +136,12 @@ class RequestsWrapper {
 			body: form
 		})
 			.then(async (res) => {
-				const txt = await res.text()
-				return res.ok ? right(txt) : left(new Error(txt))
+				if (res.ok) {
+					return right(await res.json())
+				}
+				return left(await res.text())
 			})
-			.catch((err) => left(new Error(err.toString())))
+			.catch((err: Error) => left(err.toString()))
 	}
 
 	async isAuthenticated(): Promise<boolean> {

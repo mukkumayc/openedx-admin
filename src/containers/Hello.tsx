@@ -23,7 +23,7 @@ const Hello = () => {
 	console.log(ok, text)
 
 	return (
-		<div className="hello container">
+		<div className="hello container-md">
 			{loading
 				? 'Loading...'
 				: ok && text

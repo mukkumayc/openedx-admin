@@ -1,5 +1,5 @@
-.container.page {
-	margin-top: 3rem;
+.page {
+	margin-top: 2rem;
 }
 
 .spinner-loader {
@@ -9,9 +9,4 @@
 
 .page .form-card form>* {
 	margin-bottom: 1em;
-}
-
-.main-column {
-	flex-basis: 100%;
-	max-width: 576px;
 }

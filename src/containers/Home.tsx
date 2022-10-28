@@ -1,16 +1,22 @@
+import Actions from './Actions'
 import './Home.css'
 
 const Home = () => (
-	<div className="page home container">
+	<div className="page">
 		<Lander />
+		<Actions />
 	</div>
 )
 
 const Lander = () => (
-	<div className="lander">
-		<h1>Open edX Admin</h1>
-		<p>Web app for an online course platform management</p>
-	</div>
+	<section className="lander">
+		<div className="container-md">
+			<div className="lander-content">
+				<h1>Open edX Admin</h1>
+				<p>Web app for an online course platform management</p>
+			</div>
+		</div>
+	</section>
 )
 
 export default Home

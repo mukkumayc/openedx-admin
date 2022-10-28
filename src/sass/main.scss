@@ -1,1 +1,83 @@
+$primary: #8f3985;
+$danger: #fc440f;
+
 @import 'bootstrap/scss/bootstrap';
+
+// section {
+// 	// display: flex;
+// 	justify-content: center;
+// }
+
+// .container {
+// 	width: 600px;
+// 	margin: 0 auto;
+// }
+
+// @media screen and (max-width: 900px) {
+// 	.container {
+// 		width: auto;
+// 		margin: 0 1em;
+// 	}
+// }
+
+// .navbar {
+// 	max-width: 900px;
+// 	display: flex;
+// 	justify-content: space-between;
+// }
+
+// $main: #8f3985;
+
+body {
+	color: $primary;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1em;
+	justify-content: center;
+}
+
+.action {
+	min-height: 200px;
+	width: 200px;
+	font-size: 1.5em;
+	border: 1px solid $primary;
+	border-radius: 0.5rem;
+	padding: 1rem;
+}
+
+.navbar {
+	color: white;
+	margin-top: 1em;
+	border-radius: 1em;
+	padding: 1em;
+	border: 1px solid $primary;
+}
+
+.navbar-brand {
+	color: $primary;
+}
+
+.form-control,
+.form-check {
+	margin-bottom: 1em;
+}
+
+.btn-danger,
+.btn-danger:hover {
+	color: white;
+}
+
+.table {
+	color: $primary;
+}
+
+.card-header {
+	font-size: 1.5em;
+}
+
+.container-md {
+	max-width: 800px;
+}
