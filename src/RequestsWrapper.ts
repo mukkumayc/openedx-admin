@@ -43,7 +43,7 @@ class RequestsWrapper {
 		course: string
 	): Promise<Either<string, { students: string[] }>> {
 		return this._fetch(
-			`${adminAPIEndpoint}/courses/get_students/${course}`,
+			`${adminAPIEndpoint}/courses/get_students/${course}/`,
 			'get',
 			t.type({ students: t.array(t.string) })
 		)
@@ -57,13 +57,13 @@ class RequestsWrapper {
 		courseName: string
 	): Promise<Either<string, ICourseGrades[]>> =>
 		this._grades(
-			`${adminAPIEndpoint}/students/get_grades/${username}/${courseName}`
+			`${adminAPIEndpoint}/students/get_grades/${username}/${courseName}/`
 		)
 
 	gradesForCourse = (
 		courseName: string
 	): Promise<Either<string, ICourseGrades[]>> =>
-		this._grades(`${adminAPIEndpoint}/courses/get_grades/${courseName}`)
+		this._grades(`${adminAPIEndpoint}/courses/get_grades/${courseName}/`)
 
 	async getCourses(
 		username: string
@@ -73,7 +73,7 @@ class RequestsWrapper {
 		})
 
 		return this._fetch(
-			`${adminAPIEndpoint}/students/get_courses/${username}`,
+			`${adminAPIEndpoint}/students/get_courses/${username}/`,
 			'get',
 			CoursesListC
 		)
@@ -93,7 +93,7 @@ class RequestsWrapper {
 		// 	)
 		// )
 		return this._fetch(
-			`${adminAPIEndpoint}/courses/docs_loader/${course}/${username}`,
+			`${adminAPIEndpoint}/courses/docs_loader/${course}/${username}/`,
 			'get',
 			FileLinksC
 		)
@@ -106,11 +106,12 @@ class RequestsWrapper {
 		const form = new FormData()
 		form.append('username', username)
 		form.append('course_name', courseName)
-		return await fetch(`${adminAPIEndpoint}/students/add_student`, {
-			method: 'post',
-			credentials: 'include',
-			body: form
-		})
+		return await fetch(
+			`${adminAPIEndpoint}/students/add_student/${username}/${courseName}/`,
+			{
+				method: 'post'
+			}
+		)
 			.then(async (res) => {
 				if (res.ok) {
 					return right(await res.json())
@@ -130,11 +131,12 @@ class RequestsWrapper {
 		const form = new FormData()
 		form.append('username', username)
 		form.append('course_name', courseName)
-		return await fetch(`${adminAPIEndpoint}/students/remove_student`, {
-			method: 'post',
-			credentials: 'include',
-			body: form
-		})
+		return await fetch(
+			`${adminAPIEndpoint}/students/remove_student/${username}/${courseName}/`,
+			{
+				method: 'post'
+			}
+		)
 			.then(async (res) => {
 				if (res.ok) {
 					return right(await res.json())

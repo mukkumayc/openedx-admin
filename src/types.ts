@@ -57,7 +57,7 @@ export const courseNames = [
 export const FileLinksC = t.type({
 	course_id: t.string,
 	username: t.string,
-	links: t.string
+	links: t.array(t.string)
 })
 
 export type IFileLinks = t.TypeOf<typeof FileLinksC>

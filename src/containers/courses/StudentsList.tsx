@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Card, Spinner, Table } from 'react-bootstrap'
+import { Alert, Button, Card, Spinner, Table } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import requestsWrapper from '../../RequestsWrapper'
@@ -53,41 +53,48 @@ const StudentsList: React.FC = () => {
 					</Spinner>
 				</div>
 			) : (
-				students !== null && (
-					<Table bordered hover>
-						<thead>
-							<tr>
-								<th>#</th>
-								<th>Username</th>
-							</tr>
-						</thead>
-						<tbody>
-							{students.map((v, i) => (
-								<tr key={i}>
-									<td>{i}</td>
-									<td>{v}</td>
-									<td>
-										<Button
-											variant="danger"
-											onClick={() => {
-												requestsWrapper
-													.removeStudent(v, getValues().course)
-													.then((res) => {
-														if (res._tag === 'Right') {
-															alert(res.right)
-														} else {
-															alert(res.left.toString())
-														}
-													})
-											}}>
-											Delete
-										</Button>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</Table>
-				)
+				<section className="page">
+					{students !== null &&
+						(students.length > 0 ? (
+							<Table bordered hover>
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Username</th>
+									</tr>
+								</thead>
+								<tbody>
+									{students.map((v, i) => (
+										<tr key={i}>
+											<td>{i}</td>
+											<td>{v}</td>
+											<td>
+												<Button
+													variant="danger"
+													onClick={() => {
+														requestsWrapper
+															.removeStudent(v, getValues().course)
+															.then((res) => {
+																if (res._tag === 'Right') {
+																	alert(
+																		`${res.right.status}: ${res.right.message}`
+																	)
+																} else {
+																	alert(res.left.toString())
+																}
+															})
+													}}>
+													Delete
+												</Button>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</Table>
+						) : (
+							<Alert variant="warning">Nobody enrolled in this course</Alert>
+						))}
+				</section>
 			)}
 			<AddUserModal
 				show={addingUser}

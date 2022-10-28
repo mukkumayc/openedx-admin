@@ -27,9 +27,9 @@ const FileLinks: React.FC = () => {
 		{ username, course }: Values,
 		{ setSubmitting }: FormikHelpers<Values>
 	) => {
-		fold<string, IFileLinks, void>(showError, (res) =>
-			setLinks({ ...res, links: JSON.parse(res.links.replaceAll("'", '"')) })
-		)(await requestsWrapper.fileLinks(username, course))
+		fold<string, IFileLinks, void>(showError, (res) => setLinks(res))(
+			await requestsWrapper.fileLinks(username, course)
+		)
 		setSubmitting(false)
 	}
 

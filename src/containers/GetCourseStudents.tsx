@@ -2,9 +2,9 @@ import { isLeft } from 'fp-ts/lib/Either'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import Spinner from '../components/Spinner'
 
 import requestsWrapper from '../RequestsWrapper'
+import Spinner from '../components/Spinner'
 
 interface FormInput {
 	course: string

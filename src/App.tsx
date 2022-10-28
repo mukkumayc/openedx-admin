@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { useAuth } from './AuthenticationContext'
 import requestsWrapper from './RequestsWrapper'
@@ -9,7 +8,6 @@ import { loginAPIEndpoint as edxEndpoint } from './config'
 import LoadingPage from './containers/LoadingPage'
 
 const App = () => {
-	const navigate = useNavigate()
 	const [, setAuthenticated] = useAuth()
 	const [isAuthenticating, setAuthenticating] = useState(true)
 

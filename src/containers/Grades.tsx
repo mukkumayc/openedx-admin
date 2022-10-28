@@ -24,7 +24,7 @@ const ParsedCourse = ({ course }: { course: ICourseGrades }) => (
 					{course.section_breakdown.map((grade, i) => (
 						<div key={i} className="d-flex justify-content-between">
 							<div>{grade.subsection_name}</div>
-							<div>{grade.percent}</div>
+							<div>{Math.round(grade.percent * 100)}%</div>
 						</div>
 					))}
 				</div>
