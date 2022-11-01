@@ -39,7 +39,9 @@ const RemoveStudent: React.FC = () => {
 					<input id="username" {...register('username')} required />
 					<label htmlFor="course">Course</label>
 					<input id="course" {...register('course')} required />
-					<button type="submit">Submit</button>
+					<button className="btn btn-primary" type="submit">
+						Submit
+					</button>
 				</form>
 			)}
 		</section>

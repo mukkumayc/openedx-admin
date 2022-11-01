@@ -63,7 +63,9 @@ const AddRemoveStudent: React.FC = () => {
 								{...register('course')}
 								required
 							/>
-							<button type="submit">Submit</button>
+							<button className="btn btn-primary" type="submit">
+								Submit
+							</button>
 						</form>
 					</main>
 				</div>
