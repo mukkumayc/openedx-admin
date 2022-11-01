@@ -1,7 +1,7 @@
 import { Either, left, mapLeft, right } from 'fp-ts/lib/Either'
 import * as t from 'io-ts'
 
-import { adminAPIEndpoint, loginAPIEndpoint } from './config'
+import { adminRoomAPIUrl, edxUrl } from './config'
 import { CourseGradesC, FileLinksC, ICourseGrades, IFileLinks } from './types'
 import { validationErrorsToString } from './utils'
 
@@ -43,7 +43,7 @@ class RequestsWrapper {
 		course: string
 	): Promise<Either<string, { students: string[] }>> {
 		return this._fetch(
-			`${adminAPIEndpoint}/courses/get_students/${course}/`,
+			`${adminRoomAPIUrl}/courses/get_students/${course}/`,
 			'get',
 			t.type({ students: t.array(t.string) })
 		)
@@ -57,13 +57,13 @@ class RequestsWrapper {
 		courseName: string
 	): Promise<Either<string, ICourseGrades[]>> =>
 		this._grades(
-			`${adminAPIEndpoint}/students/get_grades/${username}/${courseName}/`
+			`${adminRoomAPIUrl}/students/get_grades/${username}/${courseName}/`
 		)
 
 	gradesForCourse = (
 		courseName: string
 	): Promise<Either<string, ICourseGrades[]>> =>
-		this._grades(`${adminAPIEndpoint}/courses/get_grades/${courseName}/`)
+		this._grades(`${adminRoomAPIUrl}/courses/get_grades/${courseName}/`)
 
 	async getCourses(
 		username: string
@@ -73,7 +73,7 @@ class RequestsWrapper {
 		})
 
 		return this._fetch(
-			`${adminAPIEndpoint}/students/get_courses/${username}/`,
+			`${adminRoomAPIUrl}/students/get_courses/${username}/`,
 			'get',
 			CoursesListC
 		)
@@ -93,7 +93,7 @@ class RequestsWrapper {
 		// 	)
 		// )
 		return this._fetch(
-			`${adminAPIEndpoint}/courses/docs_loader/${course}/${username}/`,
+			`${adminRoomAPIUrl}/courses/docs_loader/${course}/${username}/`,
 			'get',
 			FileLinksC
 		)
@@ -107,7 +107,7 @@ class RequestsWrapper {
 		form.append('username', username)
 		form.append('course_name', courseName)
 		return await fetch(
-			`${adminAPIEndpoint}/students/add_student/${username}/${courseName}/`,
+			`${adminRoomAPIUrl}/students/add_student/${username}/${courseName}/`,
 			{
 				method: 'post'
 			}
@@ -132,7 +132,7 @@ class RequestsWrapper {
 		form.append('username', username)
 		form.append('course_name', courseName)
 		return await fetch(
-			`${adminAPIEndpoint}/students/remove_student/${username}/${courseName}/`,
+			`${adminRoomAPIUrl}/students/remove_student/${username}/${courseName}/`,
 			{
 				method: 'post'
 			}
@@ -147,7 +147,7 @@ class RequestsWrapper {
 	}
 
 	async isAuthenticated(): Promise<boolean> {
-		const isInEdx = await fetch(`${loginAPIEndpoint}/account/settings`, {
+		const isInEdx = await fetch(`${edxUrl}/account/settings`, {
 			credentials: 'include',
 			redirect: 'error'
 		})

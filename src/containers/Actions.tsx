@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
+import { adminRoomUrl } from '../config'
+
 const Actions: React.FC = () => {
 	const { t } = useTranslation()
 	const paths: { header: string; path: string }[] = [
@@ -27,9 +29,7 @@ const Actions: React.FC = () => {
 			))}
 			<a
 				className="action"
-				href={
-					'https://agymcourses.spbu.ru/admin_room/v1/upload_registration_file/'
-				}
+				href={`${adminRoomUrl}/upload_registration_file/`}
 				target="_blank"
 				rel="noopener noreferrer">
 				{t('Register new users')}

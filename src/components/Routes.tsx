@@ -1,7 +1,7 @@
 import { Route, Routes as Switch } from 'react-router-dom'
 
 import { useAuth } from '../AuthenticationContext'
-import { loginAPIEndpoint } from '../config'
+import { edxUrl } from '../config'
 import AddRemoveStudent from '../containers/AddRemoveStudent'
 import Error from '../containers/Error'
 import FileLinks from '../containers/FileLinks'
@@ -31,7 +31,7 @@ const Routes: React.FC = () => {
 					element={
 						<AuthenticatedRoute
 							isAuthenticated={isAuthenticated}
-							redirectUrl={`${loginAPIEndpoint}/login`}>
+							redirectUrl={`${edxUrl}/login`}>
 							{route[1]({})}
 						</AuthenticatedRoute>
 					}
@@ -42,7 +42,7 @@ const Routes: React.FC = () => {
 				element={
 					<AuthenticatedRoute
 						isAuthenticated={isAuthenticated}
-						redirectUrl={`${loginAPIEndpoint}/login`}>
+						redirectUrl={`${edxUrl}/login`}>
 						<AddRemoveStudent />
 					</AuthenticatedRoute>
 				}
@@ -52,7 +52,7 @@ const Routes: React.FC = () => {
 				element={
 					<AuthenticatedRoute
 						isAuthenticated={isAuthenticated}
-						redirectUrl={`${loginAPIEndpoint}/login`}>
+						redirectUrl={`${edxUrl}/login`}>
 						<GetCourses />
 					</AuthenticatedRoute>
 				}
