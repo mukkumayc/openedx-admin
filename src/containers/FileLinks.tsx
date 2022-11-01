@@ -2,6 +2,7 @@ import { fold } from 'fp-ts/Either'
 import { useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import requestsWrapper from '../RequestsWrapper'
 import MessageModal, { useModal } from '../components/MessageModal'
@@ -19,6 +20,7 @@ interface FormInput {
 }
 
 const FileLinks: React.FC = () => {
+	const { t } = useTranslation()
 	const [links, setLinks] = useState<FileLinks | null>(null)
 	const [modalProps, showModal] = useModal()
 	const showError = (body: string) => showModal('Error', body)
@@ -35,20 +37,20 @@ const FileLinks: React.FC = () => {
 			<section className="container-md page">
 				<Card className="mb-3">
 					<Card.Header>
-						<h4>Get additional user files</h4>
+						<h4>{t('Get additional user files')}</h4>
 					</Card.Header>
 					<Card.Body>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<Form.Group controlId="files-username">
-								<Form.Label>Username</Form.Label>
+								<Form.Label>{t('Username')}</Form.Label>
 								<Form.Control {...register('username')} />
 							</Form.Group>
 							<Form.Group controlId="files-course">
-								<Form.Label>Course</Form.Label>
+								<Form.Label>{t('Course')}</Form.Label>
 								<Form.Control {...register('course')} />
 							</Form.Group>
 							<Button variant="primary" type="submit">
-								Submit
+								{t('Submit')}
 							</Button>
 						</form>
 					</Card.Body>
@@ -71,7 +73,7 @@ const FileLinks: React.FC = () => {
 						))}
 					{links && links.links.length === 0 && (
 						<Alert variant="warning">
-							No files found for this user and course
+							{t('No files found for this user and course')}
 						</Alert>
 					)}
 				</div>

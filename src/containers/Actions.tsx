@@ -1,21 +1,23 @@
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
-const paths: { header: string; path: string }[] = [
-	{ header: 'Get a list of student grades', path: '/grades' },
-	{ header: 'Get a list of students', path: '/students-list' },
-	{ header: 'Enroll a student in a course', path: '/course/students/add' },
-	{
-		header: 'Unenroll a student from a course',
-		path: '/course/students/remove'
-	},
-	{ header: 'Get student courses', path: '/student/courses' },
-	{
-		header: 'Get a list of files for a student in course',
-		path: '/student/files'
-	}
-]
-
 const Actions: React.FC = () => {
+	const { t } = useTranslation()
+	const paths: { header: string; path: string }[] = [
+		{ header: t('Get a list of student grades'), path: '/grades' },
+		{ header: t('Get a list of students'), path: '/students-list' },
+		{ header: t('Enroll a student in a course'), path: '/course/students/add' },
+		{
+			header: t('Unenroll a student from a course'),
+			path: '/course/students/remove'
+		},
+		{ header: t('Get list of student courses'), path: '/student/courses' },
+		{
+			header: t("Get a list of student's files in a course"),
+			path: '/student/files'
+		}
+	]
+
 	return (
 		<section className="actions container-md">
 			{paths.map(({ header, path }) => (
@@ -30,7 +32,7 @@ const Actions: React.FC = () => {
 				}
 				target="_blank"
 				rel="noopener noreferrer">
-				Register new users
+				{t('Register new users')}
 			</a>
 		</section>
 	)

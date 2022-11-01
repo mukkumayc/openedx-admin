@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
+import { Trans, useTranslation } from 'react-i18next'
 
 import requestsWrapper from '../../RequestsWrapper'
 
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
+	const { t } = useTranslation()
 	const [username, setUsername] = useState('')
 	const [message, setMessage] = useState<{
 		header: string
@@ -21,11 +23,13 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 			<Modal show={show}>
 				<Modal.Header>
 					<Modal.Title>
-						Adding a student to &quot;{courseName}&quot;
+						<Trans i18nKey="addingStudentToCourse" values={{ courseName }}>
+							{'Adding a student to "{{courseName}}"'}
+						</Trans>
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					Enter username
+					{t('Enter username')}
 					<Form.Control
 						type="text"
 						value={username}
@@ -35,19 +39,19 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>
-						Close
+						{t('Close')}
 					</Button>
 					<Button
 						variant="primary"
 						onClick={async () => {
 							const res = await requestsWrapper.addStudent(username, courseName)
 							if (res._tag === 'Right') {
-								setMessage({ header: 'Success', message: res.right.message })
+								setMessage({ header: t('Success'), message: res.right.message })
 							} else {
-								setMessage({ header: 'Error', message: res.left.toString() })
+								setMessage({ header: t('Error'), message: res.left.toString() })
 							}
 						}}>
-						Submit
+						{t('Submit')}
 					</Button>
 				</Modal.Footer>
 			</Modal>
@@ -58,7 +62,7 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 				<Modal.Body>{message?.message}</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={() => setMessage(null)}>
-						Close
+						{t('Close')}
 					</Button>
 				</Modal.Footer>
 			</Modal>

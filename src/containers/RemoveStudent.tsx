@@ -1,6 +1,7 @@
 import { isLeft } from 'fp-ts/lib/Either'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import requestsWrapper from '../RequestsWrapper'
@@ -12,6 +13,7 @@ interface FormInput {
 }
 
 const RemoveStudent: React.FC = () => {
+	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const { register, handleSubmit } = useForm<FormInput>()
 	const [loading, setLoading] = useState(false)
@@ -35,12 +37,12 @@ const RemoveStudent: React.FC = () => {
 				<Spinner />
 			) : (
 				<form className="add-student-form" onSubmit={handleSubmit(onSubmit)}>
-					<label htmlFor="username">Username</label>
+					<label htmlFor="username">{t('Username')}</label>
 					<input id="username" {...register('username')} required />
-					<label htmlFor="course">Course</label>
+					<label htmlFor="course">{t('Course')}</label>
 					<input id="course" {...register('course')} required />
 					<button className="btn btn-primary" type="submit">
-						Submit
+						{t('Submit')}
 					</button>
 				</form>
 			)}

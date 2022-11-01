@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Alert, Button, Card, Spinner, Table } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import requestsWrapper from '../../RequestsWrapper'
 import AddUserModal from './AddUserModal'
@@ -10,6 +11,7 @@ interface FormInput {
 }
 
 const StudentsList: React.FC = () => {
+	const { t } = useTranslation()
 	const [students, setStudents] = useState<string[] | null>(null)
 	const [loading, setLoading] = useState(false)
 	const [addingUser, setAddingUser] = useState(false)
@@ -31,16 +33,17 @@ const StudentsList: React.FC = () => {
 		<div id="users-list" className="page container-md">
 			<Card>
 				<h1 className="card-header">
-					Write course name and select to list students or to add a student to
-					the course
+					{t(
+						'Write course name and select to "List students" or to "Add a student"'
+					)}
 				</h1>
 				<Card.Body>
 					<form onSubmit={handleSubmit(onSubmit)}>
 						<input className="form-control" {...register('course')} />
 						<div className="d-flex justify-content-between">
-							<Button type="submit">List students</Button>
+							<Button type="submit">{t('List students')}</Button>
 							<Button variant="success" onClick={() => setAddingUser(true)}>
-								Add a student
+								{t('Add a student')}
 							</Button>
 						</div>
 					</form>
@@ -49,7 +52,7 @@ const StudentsList: React.FC = () => {
 			{loading ? (
 				<div className="spinner-loader-wrapper d-flex justify-content-center">
 					<Spinner className="spinner-loader" animation="border" role="status">
-						<span className="visually-hidden">Loading...</span>
+						<span className="visually-hidden">{t('Loading')}...</span>
 					</Spinner>
 				</div>
 			) : (
@@ -60,7 +63,7 @@ const StudentsList: React.FC = () => {
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Username</th>
+										<th>{t('Username')}</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -84,7 +87,7 @@ const StudentsList: React.FC = () => {
 																}
 															})
 													}}>
-													Delete
+													{t('Delete')}
 												</Button>
 											</td>
 										</tr>
@@ -92,7 +95,9 @@ const StudentsList: React.FC = () => {
 								</tbody>
 							</Table>
 						) : (
-							<Alert variant="warning">Nobody enrolled in this course</Alert>
+							<Alert variant="warning">
+								{t('Nobody enrolled in this course')}
+							</Alert>
 						))}
 				</section>
 			)}

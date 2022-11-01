@@ -2,6 +2,7 @@ import { fold } from 'fp-ts/Either'
 import { useCallback, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import requestsWrapper from '../RequestsWrapper'
 import Spinner from '../components/Spinner'
@@ -14,28 +15,32 @@ interface FormInput {
 	username: string
 }
 
-const ParsedCourse = ({ course }: { course: ICourseGrades }) => (
-	<Alert key={course.username}>
-		<div>{course.username}</div>
-		<hr />
-		<div>
-			{course.section_breakdown.length > 0 ? (
-				<div>
-					{course.section_breakdown.map((grade, i) => (
-						<div key={i} className="d-flex justify-content-between">
-							<div>{grade.subsection_name}</div>
-							<div>{Math.round(grade.percent * 100)}%</div>
-						</div>
-					))}
-				</div>
-			) : (
-				<div className="font-weight-bold">No grades</div>
-			)}
-		</div>
-	</Alert>
-)
+const ParsedCourse = ({ course }: { course: ICourseGrades }) => {
+	const { t } = useTranslation()
+	return (
+		<Alert key={course.username}>
+			<div>{course.username}</div>
+			<hr />
+			<div>
+				{course.section_breakdown.length > 0 ? (
+					<div>
+						{course.section_breakdown.map((grade, i) => (
+							<div key={i} className="d-flex justify-content-between">
+								<div>{grade.subsection_name}</div>
+								<div>{Math.round(grade.percent * 100)}%</div>
+							</div>
+						))}
+					</div>
+				) : (
+					<div className="font-weight-bold">{t('No grades')}</div>
+				)}
+			</div>
+		</Alert>
+	)
+}
 
 const Grades = () => {
+	const { t } = useTranslation()
 	const [requestCompleted, setRequestCompleted] = useState(false)
 	const [courses, setCourses] = useState<ICourseGrades[]>([])
 	const [errorMsg, setErrorMsg] = useState('')
@@ -68,6 +73,7 @@ const Grades = () => {
 	}
 
 	const FormattedCourses = useCallback(() => {
+		const { t } = useTranslation()
 		return (
 			<div className="users-list">
 				{requestCompleted &&
@@ -79,7 +85,7 @@ const Grades = () => {
 						))
 					) : (
 						<div className="alert alert-warning">
-							There are no users for this course
+							{t('There are no students for this course')}
 						</div>
 					))}
 			</div>
@@ -91,12 +97,12 @@ const Grades = () => {
 			<section className="page grades">
 				<div className="container-md">
 					<div className="card">
-						<h1 className="card-header">Course users and grades</h1>
+						<h1 className="card-header">{t('Course users and grades')}</h1>
 						<form
 							className="card-body grades__form"
 							onSubmit={handleSubmit(onSubmit)}>
 							<label className="form-label" htmlFor="courseName">
-								Select course
+								{t('Select course')}
 							</label>
 							<input
 								className="form-control"
@@ -112,12 +118,14 @@ const Grades = () => {
 									type="checkbox"
 								/>
 								<label className="form-check-label" htmlFor="specifyUser">
-									Specify user
+									{t('Specify user')}
 								</label>
 							</div>
 							{watchSpecifyUser && (
 								<>
-									<label htmlFor="username">Enter email or username</label>
+									<label htmlFor="username">
+										{t('Enter email or username')}
+									</label>
 									<input
 										className="form-control"
 										id="username"
@@ -131,7 +139,7 @@ const Grades = () => {
 								type="submit"
 								className="btn btn-primary"
 								disabled={isSubmitting}>
-								Get grades
+								{t('Get grades')}
 							</button>
 						</form>
 					</div>

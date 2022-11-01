@@ -2,6 +2,7 @@ import { isLeft } from 'fp-ts/lib/Either'
 import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import requestsWrapper from '../RequestsWrapper'
@@ -12,6 +13,7 @@ interface FormInput {
 }
 
 const GetCourses: React.FC = () => {
+	const { t } = useTranslation()
 	const navigate = useNavigate()
 	const {
 		register,
@@ -34,12 +36,12 @@ const GetCourses: React.FC = () => {
 		<>
 			<section className="add-student container-md page">
 				<div className="card">
-					<h1 className="card-header">List of student courses</h1>
+					<h1 className="card-header">{t('List of student courses')}</h1>
 					<main className="card-body">
 						<form
 							className="add-student-form"
 							onSubmit={handleSubmit(onSubmit)}>
-							<label htmlFor="username">Username</label>
+							<label htmlFor="username">{t('Username')}</label>
 							<input
 								className="form-control"
 								id="username"
@@ -47,7 +49,7 @@ const GetCourses: React.FC = () => {
 								required
 							/>
 							<button className="btn btn-primary" type="submit">
-								Submit
+								{t('Submit')}
 							</button>
 						</form>
 					</main>
@@ -68,7 +70,7 @@ const GetCourses: React.FC = () => {
 						</Alert>
 					) : (
 						<Alert variant="warning">
-							User didn&apos;t enrolled in any courses
+							{t("User didn't enrolled in any courses")}
 						</Alert>
 					))
 				)}

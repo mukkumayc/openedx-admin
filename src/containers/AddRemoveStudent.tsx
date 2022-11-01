@@ -1,6 +1,7 @@
 import { isLeft } from 'fp-ts/lib/Either'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import requestsWrapper from '../RequestsWrapper'
@@ -13,6 +14,7 @@ interface FormInput {
 
 const AddRemoveStudent: React.FC = () => {
 	const { action } = useParams()
+	const { t } = useTranslation()
 
 	const navigate = useNavigate()
 	const { register, handleSubmit } = useForm<FormInput>()
@@ -28,7 +30,7 @@ const AddRemoveStudent: React.FC = () => {
 		}
 		const { status, message } = res.right
 
-		if (status === 'Success') {
+		if (status === t('Success')) {
 			return navigate(`/success?message=${message}`)
 		}
 		navigate(`/error?message=${message}`)
@@ -42,21 +44,21 @@ const AddRemoveStudent: React.FC = () => {
 				<div className="card">
 					<h1 className="card-header">
 						{action === 'add'
-							? 'Enrolling a student in a course'
-							: 'Unenrolling a student from a course'}
+							? t('Enrolling a student in a course')
+							: t('Unenrolling a student from a course')}
 					</h1>
 					<main className="card-body">
 						<form
 							className="add-student-form"
 							onSubmit={handleSubmit(onSubmit)}>
-							<label htmlFor="username">Username</label>
+							<label htmlFor="username">{t('Username')}</label>
 							<input
 								className="form-control"
 								id="username"
 								{...register('username')}
 								required
 							/>
-							<label htmlFor="course">Course</label>
+							<label htmlFor="course">{t('Course')}</label>
 							<input
 								className="form-control"
 								id="course"
@@ -64,7 +66,7 @@ const AddRemoveStudent: React.FC = () => {
 								required
 							/>
 							<button className="btn btn-primary" type="submit">
-								Submit
+								{t('Submit')}
 							</button>
 						</form>
 					</main>
