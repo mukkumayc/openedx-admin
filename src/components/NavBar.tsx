@@ -24,13 +24,21 @@ const NavBar: React.FC<Props> = () => {
 						className="locale"
 						onClick={() => i18n.changeLanguage('ru')}
 						role="listitem">
-						<img className="locale-image" src={RussiaFlag} alt="Russian Flag" />
+						<img
+							className="locale-image"
+							src={RussiaFlag}
+							alt="Изменить язык на русский"
+						/>
 					</button>
 					<button
 						className="locale"
 						onClick={() => i18n.changeLanguage('en')}
 						role="listitem">
-						<img className="locale-image" src={USAFlag} alt="USA Flag" />
+						<img
+							className="locale-image"
+							src={USAFlag}
+							alt="Change language to english"
+						/>
 					</button>
 				</div>
 			</nav>
