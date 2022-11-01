@@ -1,29 +1,22 @@
 import { Route, Routes as Switch } from 'react-router-dom'
 
 import { useAuth } from '../AuthenticationContext'
+import { loginAPIEndpoint } from '../config'
 import AddRemoveStudent from '../containers/AddRemoveStudent'
 import Error from '../containers/Error'
 import FileLinks from '../containers/FileLinks'
 import GetCourses from '../containers/GetCourses'
 import Grades from '../containers/Grades'
-// import Hello from '../containers/Hello'
 import Home from '../containers/Home'
-import Login from '../containers/Login'
 import NotFound from '../containers/NotFound'
 import Success from '../containers/Success'
-// import ProctoringLinks from '../containers/ProctoringLinks'
-// import Registration2 from '../containers/Registration2'
 import StudentsList from '../containers/courses/StudentsList'
 import AuthenticatedRoute from './AuthenticatedRoute'
-import UnauthenticatedRoute from './UnauthenticatedRoute'
 
 const authenticatedRoutes: [string, React.FC][] = [
 	['/', Home],
-	// ['/hello', Hello],
 	['/grades', Grades],
 	['/students-list', StudentsList],
-	// ['/proctoring-links', ProctoringLinks],
-	// ['/registration2', Registration2],
 	['/student/files', FileLinks]
 ]
 
@@ -38,28 +31,18 @@ const Routes: React.FC = () => {
 					element={
 						<AuthenticatedRoute
 							isAuthenticated={isAuthenticated}
-							redirectPath="/login">
+							redirectUrl={`${loginAPIEndpoint}/login`}>
 							{route[1]({})}
 						</AuthenticatedRoute>
 					}
 				/>
 			))}
 			<Route
-				path="/login"
-				element={
-					<UnauthenticatedRoute
-						isAuthenticated={isAuthenticated}
-						redirectPath="/">
-						<Login />
-					</UnauthenticatedRoute>
-				}
-			/>
-			<Route
 				path="/course/students/:action"
 				element={
 					<AuthenticatedRoute
 						isAuthenticated={isAuthenticated}
-						redirectPath="/">
+						redirectUrl={`${loginAPIEndpoint}/login`}>
 						<AddRemoveStudent />
 					</AuthenticatedRoute>
 				}
@@ -69,7 +52,7 @@ const Routes: React.FC = () => {
 				element={
 					<AuthenticatedRoute
 						isAuthenticated={isAuthenticated}
-						redirectPath="/">
+						redirectUrl={`${loginAPIEndpoint}/login`}>
 						<GetCourses />
 					</AuthenticatedRoute>
 				}

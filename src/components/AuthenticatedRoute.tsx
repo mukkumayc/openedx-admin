@@ -1,21 +1,22 @@
-import { PropsWithChildren } from 'react'
-import { Navigate } from 'react-router-dom'
+import { PropsWithChildren, useEffect } from 'react'
 
 interface Props extends PropsWithChildren {
 	isAuthenticated: boolean
-	redirectPath: string
+	redirectUrl: string
 }
 
 const AuthenticatedRoute: React.FC<Props> = ({
 	children,
 	isAuthenticated,
-	redirectPath
+	redirectUrl
 }: Props) => {
-	if (!isAuthenticated) {
-		return <Navigate to={redirectPath} replace />
-	}
+	useEffect(() => {
+		if (!isAuthenticated) {
+			window.location.href = redirectUrl
+		}
+	}, [])
 
-	return <>{children}</>
+	return isAuthenticated ? <>{children}</> : <></>
 }
 
 export default AuthenticatedRoute

@@ -4,7 +4,6 @@ import { useAuth } from './AuthenticationContext'
 import requestsWrapper from './RequestsWrapper'
 import NavBar from './components/NavBar'
 import Routes from './components/Routes'
-import { loginAPIEndpoint as edxEndpoint } from './config'
 import LoadingPage from './containers/LoadingPage'
 
 const App = () => {
@@ -12,14 +11,10 @@ const App = () => {
 	const [isAuthenticating, setAuthenticating] = useState(true)
 
 	useEffect(() => {
-		setAuthenticated(true)
-		setAuthenticating(false)
+		setAuthenticating(true)
 		requestsWrapper.isAuthenticated().then((authenticated) => {
 			setAuthenticated(authenticated)
 			setAuthenticating(false)
-			if (!authenticated) {
-				window.location.href = `${edxEndpoint}/login`
-			}
 		})
 	}, [])
 
