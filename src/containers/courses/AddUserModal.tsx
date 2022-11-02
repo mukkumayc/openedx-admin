@@ -49,10 +49,13 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 								setMessage({
 									header:
 										res.right.status === 'Error' ? t('Error') : t('Success'),
-									message: res.right.message
+									message: t(res.right.message)
 								})
 							} else {
-								setMessage({ header: t('Error'), message: res.left.toString() })
+								setMessage({
+									header: t('Error'),
+									message: t(res.left.toString())
+								})
 							}
 						}}>
 						{t('Submit')}

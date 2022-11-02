@@ -54,7 +54,7 @@ const resources = {
 			'Unknown server error, probably some parameters not found':
 				'Неизвестная ошибка сервера, возможно, какой-либо параметр не найден',
 			Error: 'Ошибка',
-			'Check your input': 'проверьте введённые данные'
+			'Check your input': 'Проверьте введённые данные'
 		}
 	}
 }
