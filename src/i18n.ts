@@ -46,12 +46,15 @@ const resources = {
 				'Напишите имя курса и выберите "Вывести список студентов" или "Добавить студента"',
 			'List students': 'Вывести список студентов',
 			'Add a student': 'Добавить студента',
-			Delete: 'Удалить',
+			Unenroll: 'Отчислить',
 			'Nobody enrolled in this course': 'Никто не зачислен на данный курс',
 			addingStudentToCourse: 'Добавление студента в курс "{{courseName}}"',
 			Close: 'Закрыть',
 			'Enter username': 'Введите имя пользователя',
-			'': ''
+			'Unknown server error, probably some parameters not found':
+				'Неизвестная ошибка сервера, возможно, какой-либо параметр не найден',
+			Error: 'Ошибка',
+			'Check your input': 'проверьте введённые данные'
 		}
 	}
 }

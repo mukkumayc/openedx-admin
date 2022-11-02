@@ -46,7 +46,11 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 						onClick={async () => {
 							const res = await requestsWrapper.addStudent(username, courseName)
 							if (res._tag === 'Right') {
-								setMessage({ header: t('Success'), message: res.right.message })
+								setMessage({
+									header:
+										res.right.status === 'Error' ? t('Error') : t('Success'),
+									message: res.right.message
+								})
 							} else {
 								setMessage({ header: t('Error'), message: res.left.toString() })
 							}

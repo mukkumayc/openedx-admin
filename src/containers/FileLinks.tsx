@@ -23,7 +23,7 @@ const FileLinks: React.FC = () => {
 	const { t } = useTranslation()
 	const [links, setLinks] = useState<FileLinks | null>(null)
 	const [modalProps, showModal] = useModal()
-	const showError = (body: string) => showModal('Error', body)
+	const showError = (body: string) => showModal(t('Error'), t(body))
 
 	const { register, handleSubmit } = useForm<FormInput>()
 

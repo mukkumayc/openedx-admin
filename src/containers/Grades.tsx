@@ -1,4 +1,5 @@
 import { fold } from 'fp-ts/Either'
+import { flow } from 'fp-ts/function'
 import { useCallback, useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -66,7 +67,7 @@ const Grades = () => {
 			? requestsWrapper.gradesForStudent(username, courseName)
 			: requestsWrapper.gradesForCourse(courseName))
 
-		fold(setErrorMsg, setCourses)(res)
+		fold(flow(t, setErrorMsg), setCourses)(res)
 
 		setRequestCompleted(true)
 		setLoading(false)
@@ -102,7 +103,7 @@ const Grades = () => {
 							className="card-body grades__form"
 							onSubmit={handleSubmit(onSubmit)}>
 							<label className="form-label" htmlFor="courseName">
-								{t('Select course')}
+								{t('Course')}
 							</label>
 							<input
 								className="form-control"

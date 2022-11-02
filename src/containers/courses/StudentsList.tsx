@@ -87,7 +87,7 @@ const StudentsList: React.FC = () => {
 																}
 															})
 													}}>
-													{t('Delete')}
+													{t('Unenroll')}
 												</Button>
 											</td>
 										</tr>

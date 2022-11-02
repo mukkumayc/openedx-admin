@@ -9,7 +9,11 @@ const Error: React.FC = () => {
 	return (
 		<section className="container-md error-page d-flex justify-content-center page">
 			<div className="message-wrapper">
-				<h1 className="text-center">{message ?? 'Unknown error occured'}</h1>
+				<h1 className="text-center">
+					{message
+						? `${t('Error')}: ${t(message)}`
+						: t('Unknown error occured')}
+				</h1>
 				<p className="text-center">
 					<Link to="/">{t('Return to home')}</Link>
 				</p>
