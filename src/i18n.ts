@@ -29,7 +29,7 @@ const resources = {
 			"User didn't enrolled in any courses":
 				'Пользователь не был зачислен ни на какие курсы',
 			'No grades': 'Нет оценок',
-			'There are no students for this course': 'У этого курса нет студентов',
+			'This course has no students': 'У этого курса нет студентов',
 			'Course users and grades': 'Пользователи и оценки курса',
 			'Select course': 'Выберите курс',
 			'Specify user': 'Указать пользователя',
@@ -54,7 +54,9 @@ const resources = {
 			'Unknown server error, probably some parameters not found':
 				'Неизвестная ошибка сервера, возможно, какой-либо параметр не найден',
 			Error: 'Ошибка',
-			'Check your input': 'Проверьте введённые данные'
+			'Check your input': 'Проверьте введённые данные',
+			"This student isn't enrolled in the course":
+				'Этот студент не зачислен на курс'
 		}
 	}
 }

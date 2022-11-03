@@ -86,7 +86,9 @@ const Grades = () => {
 						))
 					) : (
 						<div className="alert alert-warning">
-							{t('There are no students for this course')}
+							{watchSpecifyUser
+								? t("This student isn't enrolled in the course")
+								: t('This course has no students')}
 						</div>
 					))}
 			</div>
