@@ -59,9 +59,9 @@ const resources = {
 			"This student isn't enrolled in the course":
 				'Этот студент не зачислен на курс',
 			'User was successfully activated on course.':
-				'Пользователь был успешно зачислен на курс',
+				'Пользователь успешно зачислен на курс',
 			'User was successfully deleted from course.':
-				'Пользователь был успешно отчислен с курса'
+				'Пользователь успешно отчислен с курса'
 		}
 	}
 }
