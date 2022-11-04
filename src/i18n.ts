@@ -54,7 +54,8 @@ const resources = {
 			'Unknown server error, probably some parameters not found':
 				'Неизвестная ошибка сервера, возможно, какой-либо параметр не найден',
 			Error: 'Ошибка',
-			'Check your input': 'Проверьте введённые данные',
+			'Check your input':
+				'Не удалось совершить действие. Проверьте введенные данные.',
 			"This student isn't enrolled in the course":
 				'Этот студент не зачислен на курс'
 		}
