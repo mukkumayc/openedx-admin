@@ -126,9 +126,7 @@ const Grades = () => {
 							</div>
 							{watchSpecifyUser && (
 								<>
-									<label htmlFor="username">
-										{t('Enter email or username')}
-									</label>
+									<label htmlFor="username">{t('Username')}</label>
 									<input
 										className="form-control"
 										id="username"

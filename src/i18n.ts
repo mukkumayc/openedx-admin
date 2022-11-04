@@ -57,7 +57,11 @@ const resources = {
 			'Check your input':
 				'Не удалось совершить действие. Проверьте введенные данные.',
 			"This student isn't enrolled in the course":
-				'Этот студент не зачислен на курс'
+				'Этот студент не зачислен на курс',
+			'User was successfully activated on course.':
+				'Пользователь был успешно зачислен на курс',
+			'User was successfully deleted from course.':
+				'Пользователь был успешно отчислен с курса'
 		}
 	}
 }

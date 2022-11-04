@@ -30,10 +30,10 @@ const AddRemoveStudent: React.FC = () => {
 		}
 		const { status, message } = res.right
 
-		if (status === t('Success')) {
-			return navigate(`/success?message=${message}`)
+		if (status === 'Success') {
+			return navigate(`/success?message=${t(message)}`)
 		}
-		navigate(`/error?message=${message}`)
+		navigate(`/error?message=${t(message)}`)
 	}
 
 	return (
