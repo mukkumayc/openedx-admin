@@ -12,10 +12,15 @@ const App = () => {
 
 	useEffect(() => {
 		setAuthenticating(true)
-		requestsWrapper.isAuthenticated().then((authenticated) => {
-			setAuthenticated(authenticated)
+		if (import.meta.env.VITE_AUTHENTICATION !== 'disabled') {
+			requestsWrapper
+				.isAuthenticated()
+				.then(setAuthenticated)
+				.then(() => setAuthenticating(false))
+		} else {
+			setAuthenticated(true)
 			setAuthenticating(false)
-		})
+		}
 	}, [])
 
 	return (
