@@ -1,10 +1,10 @@
 import react from '@vitejs/plugin-react'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { defineConfig } from 'vite'
 
-// https://vitejs.dev/config/
 export default defineConfig({
 	css: {
-		devSourcemap: true // this one
+		devSourcemap: true
 	},
-	plugins: [react()]
+	plugins: [react(), visualizer()]
 })
