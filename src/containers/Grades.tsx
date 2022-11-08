@@ -5,8 +5,8 @@ import { Alert } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import requestsWrapper from '../RequestsWrapper'
 import Spinner from '../components/Spinner'
+import { gradesForCourse, gradesForStudent } from '../requests'
 import { ICourseGrades } from '../types'
 import './Grades.css'
 
@@ -64,8 +64,8 @@ const Grades = () => {
 		setErrorMsg('')
 
 		const res = await (specifyUser
-			? requestsWrapper.gradesForStudent(username, courseName)
-			: requestsWrapper.gradesForCourse(courseName))
+			? gradesForStudent(username, courseName)
+			: gradesForCourse(courseName))
 
 		fold(flow(t, setErrorMsg), setCourses)(res)
 

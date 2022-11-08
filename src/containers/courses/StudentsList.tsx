@@ -3,7 +3,7 @@ import { Alert, Button, Card, Spinner, Table } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import requestsWrapper from '../../RequestsWrapper'
+import { getStudents, removeStudent } from '../../requests'
 import AddUserModal from './AddUserModal'
 
 interface FormInput {
@@ -19,7 +19,7 @@ const StudentsList: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormInput> = async ({ course }) => {
 		setLoading(true)
-		const res = await requestsWrapper.getStudents(course)
+		const res = await getStudents(course)
 		if (res._tag === 'Right') {
 			setStudents(res.right.students)
 		} else {
@@ -75,17 +75,15 @@ const StudentsList: React.FC = () => {
 												<Button
 													variant="danger"
 													onClick={() => {
-														requestsWrapper
-															.removeStudent(v, getValues().course)
-															.then((res) => {
-																if (res._tag === 'Right') {
-																	alert(
-																		`${res.right.status}: ${res.right.message}`
-																	)
-																} else {
-																	alert(res.left.toString())
-																}
-															})
+														removeStudent(v, getValues().course).then((res) => {
+															if (res._tag === 'Right') {
+																alert(
+																	`${res.right.status}: ${res.right.message}`
+																)
+															} else {
+																alert(res.left.toString())
+															}
+														})
 													}}>
 													{t('Unenroll')}
 												</Button>

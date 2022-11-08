@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
 
-import requestsWrapper from '../../RequestsWrapper'
+import { addStudent } from '../../requests'
 
 interface Props {
 	show: boolean
@@ -44,7 +44,7 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 					<Button
 						variant="primary"
 						onClick={async () => {
-							const res = await requestsWrapper.addStudent(username, courseName)
+							const res = await addStudent(username, courseName)
 							if (res._tag === 'Right') {
 								setMessage({
 									header:

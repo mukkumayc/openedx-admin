@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
 import { useAuth } from './AuthenticationContext'
-import requestsWrapper from './RequestsWrapper'
 import NavBar from './components/NavBar'
 import Routes from './components/Routes'
 import LoadingPage from './containers/LoadingPage'
+import { isAuthenticated } from './requests'
 
 const App = () => {
 	const [, setAuthenticated] = useAuth()
@@ -13,8 +13,7 @@ const App = () => {
 	useEffect(() => {
 		setAuthenticating(true)
 		if (import.meta.env.VITE_AUTHENTICATION !== 'disabled') {
-			requestsWrapper
-				.isAuthenticated()
+			isAuthenticated()
 				.then(setAuthenticated)
 				.then(() => setAuthenticating(false))
 		} else {

@@ -4,8 +4,8 @@ import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import requestsWrapper from '../RequestsWrapper'
 import MessageModal, { useModal } from '../components/MessageModal'
+import { fileLinks } from '../requests'
 import { IFileLinks } from '../types'
 
 interface FileLinks {
@@ -29,7 +29,7 @@ const FileLinks: React.FC = () => {
 
 	const onSubmit = async ({ username, course }: FormInput) =>
 		fold<string, IFileLinks, void>(showError, (res) => setLinks(res))(
-			await requestsWrapper.fileLinks(username, course)
+			await fileLinks(username, course)
 		)
 
 	return (

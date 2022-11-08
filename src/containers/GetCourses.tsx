@@ -5,8 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import requestsWrapper from '../RequestsWrapper'
 import Spinner from '../components/Spinner'
+import { getCourses } from '../requests'
 
 interface FormInput {
 	username: string
@@ -24,7 +24,7 @@ const GetCourses: React.FC = () => {
 	const [courses, setCourses] = useState<string[]>([])
 	const onSubmit: SubmitHandler<FormInput> = async ({ username }) => {
 		setLoading(true)
-		const res = await requestsWrapper.getCourses(username)
+		const res = await getCourses(username)
 		if (isLeft(res)) {
 			return navigate('/error')
 		}
