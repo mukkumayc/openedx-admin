@@ -33,11 +33,11 @@ const GetCourses: React.FC = () => {
 	}
 
 	return (
-		<>
-			<section className="add-student container-md page">
+		<main className="page">
+			<section className="add-student container-md">
 				<div className="card">
 					<h1 className="card-header">{t('List of student courses')}</h1>
-					<main className="card-body">
+					<div className="card-body">
 						<form
 							className="add-student-form"
 							onSubmit={handleSubmit(onSubmit)}>
@@ -52,10 +52,10 @@ const GetCourses: React.FC = () => {
 								{t('Submit')}
 							</button>
 						</form>
-					</main>
+					</div>
 				</div>
 			</section>
-			<section className="results container-md page">
+			<section className="results container-md">
 				{loading ? (
 					<Spinner />
 				) : (
@@ -75,7 +75,7 @@ const GetCourses: React.FC = () => {
 					))
 				)}
 			</section>
-		</>
+		</main>
 	)
 }
 

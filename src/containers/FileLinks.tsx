@@ -33,8 +33,8 @@ const FileLinks: React.FC = () => {
 		)
 
 	return (
-		<>
-			<section className="container-md page">
+		<main className="page">
+			<section className="container-md">
 				<Card className="mb-3">
 					<Card.Header>
 						<h4>{t('Get additional user files')}</h4>
@@ -79,7 +79,7 @@ const FileLinks: React.FC = () => {
 				</div>
 			</section>
 			<MessageModal {...modalProps} />
-		</>
+		</main>
 	)
 }
 

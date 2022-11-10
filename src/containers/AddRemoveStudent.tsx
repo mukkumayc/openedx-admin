@@ -36,7 +36,7 @@ const AddRemoveStudent: React.FC = () => {
 	}
 
 	return (
-		<section className="add-student container-md page">
+		<main className="add-student container-md page">
 			{loading ? (
 				<Spinner />
 			) : (
@@ -46,7 +46,7 @@ const AddRemoveStudent: React.FC = () => {
 							? t('Enrolling a student in a course')
 							: t('Unenrolling a student from a course')}
 					</h1>
-					<main className="card-body">
+					<section className="card-body">
 						<form
 							className="add-student-form"
 							onSubmit={handleSubmit(onSubmit)}>
@@ -54,24 +54,22 @@ const AddRemoveStudent: React.FC = () => {
 							<input
 								className="form-control"
 								id="username"
-								{...register('username')}
-								required
+								{...register('username', { required: true })}
 							/>
 							<label htmlFor="course">{t('Course')}</label>
 							<input
 								className="form-control"
 								id="course"
-								{...register('course')}
-								required
+								{...register('course', { required: true })}
 							/>
 							<button className="btn btn-primary" type="submit">
 								{t('Submit')}
 							</button>
 						</form>
-					</main>
+					</section>
 				</div>
 			)}
-		</section>
+		</main>
 	)
 }
 

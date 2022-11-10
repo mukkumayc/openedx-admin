@@ -6,7 +6,7 @@ import Routes from './components/Routes'
 import LoadingPage from './containers/LoadingPage'
 import { isAuthenticated } from './requests'
 
-const App = () => {
+function authVerification() {
 	const [, setAuthenticated] = useAuth()
 	const [isAuthenticating, setAuthenticating] = useState(true)
 
@@ -21,6 +21,12 @@ const App = () => {
 			setAuthenticating(false)
 		}
 	}, [])
+
+	return isAuthenticating
+}
+
+const App = () => {
+	const isAuthenticating = authVerification()
 
 	return (
 		<>

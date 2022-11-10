@@ -4,10 +4,10 @@ import Actions from './Actions'
 import './Home.css'
 
 const Home = () => (
-	<div className="page">
+	<main className="page">
 		<Lander />
 		<Actions />
-	</div>
+	</main>
 )
 
 const Lander = () => {
