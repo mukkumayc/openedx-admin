@@ -2,7 +2,9 @@ import { Route, Routes as Switch } from 'react-router-dom'
 
 import { useAuth } from '../AuthenticationContext'
 import { edxUrl } from '../config'
+import ActivateCourse from '../containers/ActivateCourse'
 import AddRemoveStudent from '../containers/AddRemoveStudent'
+import ChangePassword from '../containers/ChangePassword/ChangePassword'
 import Error from '../containers/Error'
 import FileLinks from '../containers/FileLinks'
 import GetCourses from '../containers/GetCourses'
@@ -17,7 +19,9 @@ const authenticatedRoutes: [string, React.FC][] = [
 	['/', Home],
 	['/grades', Grades],
 	['/students-list', StudentsList],
-	['/student/files', FileLinks]
+	['/student/files', FileLinks],
+	['/student/change-password', ChangePassword],
+	['/course/activate', ActivateCourse]
 ]
 
 const Routes: React.FC = () => {

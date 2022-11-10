@@ -61,7 +61,16 @@ const resources = {
 			'User was successfully activated on course.':
 				'Пользователь успешно зачислен на курс',
 			'User was successfully deleted from course.':
-				'Пользователь успешно отчислен с курса'
+				'Пользователь успешно отчислен с курса',
+			'New password': 'Новый пароль',
+			'Password changed successfully': 'Пароль успешно изменён',
+			Change: 'Изменить',
+			"Change user's password": 'Изменить пароль пользователя',
+			'User not found.': 'Пользователь не найден',
+			'Activate course': 'Активировать курс',
+			Activate: 'Активировать',
+			'Course activated successfully': 'Курс успешно активирован',
+			'Course not found': 'Курс не найден'
 		}
 	}
 }

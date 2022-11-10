@@ -17,6 +17,14 @@ const Actions: React.FC = () => {
 		{
 			header: t("Get a list of student's files in a course"),
 			path: '/student/files'
+		},
+		{
+			header: t("Change user's password"),
+			path: '/student/change-password'
+		},
+		{
+			header: t('Activate course'),
+			path: '/course/activate'
 		}
 	]
 

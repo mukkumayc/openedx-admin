@@ -38,6 +38,25 @@ async function _fetch<A>(
 	}
 }
 
+async function post<B extends object>(url: string): Promise<Either<string, B>> {
+	const res = await fetch(url, {
+		method: 'post'
+	})
+
+	if (!res.ok) {
+		console.log(res.status)
+		return res.status < 500
+			? left(await res.text())
+			: left('Unknown server error, probably some parameters not found')
+	}
+
+	try {
+		return right(await res.json())
+	} catch (err) {
+		return left((err as Error).toString())
+	}
+}
+
 async function getStudents(
 	course: string
 ): Promise<Either<string, { students: string[] }>> {
@@ -143,6 +162,14 @@ async function isAuthenticated() {
 
 	return isInEdx
 }
+
+export const changePassword = (username: string, password: string) =>
+	post<StatusResponse>(
+		`${adminRoomAPIUrl}/students/change_password/${username}/${password}/`
+	)
+
+export const activateCourse = (course: string) =>
+	post<StatusResponse>(`${adminRoomAPIUrl}/courses/activate/${course}/`)
 
 export {
 	getStudents,
