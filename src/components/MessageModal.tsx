@@ -10,8 +10,10 @@ interface Props {
 }
 
 const MessageModal: React.FC<Props> = ({ showButtons = true, ...props }) => (
-	<Modal show={props.show}>
-		<Modal.Header>{props.header}</Modal.Header>
+	<Modal show={props.show} onHide={() => props.setShow(false)}>
+		<Modal.Header closeButton>
+			<h4>{props.header}</h4>
+		</Modal.Header>
 		<Modal.Body>{props.body}</Modal.Body>
 		<Modal.Footer className="d-flex justify-content-right">
 			{showButtons && <Button onClick={() => props.setShow(false)}>OK</Button>}
