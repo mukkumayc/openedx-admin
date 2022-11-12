@@ -5,13 +5,11 @@ import { edxUrl } from '../config'
 import ActivateCourse from '../containers/ActivateCourse'
 import AddRemoveStudent from '../containers/AddRemoveStudent'
 import ChangePassword from '../containers/ChangePassword/ChangePassword'
-import Error from '../containers/Error'
 import FileLinks from '../containers/FileLinks'
 import GetCourses from '../containers/GetCourses'
 import Grades from '../containers/Grades'
 import Home from '../containers/Home'
 import NotFound from '../containers/NotFound'
-import Success from '../containers/Success'
 import StudentsList from '../containers/courses/StudentsList'
 import AuthenticatedRoute from './AuthenticatedRoute'
 
@@ -61,8 +59,6 @@ const Routes: React.FC = () => {
 					</AuthenticatedRoute>
 				}
 			/>
-			<Route path="/error" element={<Error />} />
-			<Route path="/success" element={<Success />} />
 			<Route path="*" element={<NotFound />} />
 		</Switch>
 	)

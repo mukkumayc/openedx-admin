@@ -1,9 +1,9 @@
+import MessageModal, { useModal } from '@/components/MessageModal'
 import { isLeft } from 'fp-ts/lib/Either'
 import { useState } from 'react'
 import { Alert } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 
 import Spinner from '../components/Spinner'
 import { getCourses } from '../requests'
@@ -14,22 +14,34 @@ interface FormInput {
 
 const GetCourses: React.FC = () => {
 	const { t } = useTranslation()
-	const navigate = useNavigate()
+	const [modalProps, showModal] = useModal()
 	const {
 		register,
 		handleSubmit,
-		formState: { isSubmitted }
+		formState: { isSubmitting, isSubmitted }
 	} = useForm<FormInput>()
-	const [loading, setLoading] = useState(false)
-	const [courses, setCourses] = useState<string[]>([])
+
+	const [status, setStatus] = useState<{
+		status: 'idle' | 'success' | 'error'
+		courses: string[]
+	}>({
+		status: 'idle',
+		courses: []
+	})
+
 	const onSubmit: SubmitHandler<FormInput> = async (values) => {
-		setLoading(true)
 		const res = await getCourses(values)
 		if (isLeft(res)) {
-			return navigate('/error')
+			setStatus({ status: 'error', courses: [] })
+			return showModal(
+				t('Error'),
+				t('Unknown server error, probably some parameters not found')
+			)
 		}
-		setCourses(res.right.courses)
-		setLoading(false)
+		setStatus({
+			status: 'success',
+			courses: res.right.courses
+		})
 	}
 
 	return (
@@ -56,14 +68,15 @@ const GetCourses: React.FC = () => {
 				</div>
 			</section>
 			<section className="results container-md">
-				{loading ? (
+				{isSubmitting ? (
 					<Spinner />
 				) : (
 					isSubmitted &&
-					(courses.length > 0 ? (
+					status.status === 'success' &&
+					(status.courses.length > 0 ? (
 						<Alert>
 							<ul>
-								{courses.map((c) => (
+								{status.courses.map((c) => (
 									<li key={c}>{c}</li>
 								))}
 							</ul>
@@ -75,6 +88,7 @@ const GetCourses: React.FC = () => {
 					))
 				)}
 			</section>
+			<MessageModal {...modalProps} />
 		</main>
 	)
 }
