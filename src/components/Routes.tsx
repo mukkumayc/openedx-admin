@@ -24,6 +24,7 @@ const authenticatedRoutes: [string, React.FC][] = [
 
 const Routes: React.FC = () => {
 	const [isAuthenticated] = useAuth()
+	const routeProps = { isAuthenticated, redirectUrl: `${edxUrl}/login` }
 	return (
 		<Switch>
 			{authenticatedRoutes.map((route) => (
@@ -31,9 +32,7 @@ const Routes: React.FC = () => {
 					key={route[0]}
 					path={route[0]}
 					element={
-						<AuthenticatedRoute
-							isAuthenticated={isAuthenticated}
-							redirectUrl={`${edxUrl}/login`}>
+						<AuthenticatedRoute {...routeProps}>
 							{route[1]({})}
 						</AuthenticatedRoute>
 					}
@@ -42,9 +41,7 @@ const Routes: React.FC = () => {
 			<Route
 				path="/course/students/:action"
 				element={
-					<AuthenticatedRoute
-						isAuthenticated={isAuthenticated}
-						redirectUrl={`${edxUrl}/login`}>
+					<AuthenticatedRoute {...routeProps}>
 						<AddRemoveStudent />
 					</AuthenticatedRoute>
 				}
@@ -52,9 +49,7 @@ const Routes: React.FC = () => {
 			<Route
 				path="/student/courses"
 				element={
-					<AuthenticatedRoute
-						isAuthenticated={isAuthenticated}
-						redirectUrl={`${edxUrl}/login`}>
+					<AuthenticatedRoute {...routeProps}>
 						<GetCourses />
 					</AuthenticatedRoute>
 				}
