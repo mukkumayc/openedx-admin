@@ -7,10 +7,10 @@ import { addStudent } from '../../requests'
 interface Props {
 	show: boolean
 	setShow(b: boolean): void
-	courseName: string
+	course: string
 }
 
-const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
+const AddUserModal: React.FC<Props> = ({ show, setShow, course }) => {
 	const { t } = useTranslation()
 	const [username, setUsername] = useState('')
 	const [message, setMessage] = useState<{
@@ -23,7 +23,7 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 			<Modal show={show}>
 				<Modal.Header>
 					<Modal.Title>
-						<Trans i18nKey="addingStudentToCourse" values={{ courseName }}>
+						<Trans i18nKey="addingStudentToCourse" values={{ course }}>
 							{'Adding a student to "{{courseName}}"'}
 						</Trans>
 					</Modal.Title>
@@ -44,7 +44,7 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, courseName }) => {
 					<Button
 						variant="primary"
 						onClick={async () => {
-							const res = await addStudent(username, courseName)
+							const res = await addStudent({ username, course })
 							if (res._tag === 'Right') {
 								setMessage({
 									header:

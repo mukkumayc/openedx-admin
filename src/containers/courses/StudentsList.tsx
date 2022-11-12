@@ -19,7 +19,7 @@ const StudentsList: React.FC = () => {
 
 	const onSubmit: SubmitHandler<FormInput> = async ({ course }) => {
 		setLoading(true)
-		const res = await getStudents(course)
+		const res = await getStudents({ course })
 		if (res._tag === 'Right') {
 			setStudents(res.right.students)
 		} else {
@@ -67,15 +67,18 @@ const StudentsList: React.FC = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{students.map((v, i) => (
+									{students.map((username, i) => (
 										<tr key={i}>
 											<td>{i}</td>
-											<td>{v}</td>
+											<td>{username}</td>
 											<td>
 												<Button
 													variant="danger"
 													onClick={() => {
-														removeStudent(v, getValues().course).then((res) => {
+														removeStudent({
+															username,
+															course: getValues().course
+														}).then((res) => {
 															if (res._tag === 'Right') {
 																alert(
 																	`${res.right.status}: ${res.right.message}`
@@ -102,7 +105,7 @@ const StudentsList: React.FC = () => {
 			<AddUserModal
 				show={addingUser}
 				setShow={setAddingUser}
-				courseName={getValues().course}
+				course={getValues().course}
 			/>
 		</div>
 	)

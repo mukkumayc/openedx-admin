@@ -22,9 +22,9 @@ const GetCourses: React.FC = () => {
 	} = useForm<FormInput>()
 	const [loading, setLoading] = useState(false)
 	const [courses, setCourses] = useState<string[]>([])
-	const onSubmit: SubmitHandler<FormInput> = async ({ username }) => {
+	const onSubmit: SubmitHandler<FormInput> = async (values) => {
 		setLoading(true)
-		const res = await getCourses(username)
+		const res = await getCourses(values)
 		if (isLeft(res)) {
 			return navigate('/error')
 		}

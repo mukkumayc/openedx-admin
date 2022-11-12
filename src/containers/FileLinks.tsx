@@ -2,6 +2,7 @@ import { fold } from 'fp-ts/Either'
 import { useState } from 'react'
 import { Alert, Button, Card, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
+import type { SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import MessageModal, { useModal } from '../components/MessageModal'
@@ -27,9 +28,9 @@ const FileLinks: React.FC = () => {
 
 	const { register, handleSubmit } = useForm<FormInput>()
 
-	const onSubmit = async ({ username, course }: FormInput) =>
+	const onSubmit: SubmitHandler<FormInput> = async (values) =>
 		fold<string, IFileLinks, void>(showError, (res) => setLinks(res))(
-			await fileLinks(username, course)
+			await fileLinks(values)
 		)
 
 	return (

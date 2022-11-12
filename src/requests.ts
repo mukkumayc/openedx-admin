@@ -1,52 +1,25 @@
-import { Either, left, mapLeft, right } from 'fp-ts/lib/Either'
-import * as t from 'io-ts'
+import { left, right } from 'fp-ts/lib/Either'
+import type { Either } from 'fp-ts/lib/Either'
 
 import { adminRoomAPIUrl, edxUrl } from './config'
-import { CourseGradesC, FileLinksC, ICourseGrades, IFileLinks } from './types'
-import { validationErrorsToString } from './utils'
+import type { ICourseGrades, IFileLinks } from './types'
 
-interface StatusResponse {
+export interface StatusResponse {
 	status: string
 	message: string
 }
 
 async function _fetch<A>(
 	url: string,
-	method: 'get' | 'post',
-	validator: t.Decoder<unknown, A>
+	method: 'get' | 'post'
 ): Promise<Either<string, A>> {
-	const res = await fetch(url, { method, credentials: 'include' })
+	const res = await fetch(url, { method })
 
 	if (!res.ok) {
-		console.log(res.status)
+		const resText = await res.text()
+		console.log(res.status, resText)
 		return res.status < 500
-			? left(await res.text())
-			: left('Unknown server error, probably some parameters not found')
-	}
-
-	try {
-		const val = await (res.headers
-			.get('Content-Type')
-			?.indexOf('application/json') !== -1
-			? res.json()
-			: res.text())
-		return mapLeft<t.ValidationError[], string>(validationErrorsToString)(
-			validator.decode(val)
-		)
-	} catch (err) {
-		return left((err as Error).toString())
-	}
-}
-
-async function post<B extends object>(url: string): Promise<Either<string, B>> {
-	const res = await fetch(url, {
-		method: 'post'
-	})
-
-	if (!res.ok) {
-		console.log(res.status)
-		return res.status < 500
-			? left(await res.text())
+			? left(resText)
 			: left('Unknown server error, probably some parameters not found')
 	}
 
@@ -57,127 +30,77 @@ async function post<B extends object>(url: string): Promise<Either<string, B>> {
 	}
 }
 
-async function getStudents(
-	course: string
-): Promise<Either<string, { students: string[] }>> {
-	return _fetch(
-		`${adminRoomAPIUrl}/courses/get_students/${course}/`,
-		'get',
-		t.type({ students: t.array(t.string) })
+const get = <A>(url: string) => _fetch<A>(url, 'get')
+const post = <A>(url: string) => _fetch<A>(url, 'post')
+
+export type RequestFunction<Data, Res> = (
+	d: Data
+) => Promise<Either<string, Res>>
+
+export const getStudents: RequestFunction<
+	{ course: string },
+	{ students: string[] }
+> = ({ course }: { course: string }) =>
+	get(`${adminRoomAPIUrl}/courses/get_students/${course}/`)
+
+const _grades = (url: string) => get<ICourseGrades[]>(url)
+
+export const gradesForStudent: RequestFunction<
+	{ username: string; course: string },
+	ICourseGrades[]
+> = ({ username, course }) =>
+	_grades(`${adminRoomAPIUrl}/students/get_grades/${username}/${course}/`)
+
+export const gradesForCourse: RequestFunction<
+	{ course: string },
+	ICourseGrades[]
+> = ({ course }) => _grades(`${adminRoomAPIUrl}/courses/get_grades/${course}/`)
+
+export const getCourses: RequestFunction<
+	{ username: string },
+	{ courses: string[] }
+> = ({ username }) =>
+	get<{ courses: string[] }>(
+		`${adminRoomAPIUrl}/students/get_courses/${username}/`
 	)
-}
 
-const _grades = (url: string): Promise<Either<string, ICourseGrades[]>> =>
-	_fetch(url, 'get', t.array(CourseGradesC))
-
-const gradesForStudent = (
-	username: string,
-	courseName: string
-): Promise<Either<string, ICourseGrades[]>> =>
-	_grades(`${adminRoomAPIUrl}/students/get_grades/${username}/${courseName}/`)
-
-const gradesForCourse = (
-	courseName: string
-): Promise<Either<string, ICourseGrades[]>> =>
-	_grades(`${adminRoomAPIUrl}/courses/get_grades/${courseName}/`)
-
-async function getCourses(
-	username: string
-): Promise<Either<string, { courses: string[] }>> {
-	const CoursesListC = t.type({
-		courses: t.array(t.string)
-	})
-
-	return _fetch(
-		`${adminRoomAPIUrl}/students/get_courses/${username}/`,
-		'get',
-		CoursesListC
+export const fileLinks: RequestFunction<
+	{ username: string; course: string },
+	IFileLinks
+> = ({ username, course }) =>
+	get<IFileLinks>(
+		`${adminRoomAPIUrl}/courses/docs_loader/${course}/${username}/`
 	)
-}
 
-function fileLinks(
-	username: string,
-	course: string
-): Promise<Either<string, IFileLinks>> {
-	return _fetch(
-		`${adminRoomAPIUrl}/courses/docs_loader/${course}/${username}/`,
-		'get',
-		FileLinksC
-	)
-}
-async function addStudent(
-	username: string,
-	courseName: string
-): Promise<Either<string, StatusResponse>> {
-	const form = new FormData()
-	form.append('username', username)
-	form.append('course_name', courseName)
-	return await fetch(
-		`${adminRoomAPIUrl}/students/add_student/${username}/${courseName}/`,
-		{
-			method: 'post'
-		}
-	)
-		.then(async (res) => {
-			if (res.ok) {
-				return right(await res.json())
-			}
-			if (res.status < 500) {
-				return left(await res.text())
-			}
-			return left('Unknown server error')
-		})
-		.catch((err: Error) => left(err.toString()))
-}
+export const addStudent: RequestFunction<
+	{ username: string; course: string },
+	StatusResponse
+> = ({ username, course }) =>
+	post(`${adminRoomAPIUrl}/students/add_student/${username}/${course}/`)
 
-async function removeStudent(
-	username: string,
-	courseName: string
-): Promise<Either<string, StatusResponse>> {
-	const form = new FormData()
-	form.append('username', username)
-	form.append('course_name', courseName)
-	return await fetch(
-		`${adminRoomAPIUrl}/students/remove_student/${username}/${courseName}/`,
-		{
-			method: 'post'
-		}
-	)
-		.then(async (res) => {
-			if (res.ok) {
-				return right(await res.json())
-			}
-			return left(await res.text())
-		})
-		.catch((err: Error) => left(err.toString()))
-}
+export const removeStudent: RequestFunction<
+	{ username: string; course: string },
+	StatusResponse
+> = ({ username, course }) =>
+	post(`${adminRoomAPIUrl}/students/remove_student/${username}/${course}/`)
 
-async function isAuthenticated() {
-	const isInEdx = await fetch(`${edxUrl}/account/settings`, {
+export const isAuthenticated = async () =>
+	fetch(`${edxUrl}/account/settings`, {
 		credentials: 'include',
 		redirect: 'error'
 	})
 		.then(() => true /* no redirects */)
 		.catch(() => false)
 
-	return isInEdx
-}
-
-export const changePassword = (username: string, password: string) =>
+export const changePassword: RequestFunction<
+	{ username: string; password: string },
+	StatusResponse
+> = ({ username, password }) =>
 	post<StatusResponse>(
 		`${adminRoomAPIUrl}/students/change_password/${username}/${password}/`
 	)
 
-export const activateCourse = (course: string) =>
-	post<StatusResponse>(`${adminRoomAPIUrl}/courses/activate/${course}/`)
-
-export {
-	getStudents,
-	gradesForStudent,
-	gradesForCourse,
-	getCourses,
-	fileLinks,
-	addStudent,
-	removeStudent,
-	isAuthenticated
-}
+export const activateCourse: RequestFunction<
+	{ course: string },
+	StatusResponse
+> = ({ course }) => post(`${adminRoomAPIUrl}/courses/activate/${course}/`)

@@ -11,7 +11,7 @@ import { ICourseGrades } from '../types'
 import './Grades.css'
 
 interface FormInput {
-	courseName: string
+	course: string
 	specifyUser: boolean
 	username: string
 }
@@ -56,7 +56,7 @@ const Grades = () => {
 
 	const onSubmit: SubmitHandler<FormInput> = async ({
 		specifyUser,
-		courseName,
+		course,
 		username
 	}) => {
 		setRequestCompleted(false)
@@ -64,8 +64,8 @@ const Grades = () => {
 		setErrorMsg('')
 
 		const res = await (specifyUser
-			? gradesForStudent(username, courseName)
-			: gradesForCourse(courseName))
+			? gradesForStudent({ username, course })
+			: gradesForCourse({ course }))
 
 		fold(flow(t, setErrorMsg), setCourses)(res)
 
@@ -104,13 +104,13 @@ const Grades = () => {
 						<form
 							className="card-body grades__form"
 							onSubmit={handleSubmit(onSubmit)}>
-							<label className="form-label" htmlFor="courseName">
+							<label className="form-label" htmlFor="course">
 								{t('Course')}
 							</label>
 							<input
 								className="form-control"
-								id="courseName"
-								{...register('courseName')}
+								id="course"
+								{...register('course')}
 								required
 							/>
 							<div className="form-check">
