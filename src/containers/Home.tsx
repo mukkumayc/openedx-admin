@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import Actions from './Actions'
 import './Home.css'
 
-const Home = () => (
+const Home: React.FC = () => (
 	<main className="page">
 		<Lander />
 		<Actions />

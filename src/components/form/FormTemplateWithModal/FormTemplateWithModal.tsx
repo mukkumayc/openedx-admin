@@ -30,6 +30,7 @@ function FormTemplateWithModal<A extends FieldValues>({
 	const { t } = useTranslation()
 	const {
 		register,
+		watch,
 		handleSubmit,
 		formState: { isSubmitting }
 	} = useForm<A>()
@@ -51,7 +52,7 @@ function FormTemplateWithModal<A extends FieldValues>({
 				<Card.Body>
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						{fields.map((props, i) => (
-							<FormGroup key={i} {...props} {...{ register }} />
+							<FormGroup key={i} {...props} {...{ register, watch }} />
 						))}
 						<Button variant="primary" type="submit" disabled={isSubmitting}>
 							{submitBtnText}

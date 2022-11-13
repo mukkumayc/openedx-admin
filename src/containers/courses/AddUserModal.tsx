@@ -1,8 +1,7 @@
+import { addStudent } from '@/requests'
 import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
-
-import { addStudent } from '../../requests'
 
 interface Props {
 	show: boolean
@@ -24,7 +23,7 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, course }) => {
 				<Modal.Header>
 					<Modal.Title>
 						<Trans i18nKey="addingStudentToCourse" values={{ course }}>
-							{'Adding a student to "{{courseName}}"'}
+							{'Adding a student to "{{course}}"'}
 						</Trans>
 					</Modal.Title>
 				</Modal.Header>

@@ -1,11 +1,7 @@
-import { fold } from 'fp-ts/Either'
-import { flow } from 'fp-ts/function'
-import { useCallback, useState } from 'react'
+import { FormTemplateWithResult } from '@/components/form'
 import { Alert } from 'react-bootstrap'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import Spinner from '../components/Spinner'
 import { gradesForCourse, gradesForStudent } from '../requests'
 import { ICourseGrades } from '../types'
 import './Grades.css'
@@ -40,118 +36,47 @@ const ParsedCourse = ({ course }: { course: ICourseGrades }) => {
 	)
 }
 
-const Grades = () => {
+const Grades: React.FC = () => {
 	const { t } = useTranslation()
-	const [requestCompleted, setRequestCompleted] = useState(false)
-	const [courses, setCourses] = useState<ICourseGrades[]>([])
-	const [errorMsg, setErrorMsg] = useState('')
-	const [loading, setLoading] = useState(false)
-	const {
-		register,
-		handleSubmit,
-		watch,
-		formState: { isSubmitting }
-	} = useForm<FormInput>()
-	const watchSpecifyUser = watch('specifyUser', false)
 
-	const onSubmit: SubmitHandler<FormInput> = async ({
-		specifyUser,
-		course,
-		username
-	}) => {
-		setRequestCompleted(false)
-		setLoading(true)
-		setErrorMsg('')
-
-		const res = await (specifyUser
+	const handler = ({ specifyUser, course, username }: FormInput) =>
+		specifyUser
 			? gradesForStudent({ username, course })
-			: gradesForCourse({ course }))
+			: gradesForCourse({ course })
 
-		fold(flow(t, setErrorMsg), setCourses)(res)
-
-		setRequestCompleted(true)
-		setLoading(false)
-	}
-
-	const FormattedCourses = useCallback(() => {
-		const { t } = useTranslation()
+	const parseResponse = (courses: ICourseGrades[]) => {
 		return (
 			<div className="users-list">
-				{requestCompleted &&
-					(errorMsg.length > 0 ? (
-						<div className="alert alert-danger">{errorMsg}</div>
-					) : courses.length > 0 ? (
-						courses.map((course, ind) => (
-							<ParsedCourse key={ind} {...{ course }} />
-						))
-					) : (
-						<div className="alert alert-warning">
-							{watchSpecifyUser
-								? t("This student isn't enrolled in the course")
-								: t('This course has no students')}
-						</div>
-					))}
+				{courses.length > 0 ? (
+					courses.map((course, ind) => (
+						<ParsedCourse key={ind} {...{ course }} />
+					))
+				) : (
+					<div className="alert alert-warning">{t("Grades wasn't found")}</div>
+				)}
 			</div>
 		)
-	}, [requestCompleted, errorMsg, courses])
+	}
 
 	return (
-		<>
-			<section className="page grades">
-				<div className="container-md">
-					<div className="card">
-						<h1 className="card-header">{t('Course users and grades')}</h1>
-						<form
-							className="card-body grades__form"
-							onSubmit={handleSubmit(onSubmit)}>
-							<label className="form-label" htmlFor="course">
-								{t('Course')}
-							</label>
-							<input
-								className="form-control"
-								id="course"
-								{...register('course')}
-								required
-							/>
-							<div className="form-check">
-								<input
-									className="form-check-input"
-									id="specifyUser"
-									{...register('specifyUser')}
-									type="checkbox"
-								/>
-								<label className="form-check-label" htmlFor="specifyUser">
-									{t('Specify user')}
-								</label>
-							</div>
-							{watchSpecifyUser && (
-								<>
-									<label htmlFor="username">{t('Username')}</label>
-									<input
-										className="form-control"
-										id="username"
-										{...register('username')}
-										disabled={!watchSpecifyUser}
-										required={watchSpecifyUser}
-									/>
-								</>
-							)}
-							<button
-								type="submit"
-								className="btn btn-primary"
-								disabled={isSubmitting}>
-								{t('Get grades')}
-							</button>
-						</form>
-					</div>
-				</div>
-			</section>
-			<section className="result">
-				<div className="container-md">
-					{loading ? <Spinner /> : <FormattedCourses />}
-				</div>
-			</section>
-		</>
+		<FormTemplateWithResult
+			header={t('Course users and grades')}
+			fields={[
+				{ controlId: 'course', label: t('Course') },
+				{
+					controlId: 'specifyUser',
+					label: t('Specify user'),
+					type: 'checkbox'
+				},
+				{
+					controlId: 'username',
+					label: t('Username'),
+					optional: 'specifyUser'
+				}
+			]}
+			submitBtnText={t('Get grades')}
+			{...{ handler, parseResponse }}
+		/>
 	)
 }
 

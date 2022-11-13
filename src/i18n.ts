@@ -42,13 +42,14 @@ const resources = {
 				'Файлы не найдены для данных пользователя и курса',
 			'Enter email or username':
 				'Введите электронную почту или имя пользователя',
-			'Write course name and select to "List students" or to "Add a student"':
+			'Write course name and select "List students" or "Add a student"':
 				'Напишите имя курса и выберите "Вывести список студентов" или "Добавить студента"',
 			'List students': 'Вывести список студентов',
 			'Add a student': 'Добавить студента',
+			'Add student': 'Зачислить студента',
 			Unenroll: 'Отчислить',
 			'Nobody enrolled in this course': 'Никто не зачислен на данный курс',
-			addingStudentToCourse: 'Добавление студента в курс "{{courseName}}"',
+			addingStudentToCourse: 'Добавление студента в курс "{{course}}"',
 			Close: 'Закрыть',
 			'Enter username': 'Введите имя пользователя',
 			'Unknown server error, probably some parameters not found':
@@ -70,7 +71,9 @@ const resources = {
 			'Activate course': 'Активировать курс',
 			Activate: 'Активировать',
 			'Course activated successfully': 'Курс успешно активирован',
-			'Course not found': 'Курс не найден'
+			'Course not found': 'Курс не найден',
+			"Grades wasn't found": 'Оценки не найдены',
+			'Are you sure?': 'Вы уверены?'
 		}
 	}
 }
