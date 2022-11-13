@@ -1,10 +1,11 @@
 import ActivateCourse from './containers/ActivateCourse'
-import AddRemoveStudent from './containers/AddRemoveStudent'
+import AddStudent from './containers/AddStudent'
 import ChangePassword from './containers/ChangePassword/ChangePassword'
 import FileLinks from './containers/FileLinks'
 import GetCourses from './containers/GetCourses'
 import Grades from './containers/Grades'
 import Home from './containers/Home'
+import RemoveStudent from './containers/RemoveStudent'
 import StudentsList from './containers/courses/StudentsList'
 
 const pages = [
@@ -27,12 +28,12 @@ const pages = [
 	{
 		description: 'Enroll a student in a course',
 		path: '/course/students/add',
-		component: AddRemoveStudent
+		component: AddStudent
 	},
 	{
 		description: 'Unenroll a student from a course',
 		path: '/course/students/remove',
-		component: AddRemoveStudent
+		component: RemoveStudent
 	},
 	{
 		description: "Get a list of student's courses",
