@@ -1,48 +1,78 @@
+import { Container, NavDropdown, Navbar } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
-import RussiaFlag from '../assets/russia-flag-icon.svg'
+import RusFlag from '../assets/russia-flag-icon.svg'
 import USAFlag from '../assets/united-states-flag-icon.svg'
 
 interface Props {
 	isAuthenticating: boolean
 }
 
+const LangIcon: React.FC<{ lang: string }> = ({ lang, ...rest }) => {
+	switch (lang) {
+		case 'ru':
+			return (
+				<img className="locale-image" src={RusFlag} alt="Русский" {...rest} />
+			)
+		case 'en':
+			return (
+				<img className="locale-image" src={USAFlag} alt="English" {...rest} />
+			)
+		default:
+			return <div>no image</div>
+	}
+}
+
+const LangButton: React.FC<{ lang: string }> = ({ lang }) => {
+	const { i18n } = useTranslation()
+	switch (lang) {
+		case 'ru':
+			return (
+				<button className="locale" onClick={() => i18n.changeLanguage('ru')}>
+					<LangIcon lang="ru" /> Русский
+				</button>
+			)
+		default:
+			return (
+				<button className="locale" onClick={() => i18n.changeLanguage('en')}>
+					<LangIcon lang="en" /> English
+				</button>
+			)
+	}
+}
+
+const LangDropdown: React.FC = () => {
+	const { i18n } = useTranslation()
+	return (
+		<NavDropdown
+			title={<LangIcon lang={i18n.language} />}
+			className="text-white">
+			<NavDropdown.Item>
+				<LangButton lang="ru" />
+			</NavDropdown.Item>
+			<NavDropdown.Item>
+				<LangButton lang="en" />
+			</NavDropdown.Item>
+		</NavDropdown>
+	)
+}
+
 const NavBar: React.FC<Props> = () => {
 	const location = useLocation()
-	const { t, i18n } = useTranslation()
+	const { t } = useTranslation()
 	return (
-		<div className="container-md">
-			<nav className="navbar">
-				<Link className="navbar-brand" to="/">
+		<Navbar bg="primary" variant="dark" sticky="top">
+			<Container fluid="md">
+				<Navbar.Brand as={Link} to="/">
 					{location.pathname === '/' || location.pathname === '/login'
 						? 'Open edX Admin'
 						: `<- ${t('Back to Home')}`}
-				</Link>
-				<div className="locale-choice" role="list">
-					<button
-						className="locale"
-						onClick={() => i18n.changeLanguage('ru')}
-						role="listitem">
-						<img
-							className="locale-image"
-							src={RussiaFlag}
-							alt="Изменить язык на русский"
-						/>
-					</button>
-					<button
-						className="locale"
-						onClick={() => i18n.changeLanguage('en')}
-						role="listitem">
-						<img
-							className="locale-image"
-							src={USAFlag}
-							alt="Change language to english"
-						/>
-					</button>
-				</div>
-			</nav>
-		</div>
+				</Navbar.Brand>
+
+				<LangDropdown />
+			</Container>
+		</Navbar>
 	)
 }
 
