@@ -47,6 +47,7 @@ const resources = {
 			'List students': 'Вывести список студентов',
 			'Add a student': 'Добавить студента',
 			'Add student': 'Зачислить студента',
+			Enroll: 'Зачислить',
 			Unenroll: 'Отчислить',
 			'Nobody enrolled in this course': 'Никто не зачислен на данный курс',
 			addingStudentToCourse: 'Добавление студента в курс "{{course}}"',
@@ -73,7 +74,22 @@ const resources = {
 			'Course activated successfully': 'Курс успешно активирован',
 			'Course not found': 'Курс не найден',
 			"Grades wasn't found": 'Оценки не найдены',
-			'Are you sure?': 'Вы уверены?'
+			'Are you sure?': 'Вы уверены?',
+			'Course student list management': 'Управление списком студентов курса',
+			'Enter usernames separated by comma':
+				'Введите имена пользователей, разделённые запятой',
+			Cancel: 'Отменить',
+			'The following users will be enrolled in the course':
+				'Следующие пользователи будут зачислены на курс',
+			'The following users will be unenrolled from the course':
+				'Следующие пользователи будут отчислены с курса',
+			'Enrolling users in the course': 'Зачисление пользователей на курс',
+			'Unnrolling users from the course': 'Отчисление пользователей с курса',
+			'Enrolling students': 'Зачисление студентов',
+			'Unenrolling students': 'Отчисление студентов',
+			Continue: 'Продолжить',
+			Pending: 'Ожидание',
+			Confirm: 'Подтвердить'
 		}
 	}
 }

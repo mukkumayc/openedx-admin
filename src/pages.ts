@@ -6,7 +6,7 @@ import GetCourses from './containers/GetCourses'
 import Grades from './containers/Grades'
 import Home from './containers/Home'
 import RemoveStudent from './containers/RemoveStudent'
-import StudentsList from './containers/courses/StudentsList'
+import StudentsListManagement from './containers/courses/StudentListManagement'
 
 const pages = [
 	{
@@ -21,9 +21,9 @@ const pages = [
 		component: Grades
 	},
 	{
-		description: 'Get a list of students',
-		path: '/students-list',
-		component: StudentsList
+		description: 'Course student list management',
+		path: '/course/student-list-management',
+		component: StudentsListManagement
 	},
 	{
 		description: 'Enroll a student in a course',
