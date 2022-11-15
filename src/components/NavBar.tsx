@@ -47,7 +47,8 @@ const LangDropdown: React.FC = () => {
 	return (
 		<NavDropdown
 			title={<LangIcon lang={i18n.language} />}
-			className="text-white">
+			className="text-white"
+			drop="start">
 			<NavDropdown.Item>
 				<LangButton lang="ru" />
 			</NavDropdown.Item>
