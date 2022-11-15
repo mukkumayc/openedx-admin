@@ -43,7 +43,7 @@ function parseField<A extends FieldValues>(
 			{...register(field.controlId)}
 		/>
 	) : (
-		<FormGroup {...field} {...{ register, watch, key }} />
+		<FormGroup className="mb-3" {...field} {...{ register, watch, key }} />
 	)
 }
 

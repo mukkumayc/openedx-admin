@@ -52,7 +52,12 @@ function FormTemplateWithModal<A extends FieldValues>({
 				<Card.Body>
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						{fields.map((props, i) => (
-							<FormGroup key={i} {...props} {...{ register, watch }} />
+							<FormGroup
+								key={i}
+								{...props}
+								{...{ register, watch }}
+								className="mb-3"
+							/>
 						))}
 						<Button variant="primary" type="submit" disabled={isSubmitting}>
 							{submitBtnText}

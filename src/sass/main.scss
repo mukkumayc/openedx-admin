@@ -1,32 +1,8 @@
-$primary: #8f3985;
+$primary: #8b3781;
 $danger: #fc440f;
+$white: #fefefe;
 
 @import 'bootstrap/scss/bootstrap';
-
-// section {
-// 	// display: flex;
-// 	justify-content: center;
-// }
-
-// .container {
-// 	width: 600px;
-// 	margin: 0 auto;
-// }
-
-// @media screen and (max-width: 900px) {
-// 	.container {
-// 		width: auto;
-// 		margin: 0 1em;
-// 	}
-// }
-
-// .navbar {
-// 	max-width: 900px;
-// 	display: flex;
-// 	justify-content: space-between;
-// }
-
-// $main: #8f3985;
 
 body {
 	color: $primary;
@@ -48,19 +24,7 @@ body {
 	padding: 1rem;
 }
 
-.navbar {
-	color: white;
-	margin-top: 1em;
-	border-radius: 1em;
-	padding: 1em;
-	border: 1px solid $primary;
-}
-
-.navbar-brand {
-	color: $primary;
-}
-
-.form-control,
+.input-group,
 .form-check {
 	margin-bottom: 1em;
 }
@@ -83,15 +47,39 @@ body {
 }
 
 .locale-image {
-	width: 100%;
+	height: 2em;
 }
 
 .locale {
 	border: none;
 	background-color: transparent;
-	width: 3em;
+	width: 50px;
 }
 
 .results {
 	margin-top: 1em;
+}
+
+.input-inline {
+	display: inline-block;
+}
+
+.unenroll-list {
+	height: 60px;
+	display: flex;
+	align-items: center;
+	position: sticky;
+}
+
+.unenroll-actions-list {
+	display: flex;
+	gap: 10px;
+}
+
+.enroll-status {
+	.username {
+		margin-left: 10px;
+		margin-right: auto;
+	}
+	display: flex;
 }
