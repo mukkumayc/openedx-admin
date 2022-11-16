@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # rollup visualizer output
-.stats.html
+stats.html
