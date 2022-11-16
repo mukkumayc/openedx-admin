@@ -1,5 +1,4 @@
 import pages from '@/pages'
-import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -13,25 +12,21 @@ const Actions: React.FC = () => {
 			{pages.map(
 				({ description, path, hideInActions }) =>
 					!hideInActions && (
-						<Button
-							variant="outline-primary"
-							as={Link}
-							className="action"
+						<Link
+							className="action btn btn-outline-primary"
 							to={path}
 							key={path}>
 							{t(description)}
-						</Button>
+						</Link>
 					)
 			)}
-			<Button
-				variant="outline-primary"
-				as="a"
-				className="action"
+			<a
+				className="action btn btn-outline-primary"
 				href={`${adminRoomUrl}/upload_registration_file/`}
 				target="_blank"
 				rel="noopener noreferrer">
 				{t('New users registration')}
-			</Button>
+			</a>
 		</section>
 	)
 }
