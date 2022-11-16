@@ -6,41 +6,19 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
-import { UseFormRegister, UseFormWatch, useForm } from 'react-hook-form'
-import type { FieldValues, Path, SubmitHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import type { FieldValues, SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { FormGroup } from '..'
+import type { FormGroupExternalProps } from '..'
 
 interface Props<A extends FieldValues, B> {
 	header: string
-	fields: {
-		name: Path<A>
-		label: string
-		type?: 'checkbox'
-		optional?: Path<A>
-	}[]
+	fields: FormGroupExternalProps<A>[]
 	submitBtnText: string
 	handler: RequestFunction<A, B>
 	parseResponse(data: B): React.ReactNode
-}
-
-function parseField<A extends FieldValues>(
-	field: {
-		name: Path<A>
-		label: string
-		type?: 'checkbox'
-		optional?: Path<A>
-	},
-	register: UseFormRegister<A>,
-	watch: UseFormWatch<A>,
-	key?: number
-) {
-	return field.type === 'checkbox' ? (
-		<Form.Check id={field.name} label={field.label} {...register(field.name)} />
-	) : (
-		<FormGroup className="mb-3" {...field} {...{ register, watch, key }} />
-	)
 }
 
 function FormTemplateWithResult<A extends FieldValues, B>({
@@ -77,7 +55,13 @@ function FormTemplateWithResult<A extends FieldValues, B>({
 				<Card.Header as="h1">{header}</Card.Header>
 				<Card.Body>
 					<Form onSubmit={handleSubmit(onSubmit)}>
-						{fields.map((props, i) => parseField(props, register, watch, i))}
+						{fields.map((props, i) => (
+							<FormGroup
+								key={i}
+								{...props}
+								{...{ watch, register, className: 'mb-3' }}
+							/>
+						))}
 						<Button variant="primary" type="submit" disabled={isSubmitting}>
 							{submitBtnText}
 						</Button>
