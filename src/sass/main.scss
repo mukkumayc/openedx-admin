@@ -81,3 +81,23 @@ body {
 	}
 	display: flex;
 }
+
+.arrow {
+	border: solid currentColor;
+	border-width: 0 3px 3px 0;
+	display: inline-block;
+	padding: 3px;
+	height: 0.5em;
+	width: 0.5em;
+}
+
+.left {
+	transform: rotate(135deg);
+	-webkit-transform: rotate(135deg);
+}
+
+.navbar-brand {
+	display: flex;
+	align-items: center;
+	gap: 0.2em;
+}
