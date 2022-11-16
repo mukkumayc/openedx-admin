@@ -14,7 +14,7 @@ const resources = {
 			"Get a list of student's courses": 'Получить список курсов студента',
 			"Get a list of student's files in a course":
 				'Получить список файлов учащегося в курсе',
-			'Register new users': 'Зарегистрировать новых пользователей',
+			'New users registration': 'Регистрация новых пользователей',
 			Success: 'Успешно',
 			'Enrolling a student in a course': 'Зачисление студента на курс',
 			'Unenrolling a student from a course': 'Отчисление студента с курса',
