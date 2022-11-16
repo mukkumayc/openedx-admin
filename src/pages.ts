@@ -30,17 +30,17 @@ const pages = [
 		component: AddRemoveStudent
 	},
 	{
-		description: "Get a list of student's courses",
+		description: 'Get a list of student courses',
 		path: '/student/courses',
 		component: GetCourses
 	},
 	{
-		description: "Get a list of student's files in a course",
+		description: 'Get a list of student files in a course',
 		path: '/student/files',
 		component: FileLinks
 	},
 	{
-		description: "Change user's password",
+		description: 'Change user password',
 		path: '/student/change-password',
 		component: ChangePassword
 	},

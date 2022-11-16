@@ -11,8 +11,8 @@ const resources = {
 			'Get a list of students': 'Получить список студентов',
 			'Enroll a student in a course': 'Зачислить студента на курс',
 			'Unenroll a student from a course': 'Отчислить студента с курса',
-			"Get a list of student's courses": 'Получить список курсов студента',
-			"Get a list of student's files in a course":
+			'Get a list of student courses': 'Получить список курсов студента',
+			'Get a list of student files in a course':
 				'Получить список файлов учащегося в курсе',
 			'New users registration': 'Регистрация новых пользователей',
 			Success: 'Успешно',
@@ -67,7 +67,7 @@ const resources = {
 			'New password': 'Новый пароль',
 			'Password changed successfully': 'Пароль успешно изменён',
 			Change: 'Изменить',
-			"Change user's password": 'Изменить пароль пользователя',
+			'Change user password': 'Изменить пароль пользователя',
 			'User not found.': 'Пользователь не найден',
 			'Activate course': 'Активировать курс',
 			Activate: 'Активировать',

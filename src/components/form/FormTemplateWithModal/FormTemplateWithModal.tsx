@@ -9,8 +9,8 @@ import { useForm } from 'react-hook-form'
 import type { FieldValues, SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { FormGroup } from '../'
-import type { FormGroupExternalProps } from '../'
+import { FormGroup } from '..'
+import type { FormGroupExternalProps } from '..'
 
 interface Props<A extends FieldValues> {
 	header: string
