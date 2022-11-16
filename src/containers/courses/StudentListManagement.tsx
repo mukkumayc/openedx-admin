@@ -258,7 +258,7 @@ const StudentsListManagement: React.FC = () => {
 	} = useForm<FormInput>()
 	const [students, setStudents] = useState<string[] | null>(null)
 	const [modalProps, showModal] = useModal()
-	const showError = (err: string) => showModal(t('Error'), err)
+	const showError = (err: string) => showModal(t('Error'), t(err))
 	const [showEnroll, setShowEnroll] = useState(false)
 	const usernames = watch('usernames')
 	const course = watch('course')

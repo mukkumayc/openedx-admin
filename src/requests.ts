@@ -2,7 +2,7 @@ import { left, right } from 'fp-ts/lib/Either'
 import type { Either } from 'fp-ts/lib/Either'
 
 import { adminRoomAPIUrl, edxUrl } from './config'
-import type { ICourseGrades, IFileLinks } from './types'
+import type { CourseGrades, FileLinks } from './types'
 
 export interface StatusResponse {
 	status: string
@@ -43,17 +43,17 @@ export const getStudents: RequestFunction<
 > = ({ course }: { course: string }) =>
 	get(`${adminRoomAPIUrl}/courses/get_students/${course}/`)
 
-const _grades = (url: string) => get<ICourseGrades[]>(url)
+const _grades = (url: string) => get<CourseGrades[]>(url)
 
 export const gradesForStudent: RequestFunction<
 	{ username: string; course: string },
-	ICourseGrades[]
+	CourseGrades[]
 > = ({ username, course }) =>
 	_grades(`${adminRoomAPIUrl}/students/get_grades/${username}/${course}/`)
 
 export const gradesForCourse: RequestFunction<
 	{ course: string },
-	ICourseGrades[]
+	CourseGrades[]
 > = ({ course }) => _grades(`${adminRoomAPIUrl}/courses/get_grades/${course}/`)
 
 export const getCourses: RequestFunction<
@@ -66,9 +66,9 @@ export const getCourses: RequestFunction<
 
 export const fileLinks: RequestFunction<
 	{ username: string; course: string },
-	IFileLinks
+	FileLinks
 > = ({ username, course }) =>
-	get<IFileLinks>(
+	get<FileLinks>(
 		`${adminRoomAPIUrl}/courses/docs_loader/${course}/${username}/`
 	)
 

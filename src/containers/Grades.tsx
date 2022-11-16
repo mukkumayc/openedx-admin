@@ -3,7 +3,7 @@ import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
 import { gradesForCourse, gradesForStudent } from '../requests'
-import { ICourseGrades } from '../types'
+import { CourseGrades } from '../types'
 import './Grades.css'
 
 interface FormInput {
@@ -12,7 +12,7 @@ interface FormInput {
 	username: string
 }
 
-const ParsedCourse = ({ course }: { course: ICourseGrades }) => {
+const ParsedCourse = ({ course }: { course: CourseGrades }) => {
 	const { t } = useTranslation()
 	return (
 		<Alert key={course.username}>
@@ -44,7 +44,7 @@ const Grades: React.FC = () => {
 			? gradesForStudent({ username, course })
 			: gradesForCourse({ course })
 
-	const parseResponse = (courses: ICourseGrades[]) => {
+	const parseResponse = (courses: CourseGrades[]) => {
 		return (
 			<div className="users-list">
 				{courses.length > 0 ? (
