@@ -1,4 +1,5 @@
 import { addStudent } from '@/requests'
+import { isLeft } from '@/utils'
 import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
@@ -44,16 +45,15 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, course }) => {
 						variant="primary"
 						onClick={async () => {
 							const res = await addStudent({ username, course })
-							if (res._tag === 'Right') {
-								setMessage({
-									header:
-										res.right.status === 'Error' ? t('Error') : t('Success'),
-									message: t(res.right.message)
-								})
-							} else {
+							if (isLeft(res)) {
 								setMessage({
 									header: t('Error'),
 									message: t(res.left.toString())
+								})
+							} else {
+								setMessage({
+									header: t(res.right.status),
+									message: t(res.right.message)
 								})
 							}
 						}}>

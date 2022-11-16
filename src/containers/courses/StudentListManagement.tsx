@@ -1,7 +1,7 @@
 import MessageModal, { useModal } from '@/components/MessageModal'
 import { FormGroup } from '@/components/form'
 import { addStudent, getStudents, removeStudent } from '@/requests'
-import { isLeft } from 'fp-ts/lib/Either'
+import { isLeft } from '@/utils'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import {
 	Button,

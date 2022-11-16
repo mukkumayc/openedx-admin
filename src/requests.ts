@@ -1,5 +1,5 @@
-import { left, right } from 'fp-ts/lib/Either'
-import type { Either } from 'fp-ts/lib/Either'
+import type { Either } from '@/types'
+import { left, right } from '@/utils'
 
 import { adminRoomAPIUrl, edxUrl } from './config'
 import type { CourseGrades, FileLinks } from './types'

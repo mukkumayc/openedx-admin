@@ -25,3 +25,13 @@ export interface FileLinks {
 	username: string
 	links: string[]
 }
+
+export interface Left<E> {
+	left: E
+}
+
+export interface Right<A> {
+	right: A
+}
+
+export type Either<E, A> = Left<E> | Right<A>

@@ -1,6 +1,6 @@
 import MessageModal, { useModal } from '@/components/MessageModal'
 import type { RequestFunction, StatusResponse } from '@/requests'
-import { isLeft } from 'fp-ts/lib/Either'
+import { isLeft } from '@/utils'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
