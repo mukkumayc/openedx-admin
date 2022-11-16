@@ -66,9 +66,14 @@ const NavBar: React.FC<Props> = () => {
 		<Navbar bg="primary" variant="dark" sticky="top">
 			<Container fluid="md">
 				<Navbar.Brand as={Link} to="/">
-					{location.pathname === '/' || location.pathname === '/login'
-						? 'Open edX Admin'
-						: `<- ${t('Back to Home')}`}
+					{location.pathname === '/' || location.pathname === '/login' ? (
+						'Open edX Admin'
+					) : (
+						<>
+							<span className="arrow left"></span>
+							{t('Back to Home')}
+						</>
+					)}
 				</Navbar.Brand>
 
 				<LangDropdown />
