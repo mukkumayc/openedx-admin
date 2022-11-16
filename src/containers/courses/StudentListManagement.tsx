@@ -270,7 +270,7 @@ const StudentsListManagement: React.FC = () => {
 				<Card.Body>
 					<FormGroup
 						className="mb-3"
-						controlId="course"
+						name="course"
 						label={t('Course')}
 						{...{ register, watch }}
 					/>

@@ -38,9 +38,9 @@ const FileLinks: React.FC = () => {
 		<FormTemplateWithResult
 			header={t('Get additional user files')}
 			fields={[
-				{ controlId: 'username', label: t('Username') },
+				{ name: 'username', label: t('Username') },
 				{
-					controlId: 'course',
+					name: 'course',
 					label: t('Course')
 				}
 			]}

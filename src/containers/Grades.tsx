@@ -62,14 +62,14 @@ const Grades: React.FC = () => {
 		<FormTemplateWithResult
 			header={t('Course users and grades')}
 			fields={[
-				{ controlId: 'course', label: t('Course') },
+				{ name: 'course', label: t('Course') },
 				{
-					controlId: 'specifyUser',
+					name: 'specifyUser',
 					label: t('Specify user'),
 					type: 'checkbox'
 				},
 				{
-					controlId: 'username',
+					name: 'username',
 					label: t('Username'),
 					optional: 'specifyUser'
 				}

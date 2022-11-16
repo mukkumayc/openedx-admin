@@ -7,7 +7,7 @@ import type {
 } from 'react-hook-form'
 
 interface CommonExternalProps<A extends FieldValues> {
-	controlId: Path<A>
+	name: Path<A>
 	optional?: Path<A>
 	className?: string
 }
@@ -33,54 +33,42 @@ type FormGroupProps<A extends FieldValues> = {
 	watch: UseFormWatch<A>
 } & (ControlAndCheckProps<A> | RadiosProps<A>)
 
-const FormGroup = <A extends FieldValues>({
-	controlId,
-	register,
-	watch,
-	optional,
-	className,
-	...rest
-}: FormGroupProps<A>) => {
-	// Optional is name of a form field. If field with this name has value `true`, this field is visible
-	const isEnabled = optional ? watch(optional) : true
+const Component = <A extends FieldValues>(props: FormGroupProps<A>) => {
+	const { name, register, className, ...rest } = props
+	switch (rest.type) {
+		case 'checkbox':
+			return <Form.Check id={name} label={rest.label} {...register(name)} />
+		case 'radios':
+			return (
+				<>
+					{rest.radios.map(({ value, label }) => (
+						<Form.Check
+							id={`${name}-${value}`}
+							label={label}
+							{...register(name)}
+							type="radio"
+							value={value}
+							key={value}
+						/>
+					))}
+				</>
+			)
 
-	const Component = () => {
-		switch (rest.type) {
-			case 'checkbox':
-				return (
-					<Form.Check
-						id={controlId}
-						label={rest.label}
-						{...register(controlId)}
-					/>
-				)
-			case 'radios':
-				return (
-					<>
-						{rest.radios.map(({ value, label }) => (
-							<Form.Check
-								id={`${controlId}-${value}`}
-								label={label}
-								{...register(controlId)}
-								type="radio"
-								value={value}
-								key={value}
-							/>
-						))}
-					</>
-				)
-
-			default:
-				return (
-					<Form.Group {...{ controlId }} {...{ className }}>
-						<Form.Label>{rest.label}</Form.Label>
-						<Form.Control {...register(controlId, { required: true })} />
-					</Form.Group>
-				)
-		}
+		default:
+			return (
+				<Form.Group {...{ controlId: name }} {...{ className }}>
+					<Form.Label>{rest.label}</Form.Label>
+					<Form.Control {...register(name, { required: true })} />
+				</Form.Group>
+			)
 	}
+}
 
-	return isEnabled ? <Component /> : <></>
+const FormGroup = <A extends FieldValues>(props: FormGroupProps<A>) => {
+	// props.optional is name of a form field. If field with this name has value `true`, this field is visible
+	const isEnabled = props.optional ? props.watch(props.optional) : true
+
+	return isEnabled ? <Component {...props} /> : <></>
 }
 
 export default FormGroup

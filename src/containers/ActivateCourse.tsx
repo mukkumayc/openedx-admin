@@ -8,7 +8,7 @@ const ActivateCourse: React.FC = () => {
 	return (
 		<FormTemplateWithModal
 			header={t('Activate course')}
-			fields={[{ controlId: 'course', label: t('Course') }]}
+			fields={[{ name: 'course', label: t('Course') }]}
 			submitBtnText={t('Activate')}
 			handler={activateCourse}
 		/>

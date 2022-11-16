@@ -15,7 +15,7 @@ import { FormGroup } from '..'
 interface Props<A extends FieldValues, B> {
 	header: string
 	fields: {
-		controlId: Path<A>
+		name: Path<A>
 		label: string
 		type?: 'checkbox'
 		optional?: Path<A>
@@ -27,7 +27,7 @@ interface Props<A extends FieldValues, B> {
 
 function parseField<A extends FieldValues>(
 	field: {
-		controlId: Path<A>
+		name: Path<A>
 		label: string
 		type?: 'checkbox'
 		optional?: Path<A>
@@ -37,11 +37,7 @@ function parseField<A extends FieldValues>(
 	key?: number
 ) {
 	return field.type === 'checkbox' ? (
-		<Form.Check
-			id={field.controlId}
-			label={field.label}
-			{...register(field.controlId)}
-		/>
+		<Form.Check id={field.name} label={field.label} {...register(field.name)} />
 	) : (
 		<FormGroup className="mb-3" {...field} {...{ register, watch, key }} />
 	)
