@@ -6,17 +6,15 @@ import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
 import { useForm } from 'react-hook-form'
-import type { FieldValues, Path, SubmitHandler } from 'react-hook-form'
+import type { FieldValues, SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import { FormGroup } from '../'
+import type { FormGroupExternalProps } from '../'
 
 interface Props<A extends FieldValues> {
 	header: string
-	fields: {
-		controlId: Path<A>
-		label: string
-	}[]
+	fields: FormGroupExternalProps<A>[]
 	submitBtnText: string
 	handler: RequestFunction<A, StatusResponse>
 }

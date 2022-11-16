@@ -89,7 +89,8 @@ const resources = {
 			'Unenrolling students': 'Отчисление студентов',
 			Continue: 'Продолжить',
 			Pending: 'Ожидание',
-			Confirm: 'Подтвердить'
+			Confirm: 'Подтвердить',
+			'Enroll or unenroll a student': 'Зачислить или отчислить студента'
 		}
 	}
 }

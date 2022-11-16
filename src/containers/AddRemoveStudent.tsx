@@ -1,0 +1,32 @@
+import { FormTemplateWithModal } from '@/components/form'
+import { addStudent, removeStudent } from '@/requests'
+import { useTranslation } from 'react-i18next'
+
+const AddRemoveStudent: React.FC = () => {
+	const { t } = useTranslation()
+
+	return (
+		<FormTemplateWithModal
+			header={t('Enroll or unenroll a student')}
+			fields={[
+				{ controlId: 'username', label: t('Username') },
+				{ controlId: 'course', label: t('Course') },
+				{
+					controlId: 'action',
+					type: 'radios',
+					radios: [
+						{ value: 'enroll', label: t('Enroll') },
+						{ value: 'unenroll', label: t('Unenroll') }
+					],
+					checked: 'enroll'
+				}
+			]}
+			submitBtnText={t('Submit')}
+			handler={(values) =>
+				values.action === 'enroll' ? addStudent(values) : removeStudent(values)
+			}
+		/>
+	)
+}
+
+export default AddRemoveStudent
