@@ -5,7 +5,6 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import { AuthProvider } from './AuthenticationContext'
 import './i18n'
-import './index.css'
 import './sass/main.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

@@ -2,8 +2,8 @@ import { Container, NavDropdown, Navbar } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router-dom'
 
-import RusFlag from '../assets/russia-flag-icon.svg'
-import USAFlag from '../assets/united-states-flag-icon.svg'
+import RusFlag from '@/assets/russia-flag-icon.svg'
+import USAFlag from '@/assets/united-states-flag-icon.svg'
 
 interface Props {
 	isAuthenticating: boolean

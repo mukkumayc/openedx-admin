@@ -1,7 +1,7 @@
 import { Container } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
-import Spinner from '../components/Spinner'
+import Spinner from '@/components/Spinner'
 
 const LoadingPage = () => {
 	const { t } = useTranslation()

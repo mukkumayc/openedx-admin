@@ -1,8 +1,8 @@
-import { FormTemplateWithResult } from '@/components/form'
 import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
-import { getCourses } from '../requests'
+import { FormTemplateWithResult } from '@/components/form'
+import { getCourses } from '@/requests'
 
 const GetCourses: React.FC = () => {
 	const { t } = useTranslation()

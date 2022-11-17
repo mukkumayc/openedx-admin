@@ -1,7 +1,7 @@
-import { FormTemplateWithModal } from '@/components/form'
 import { useTranslation } from 'react-i18next'
 
-import { activateCourse } from '../requests'
+import { FormTemplateWithModal } from '@/components/form'
+import { activateCourse } from '@/requests'
 
 const ActivateCourse: React.FC = () => {
 	const { t } = useTranslation()

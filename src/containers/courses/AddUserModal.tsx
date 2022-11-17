@@ -1,8 +1,9 @@
-import { addStudent } from '@/requests'
-import { isLeft } from '@/utils'
 import { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { Trans, useTranslation } from 'react-i18next'
+
+import { addStudent } from '@/requests'
+import { isLeft } from '@/utils'
 
 interface Props {
 	show: boolean

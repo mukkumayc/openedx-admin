@@ -1,9 +1,10 @@
-import { FormTemplateWithResult } from '@/components/form'
 import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
-import { gradesForCourse, gradesForStudent } from '../requests'
-import { CourseGrades } from '../types'
+import { FormTemplateWithResult } from '@/components/form'
+import { gradesForCourse, gradesForStudent } from '@/requests'
+import { CourseGrades } from '@/types'
+
 import './Grades.css'
 
 interface FormInput {

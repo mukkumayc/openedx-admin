@@ -1,6 +1,3 @@
-import MessageModal, { useModal } from '@/components/MessageModal'
-import type { RequestFunction, StatusResponse } from '@/requests'
-import { isLeft } from '@/utils'
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Container from 'react-bootstrap/Container'
@@ -9,8 +6,11 @@ import { useForm } from 'react-hook-form'
 import type { FieldValues, SubmitHandler } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
-import { FormGroup } from '..'
-import type { FormGroupExternalProps } from '..'
+import MessageModal, { useModal } from '@/components/MessageModal'
+import { FormGroup } from '@/components/form'
+import type { FormGroupExternalProps } from '@/components/form'
+import type { RequestFunction, StatusResponse } from '@/requests'
+import { isLeft } from '@/utils'
 
 interface Props<A extends FieldValues> {
 	header: string

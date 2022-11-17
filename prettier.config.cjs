@@ -9,7 +9,7 @@ const { endOfLine, useTabs, tabWidth, printWidth, ...rest } =
 module.exports = {
 	...rest,
 	plugins: ['./node_modules/@trivago/prettier-plugin-sort-imports'],
-	importOrder: ['^[./]'],
+	importOrder: ['^@/(.*)$', '^[./]'],
 	importOrderSeparation: true,
 	importOrderSortSpecifiers: true
 }

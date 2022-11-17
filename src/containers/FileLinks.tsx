@@ -1,8 +1,8 @@
-import { FormTemplateWithResult } from '@/components/form'
 import { Alert } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
-import { fileLinks } from '../requests'
+import { FormTemplateWithResult } from '@/components/form'
+import { fileLinks } from '@/requests'
 
 interface FileLinks {
 	course_id: string

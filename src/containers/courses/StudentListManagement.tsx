@@ -1,7 +1,3 @@
-import MessageModal, { useModal } from '@/components/MessageModal'
-import { FormGroup } from '@/components/form'
-import { addStudent, getStudents, removeStudent } from '@/requests'
-import { isLeft } from '@/utils'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import {
 	Button,
@@ -14,6 +10,11 @@ import {
 } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
+
+import MessageModal, { useModal } from '@/components/MessageModal'
+import { FormGroup } from '@/components/form'
+import { addStudent, getStudents, removeStudent } from '@/requests'
+import { isLeft } from '@/utils'
 
 const UnenrollList: React.FC<{ students: string[]; course: string }> = ({
 	students,

@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next'
+
 import { FormTemplateWithModal } from '@/components/form'
 import { changePassword } from '@/requests'
-import { useTranslation } from 'react-i18next'
 
 const ChangePassword: React.FC = () => {
 	const { t } = useTranslation()

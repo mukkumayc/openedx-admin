@@ -1,6 +1,7 @@
+import { useTranslation } from 'react-i18next'
+
 import { FormTemplateWithModal } from '@/components/form'
 import { addStudent, removeStudent } from '@/requests'
-import { useTranslation } from 'react-i18next'
 
 const AddRemoveStudent: React.FC = () => {
 	const { t } = useTranslation()
