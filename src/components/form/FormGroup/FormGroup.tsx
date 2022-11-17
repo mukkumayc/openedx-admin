@@ -34,7 +34,8 @@ type FormGroupProps<A extends FieldValues> = {
 } & (ControlAndCheckProps<A> | RadiosProps<A>)
 
 const Component = <A extends FieldValues>(props: FormGroupProps<A>) => {
-	const { name, register, className, ...rest } = props
+	const { name, register, watch, className, ...rest } = props
+	const isRadioChecked = rest.type === 'radios' ? watch(name) : null
 	switch (rest.type) {
 		case 'checkbox':
 			return <Form.Check id={name} label={rest.label} {...register(name)} />
@@ -49,6 +50,7 @@ const Component = <A extends FieldValues>(props: FormGroupProps<A>) => {
 							type="radio"
 							value={value}
 							key={value}
+							checked={isRadioChecked ? undefined : value === rest.checked}
 						/>
 					))}
 				</>
