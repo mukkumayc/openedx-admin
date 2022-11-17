@@ -57,10 +57,14 @@ const StudentsListManagement: React.FC = () => {
 						label={t('Course')}
 						{...{ register, watch }}
 					/>
-					<Form.Label>{t('Enter usernames separated by comma')}</Form.Label>
+					<Form.Label>
+						{t('Enter usernames or emails separated by comma')}
+					</Form.Label>
 					<InputGroup>
 						<Form.Control
-							aria-label={t('Enter usernames separated by comma').toString()}
+							aria-label={t(
+								'Enter usernames or emails separated by comma'
+							).toString()}
 							{...register('usernames')}
 						/>
 						<Button

@@ -18,7 +18,7 @@ const resources = {
 			Success: 'Успешно',
 			'Enrolling a student in a course': 'Зачисление студента на курс',
 			'Unenrolling a student from a course': 'Отчисление студента с курса',
-			Username: 'Имя пользователя',
+			'Username or email': 'Имя или почта пользователя',
 			Course: 'Курс',
 			Submit: 'Отправить',
 			'Return to home': 'Вернуться домой',
@@ -76,8 +76,8 @@ const resources = {
 			"Grades wasn't found": 'Оценки не найдены',
 			'Are you sure?': 'Вы уверены?',
 			'Course student list management': 'Управление списком студентов курса',
-			'Enter usernames separated by comma':
-				'Введите имена пользователей, разделённые запятой',
+			'Enter usernames or emails separated by comma':
+				'Введите имена или почты пользователей, разделённые запятой',
 			Cancel: 'Отменить',
 			'The following users will be enrolled in the course':
 				'Следующие пользователи будут зачислены на курс',

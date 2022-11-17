@@ -71,7 +71,7 @@ const Grades: React.FC = () => {
 				},
 				{
 					name: 'user',
-					label: t('Username'),
+					label: t('Username or email'),
 					optional: 'specifyUser'
 				}
 			]}
