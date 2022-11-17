@@ -10,7 +10,7 @@ import './Grades.css'
 interface FormInput {
 	course: string
 	specifyUser: boolean
-	username: string
+	user: string
 }
 
 const ParsedCourse = ({ course }: { course: CourseGrades }) => {
@@ -40,9 +40,9 @@ const ParsedCourse = ({ course }: { course: CourseGrades }) => {
 const Grades: React.FC = () => {
 	const { t } = useTranslation()
 
-	const handler = ({ specifyUser, course, username }: FormInput) =>
+	const handler = ({ specifyUser, course, user }: FormInput) =>
 		specifyUser
-			? gradesForStudent({ username, course })
+			? gradesForStudent({ user, course })
 			: gradesForCourse({ course })
 
 	const parseResponse = (courses: CourseGrades[]) => {
@@ -70,7 +70,7 @@ const Grades: React.FC = () => {
 					type: 'checkbox'
 				},
 				{
-					name: 'username',
+					name: 'user',
 					label: t('Username'),
 					optional: 'specifyUser'
 				}

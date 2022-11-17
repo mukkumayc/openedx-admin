@@ -25,7 +25,7 @@ const GetCourses: React.FC = () => {
 	return (
 		<FormTemplateWithResult
 			header={t('List of student courses')}
-			fields={[{ name: 'username', label: t('Username') }]}
+			fields={[{ name: 'user', label: t('Username') }]}
 			submitBtnText={t('Submit')}
 			handler={getCourses}
 			{...{ parseResponse }}

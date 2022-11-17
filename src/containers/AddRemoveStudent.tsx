@@ -10,7 +10,7 @@ const AddRemoveStudent: React.FC = () => {
 		<FormTemplateWithModal
 			header={t('Enroll or unenroll a student')}
 			fields={[
-				{ name: 'username', label: t('Username') },
+				{ name: 'user', label: t('Username') },
 				{ name: 'course', label: t('Course') },
 				{
 					name: 'action',

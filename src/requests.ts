@@ -46,10 +46,10 @@ export const getStudents: RequestFunction<
 const _grades = (url: string) => get<CourseGrades[]>(url)
 
 export const gradesForStudent: RequestFunction<
-	{ username: string; course: string },
+	{ user: string; course: string },
 	CourseGrades[]
-> = ({ username, course }) =>
-	_grades(`${adminRoomAPIUrl}/students/get_grades/${username}/${course}/`)
+> = ({ user, course }) =>
+	_grades(`${adminRoomAPIUrl}/students/get_grades/${user}/${course}/`)
 
 export const gradesForCourse: RequestFunction<
 	{ course: string },
@@ -57,32 +57,28 @@ export const gradesForCourse: RequestFunction<
 > = ({ course }) => _grades(`${adminRoomAPIUrl}/courses/get_grades/${course}/`)
 
 export const getCourses: RequestFunction<
-	{ username: string },
+	{ user: string },
 	{ courses: string[] }
-> = ({ username }) =>
-	get<{ courses: string[] }>(
-		`${adminRoomAPIUrl}/students/get_courses/${username}/`
-	)
+> = ({ user: user }) =>
+	get<{ courses: string[] }>(`${adminRoomAPIUrl}/students/get_courses/${user}/`)
 
 export const fileLinks: RequestFunction<
-	{ username: string; course: string },
+	{ user: string; course: string },
 	FileLinks
-> = ({ username, course }) =>
-	get<FileLinks>(
-		`${adminRoomAPIUrl}/courses/docs_loader/${course}/${username}/`
-	)
+> = ({ user, course }) =>
+	get<FileLinks>(`${adminRoomAPIUrl}/courses/docs_loader/${course}/${user}/`)
 
 export const addStudent: RequestFunction<
-	{ username: string; course: string },
+	{ user: string; course: string },
 	StatusResponse
-> = ({ username, course }) =>
-	post(`${adminRoomAPIUrl}/students/add_student/${username}/${course}/`)
+> = ({ user, course }) =>
+	post(`${adminRoomAPIUrl}/students/add_student/${user}/${course}/`)
 
 export const removeStudent: RequestFunction<
-	{ username: string; course: string },
+	{ user: string; course: string },
 	StatusResponse
-> = ({ username, course }) =>
-	post(`${adminRoomAPIUrl}/students/remove_student/${username}/${course}/`)
+> = ({ user, course }) =>
+	post(`${adminRoomAPIUrl}/students/remove_student/${user}/${course}/`)
 
 export const isAuthenticated = async () =>
 	fetch(`${edxUrl}/account/settings`, {
@@ -93,11 +89,11 @@ export const isAuthenticated = async () =>
 		.catch(() => false)
 
 export const changePassword: RequestFunction<
-	{ username: string; password: string },
+	{ user: string; password: string },
 	StatusResponse
-> = ({ username, password }) =>
+> = ({ user, password }) =>
 	post<StatusResponse>(
-		`${adminRoomAPIUrl}/students/change_password/${username}/${password}/`
+		`${adminRoomAPIUrl}/students/change_password/${user}/${password}/`
 	)
 
 export const activateCourse: RequestFunction<

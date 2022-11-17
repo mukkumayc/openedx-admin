@@ -13,7 +13,7 @@ interface Props {
 
 const AddUserModal: React.FC<Props> = ({ show, setShow, course }) => {
 	const { t } = useTranslation()
-	const [username, setUsername] = useState('')
+	const [user, setUser] = useState('')
 	const [message, setMessage] = useState<{
 		header: string
 		message: string
@@ -33,10 +33,8 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, course }) => {
 					{t('Enter username')}
 					<Form.Control
 						type="text"
-						value={username}
-						onChange={(event) =>
-							setUsername(event.target.value)
-						}></Form.Control>
+						value={user}
+						onChange={(event) => setUser(event.target.value)}></Form.Control>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={handleClose}>
@@ -45,7 +43,7 @@ const AddUserModal: React.FC<Props> = ({ show, setShow, course }) => {
 					<Button
 						variant="primary"
 						onClick={async () => {
-							const res = await addStudent({ username, course })
+							const res = await addStudent({ user, course })
 							if (isLeft(res)) {
 								setMessage({
 									header: t('Error'),

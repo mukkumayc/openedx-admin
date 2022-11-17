@@ -10,7 +10,7 @@ const ChangePassword: React.FC = () => {
 		<FormTemplateWithModal
 			header={t('Change user password')}
 			fields={[
-				{ name: 'username', label: t('Username') },
+				{ name: 'user', label: t('Username') },
 				{ name: 'password', label: t('New password') }
 			]}
 			submitBtnText={t('Change')}
