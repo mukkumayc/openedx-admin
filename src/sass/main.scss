@@ -61,15 +61,18 @@ body {
 	display: inline-block;
 }
 
-.unenroll-list {
-	height: 60px;
+.checkbox-list__header {
 	display: flex;
 	align-items: center;
-	position: sticky;
 }
 
-.unenroll-actions-list {
-	display: flex;
+.checkbox-list__title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.checkbox-list__actions {
+	display: inline-flex;
 	gap: 10px;
 }
 

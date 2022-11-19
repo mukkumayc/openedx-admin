@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import MessageModal, { useModal } from '@/components/MessageModal'
 import { FormGroup } from '@/components/form'
 import { getStudents } from '@/requests'
-import { isLeft } from '@/utils'
+import { isLeft, tokenize } from '@/utils'
 
 import EnrollmentModal from './EnrollmentModal'
 import UnenrollList from './UnenrollList'
@@ -27,7 +27,7 @@ const handleStudentsRequest = async (
 
 interface FormInput {
 	course: string
-	usernames: string
+	users: string
 }
 
 const StudentsListManagement: React.FC = () => {
@@ -43,8 +43,10 @@ const StudentsListManagement: React.FC = () => {
 	const [modalProps, showModal] = useModal()
 	const showError = (err: string) => showModal(t('Error'), t(err))
 	const [showEnroll, setShowEnroll] = useState(false)
-	const usernames = watch('usernames')
+	const usersStr = watch('users', '')
+	const users = tokenize(usersStr || '')
 	const course = watch('course')
+	const hide = () => setShowEnroll(false)
 
 	return (
 		<Container fluid="md" className="page">
@@ -65,18 +67,16 @@ const StudentsListManagement: React.FC = () => {
 							aria-label={t(
 								'Enter usernames or emails separated by comma'
 							).toString()}
-							{...register('usernames')}
+							{...register('users')}
 						/>
 						<Button
 							className="text-white"
 							variant="success"
 							onClick={handleSubmit((values) => {
-								if (
-									values.usernames.match(/^([\w.@]+\s*,\s*)*[\w.@]+\s*,?\s*$/)
-								) {
+								if (values.users.match(/^([\w.@]+\s*,\s*)*[\w.@]+\s*,?\s*$/)) {
 									setShowEnroll(true)
 								} else {
-									setFocus('usernames')
+									setFocus('users')
 								}
 							})}>
 							{t('Enroll')}
@@ -94,13 +94,13 @@ const StudentsListManagement: React.FC = () => {
 			</Card>
 			<MessageModal {...modalProps} />
 			<EnrollmentModal
-				users={usernames}
-				course={course}
+				{...{ users, course, hide }}
 				show={showEnroll}
-				setShow={setShowEnroll}
 				action="enroll"
 			/>
-			{students && <UnenrollList {...{ objects: students, subject: course }} />}
+			{students && (
+				<UnenrollList {...{ students, course, title: t('Students') }} />
+			)}
 		</Container>
 	)
 }

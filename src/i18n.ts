@@ -84,13 +84,14 @@ const resources = {
 			'The following users will be unenrolled from the course':
 				'Следующие пользователи будут отчислены с курса',
 			'Enrolling users in the course': 'Зачисление пользователей на курс',
-			'Unnrolling users from the course': 'Отчисление пользователей с курса',
+			'Unenrolling users from the course': 'Отчисление пользователей с курса',
 			'Enrolling students': 'Зачисление студентов',
 			'Unenrolling students': 'Отчисление студентов',
 			Continue: 'Продолжить',
 			Pending: 'Ожидание',
 			Confirm: 'Подтвердить',
-			'Enroll or unenroll a student': 'Зачислить или отчислить студента'
+			'Enroll or unenroll a student': 'Зачислить или отчислить студента',
+			Students: 'Студенты'
 		}
 	}
 }

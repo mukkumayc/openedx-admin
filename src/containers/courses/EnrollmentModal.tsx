@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { Button, ListGroup, Modal } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
+import Confirmation from '@/components/Confirmation'
 import { addStudent, removeStudent } from '@/requests'
 import { isLeft } from '@/utils'
 
@@ -9,7 +10,8 @@ const EnrollmentConfirmationInfo: React.FC<{
 	course: string
 	users: string[]
 	action: 'enroll' | 'unenroll'
-}> = ({ course, users, action }) => {
+	answer: (isConfirmed: boolean) => void
+}> = ({ course, users, action, answer }) => {
 	const { t } = useTranslation()
 	return (
 		<>
@@ -26,6 +28,16 @@ const EnrollmentConfirmationInfo: React.FC<{
 					</ListGroup.Item>
 				))}
 			</ListGroup>
+			<div className="enrollment-modal-buttons mt-3 d-flex justify-content-end">
+				<Button variant="secondary" onClick={() => answer(false)}>
+					{t('Cancel')}
+				</Button>
+				<Button
+					variant={action === 'unenroll' ? 'danger' : 'primary'}
+					onClick={() => answer(true)}>
+					{t('Confirm')}
+				</Button>
+			</div>
 		</>
 	)
 }
@@ -65,19 +77,13 @@ const EnrollmentBody: React.FC<{
 }> = ({ users, course, action, handleClose }) => {
 	const { t } = useTranslation()
 
-	const [state, setState] = useState<'confirm' | 'enroll' | 'complete'>(
-		'confirm'
-	)
+	const [submitting, setSubmitting] = useState<boolean>(true)
 
 	const [statuses, setStatuses] = useState<{ user: string; status: string }[]>(
 		users.map((user) => ({ user, status: t('Pending') }))
 	)
 
 	useEffect(() => {
-		if (state !== 'enroll') {
-			return
-		}
-
 		Promise.all(
 			users.map((user) =>
 				(action === 'enroll' ? addStudent : removeStudent)({
@@ -99,37 +105,16 @@ const EnrollmentBody: React.FC<{
 					}
 				})
 			)
-		).then(() => setState('complete'))
-	}, [state])
+		).then(() => setSubmitting(false))
+	}, [])
 
 	return (
 		<>
-			{state === 'confirm' && (
-				<EnrollmentConfirmationInfo {...{ course, users, action }} />
-			)}
-			{(state === 'enroll' || state === 'complete') && (
-				<EnrollStatuses {...{ statuses, course, action }} />
-			)}
+			<EnrollStatuses {...{ statuses, course, action }} />
 			<div className="enrollment-modal-buttons mt-3 d-flex justify-content-end">
-				{state === 'confirm' ? (
-					<>
-						<Button variant="secondary" onClick={handleClose}>
-							{t('Cancel')}
-						</Button>
-						<Button
-							variant={action === 'unenroll' ? 'danger' : 'primary'}
-							onClick={() => setState('enroll')}>
-							{t('Confirm')}
-						</Button>
-					</>
-				) : (
-					<Button
-						variant="primary"
-						onClick={handleClose}
-						disabled={state === 'enroll'}>
-						{t('Continue')}
-					</Button>
-				)}
+				<Button variant="primary" onClick={handleClose} disabled={submitting}>
+					{t('Continue')}
+				</Button>
 			</div>
 		</>
 	)
@@ -137,35 +122,22 @@ const EnrollmentBody: React.FC<{
 
 interface ModalProps {
 	show: boolean
-	setShow: (s: boolean) => void
-	users: string | string[]
+	hide: () => void
+	users: string[]
 	course: string
 	action: 'enroll' | 'unenroll'
 }
 
 const EnrollmentModal: React.FC<ModalProps> = ({
 	show,
-	setShow,
-	users: usersInput,
+	hide,
+	users,
 	course,
 	action
 }) => {
-	if (!show) return <></>
 	const { t } = useTranslation()
 
-	const handleClose = () => setShow(false)
-
-	const users =
-		usersInput instanceof Array
-			? usersInput
-			: Array.from(
-					usersInput
-						.split(',')
-						.map((el) => el.trim())
-						.filter((el) => el.length > 0)
-						.reduce((prev, cur) => prev.add(cur), new Set<string>())
-			  )
-
+	if (!show) return <></>
 	return (
 		<Modal show={show}>
 			<Modal.Header>
@@ -176,7 +148,16 @@ const EnrollmentModal: React.FC<ModalProps> = ({
 				</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<EnrollmentBody {...{ users, course, action, handleClose }} />
+				<Confirmation
+					ConfirmationMessage={({ answer }) => (
+						<EnrollmentConfirmationInfo
+							{...{ course, users, action, answer }}
+						/>
+					)}
+					onReject={hide}>
+					<EnrollmentBody {...{ course, users, action, handleClose: hide }} />
+				</Confirmation>
+				{/* <EnrollmentBody {...{ users, course, action, handleClose }} /> */}
 			</Modal.Body>
 		</Modal>
 	)
