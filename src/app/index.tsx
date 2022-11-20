@@ -6,6 +6,8 @@ import Routes from '@/components/Routes'
 import LoadingPage from '@/containers/LoadingPage'
 import { isAuthenticated } from '@/requests'
 
+import './index.scss'
+
 function authVerification() {
 	const [, setAuthenticated] = useAuth()
 	const [isAuthenticating, setAuthenticating] = useState(true)

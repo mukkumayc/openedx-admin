@@ -6,7 +6,6 @@ import App from '@/app'
 
 import { AuthProvider } from './AuthenticationContext'
 import './i18n'
-import './sass/main.scss'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<React.StrictMode>
