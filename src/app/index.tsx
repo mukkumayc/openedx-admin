@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useAuth } from '@/AuthenticationContext'
+import { useAuth, withProviders } from '@/app/providers'
 import NavBar from '@/components/NavBar'
 import Routes from '@/components/Routes'
 import LoadingPage from '@/containers/LoadingPage'
@@ -40,4 +40,4 @@ const App = () => {
 	)
 }
 
-export default App
+export default withProviders(App)
