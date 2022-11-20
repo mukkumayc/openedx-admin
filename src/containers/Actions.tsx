@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 import { adminRoomUrl } from '@/config'
-import pages from '@/pages'
+import pages from '@/entities/pages'
 
 const Actions: React.FC = () => {
 	const { t } = useTranslation()

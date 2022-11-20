@@ -1,11 +1,10 @@
 import { Route, Routes as Switch } from 'react-router-dom'
 
+import AuthenticatedRoute from '@/components/AuthenticatedRoute'
 import { edxUrl } from '@/config'
 import NotFound from '@/containers/NotFound'
 import { useAuth } from '@/entities/auth'
-import pages from '@/pages'
-
-import AuthenticatedRoute from './AuthenticatedRoute'
+import pages from '@/entities/pages'
 
 const Routes: React.FC = () => {
 	const [isAuthenticated] = useAuth()
