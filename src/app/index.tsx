@@ -1,34 +1,13 @@
-import { useEffect, useState } from 'react'
-
-import { useAuth, withProviders } from '@/app/providers'
+import { withProviders } from '@/app/providers'
 import NavBar from '@/components/NavBar'
 import Routes from '@/components/Routes'
 import LoadingPage from '@/containers/LoadingPage'
-import { isAuthenticated } from '@/requests'
 
 import './index.scss'
-
-function authVerification() {
-	const [, setAuthenticated] = useAuth()
-	const [isAuthenticating, setAuthenticating] = useState(true)
-
-	useEffect(() => {
-		setAuthenticating(true)
-		if (import.meta.env.VITE_AUTHENTICATION !== 'disabled') {
-			isAuthenticated()
-				.then(setAuthenticated)
-				.then(() => setAuthenticating(false))
-		} else {
-			setAuthenticated(true)
-			setAuthenticating(false)
-		}
-	}, [])
-
-	return isAuthenticating
-}
+import { useAuthStartup } from './providers/with-auth'
 
 const App = () => {
-	const isAuthenticating = authVerification()
+	const isAuthenticating = useAuthStartup()
 
 	return (
 		<>

@@ -3,8 +3,11 @@ import React, {
 	SetStateAction,
 	createContext,
 	useContext,
+	useEffect,
 	useState
 } from 'react'
+
+import { isAuthenticated } from '@/requests'
 
 const AuthContext = createContext<[boolean, Dispatch<SetStateAction<boolean>>]>(
 	[false, () => null]
@@ -22,3 +25,22 @@ export const withAuth = (component: () => React.ReactNode) => {
 }
 
 export const useAuth = () => useContext(AuthContext)
+
+export const useAuthStartup = () => {
+	const [, setAuthenticated] = useAuth()
+	const [isAuthenticating, setAuthenticating] = useState(true)
+
+	useEffect(() => {
+		setAuthenticating(true)
+		if (import.meta.env.VITE_AUTHENTICATION !== 'disabled') {
+			isAuthenticated()
+				.then(setAuthenticated)
+				.then(() => setAuthenticating(false))
+		} else {
+			setAuthenticated(true)
+			setAuthenticating(false)
+		}
+	}, [])
+
+	return isAuthenticating
+}
