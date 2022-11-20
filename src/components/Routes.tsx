@@ -1,8 +1,8 @@
 import { Route, Routes as Switch } from 'react-router-dom'
 
-import { useAuth } from '@/AuthenticationContext'
 import { edxUrl } from '@/config'
 import NotFound from '@/containers/NotFound'
+import { useAuth } from '@/entities/auth'
 import pages from '@/pages'
 
 import AuthenticatedRoute from './AuthenticatedRoute'
