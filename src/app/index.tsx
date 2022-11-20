@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 
-import { useAuth } from './AuthenticationContext'
-import NavBar from './components/NavBar'
-import Routes from './components/Routes'
-import LoadingPage from './containers/LoadingPage'
-import { isAuthenticated } from './requests'
+import { useAuth } from '@/AuthenticationContext'
+import NavBar from '@/components/NavBar'
+import Routes from '@/components/Routes'
+import LoadingPage from '@/containers/LoadingPage'
+import { isAuthenticated } from '@/requests'
 
 function authVerification() {
 	const [, setAuthenticated] = useAuth()
