@@ -1,11 +1,11 @@
-import ActivateCourse from '@/containers/ActivateCourse'
-import AddRemoveStudent from '@/containers/AddRemoveStudent'
-import ChangePassword from '@/containers/ChangePassword/ChangePassword'
-import FileLinks from '@/containers/FileLinks'
-import GetCourses from '@/containers/GetCourses'
-import Home from '@/containers/Home'
-import StudentsListManagement from '@/containers/courses/StudentListManagement'
-import Grades from '@/pages/grades'
+import ActivateCourse from './activate-course'
+import AddRemoveStudent from './add-or-remove-student'
+import ChangePassword from './change-password'
+import FileLinks from './file-links'
+import Grades from './grades'
+import Home from './home'
+import GetCourses from './list-courses'
+import StudentsListManagement from './student-list-management'
 
 const pages = [
 	{

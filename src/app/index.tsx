@@ -1,8 +1,8 @@
 import { withProviders } from '@/app/providers'
 import NavBar from '@/components/NavBar'
-import LoadingPage from '@/containers/LoadingPage'
 import { useAuthStartup } from '@/entities/auth'
 import Routes from '@/pages'
+import LoadingPage from '@/pages/loading'
 
 import './index.scss'
 

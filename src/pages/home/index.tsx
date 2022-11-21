@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
 import Actions from './Actions'
-import './Home.css'
+import './index.css'
 
 const Home: React.FC = () => (
 	<main className="page">
