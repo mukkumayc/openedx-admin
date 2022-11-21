@@ -5,7 +5,7 @@ import { FormTemplateWithResult } from '@/components/form'
 import { gradesForCourse, gradesForStudent } from '@/requests'
 import { CourseGrades } from '@/types'
 
-import './Grades.css'
+import './index.css'
 
 interface FormInput {
 	course: string

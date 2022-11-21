@@ -4,7 +4,8 @@ import AuthenticatedRoute from '@/components/AuthenticatedRoute'
 import { edxUrl } from '@/config'
 import NotFound from '@/containers/NotFound'
 import { useAuth } from '@/entities/auth'
-import pages from '@/entities/pages'
+
+import pages from './page-list'
 
 const Routes: React.FC = () => {
 	const [isAuthenticated] = useAuth()
