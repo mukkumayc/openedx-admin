@@ -13,12 +13,12 @@ const AuthContext = createContext<[boolean, Dispatch<SetStateAction<boolean>>]>(
 	[false, () => null]
 )
 
-export const withAuth = (component: () => React.ReactNode) => {
-	return function AuthWrapper() {
+export const withAuth = (Component: React.FC) => {
+	return function AuthProvider() {
 		const [isAuthenticated, setIsAuthenticated] = useState(false)
 		return (
 			<AuthContext.Provider value={[isAuthenticated, setIsAuthenticated]}>
-				{component()}
+				<Component />
 			</AuthContext.Provider>
 		)
 	}
