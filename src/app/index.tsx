@@ -1,10 +1,10 @@
-import { withProviders } from '@/app/providers'
 import NavBar from '@/components/NavBar'
 import { useAuthStartup } from '@/entities/auth'
 import Routes from '@/pages'
 import LoadingPage from '@/pages/loading'
 
 import './index.scss'
+import { withProviders } from './providers'
 
 const App = () => {
 	const isAuthenticating = useAuthStartup()

@@ -1,3 +1,4 @@
+import { createElement } from 'react'
 import { Route, Routes as Switch } from 'react-router-dom'
 
 import AuthenticatedRoute from '@/components/AuthenticatedRoute'
@@ -18,7 +19,7 @@ const Routes: React.FC = () => {
 					path={route.path}
 					element={
 						<AuthenticatedRoute {...routeProps}>
-							{route.component({})}
+							{createElement(route.component)}
 						</AuthenticatedRoute>
 					}
 				/>
