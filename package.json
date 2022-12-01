@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "([ -f .env.local ] || cp .env.example .env.local) && vite",
 		"build": "tsc && vite build",
 		"lint": "tsc --noEmit && eslint --fix src",
 		"preview": "vite preview"
