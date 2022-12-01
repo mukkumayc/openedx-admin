@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { FormTemplateWithResult } from '@/components/form'
 import { getCourses } from '@/requests'
 
-const GetCourses: React.FC = () => {
+const ListCourses: React.FC = () => {
 	const { t } = useTranslation()
 
 	const parseResponse = ({ courses }: { courses: string[] }) =>
@@ -33,4 +33,4 @@ const GetCourses: React.FC = () => {
 	)
 }
 
-export default GetCourses
+export default ListCourses

@@ -4,7 +4,7 @@ import ChangePassword from './change-password'
 import FileLinks from './file-links'
 import Grades from './grades'
 import Home from './home'
-import GetCourses from './list-courses'
+import ListCourses from './list-courses'
 import StudentsListManagement from './student-list-management'
 
 const pages = [
@@ -32,7 +32,7 @@ const pages = [
 	{
 		description: 'Get a list of student courses',
 		path: '/student/courses',
-		component: GetCourses
+		component: ListCourses
 	},
 	{
 		description: 'Get a list of student files in a course',
