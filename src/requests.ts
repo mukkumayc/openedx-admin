@@ -1,5 +1,6 @@
 import type { Either } from '@/types'
 import { left, right } from '@/utils'
+import whitelist from '@/whitelist.json'
 
 import { adminRoomAPIUrl, edxUrl } from './config'
 import type { CourseGrades, FileLinks } from './types'
@@ -81,11 +82,25 @@ export const removeStudent: RequestFunction<
 	post(`${adminRoomAPIUrl}/students/remove_student/${user}/${course}/`)
 
 export const isAuthenticated = async () =>
-	fetch(`${edxUrl}/account/settings`, {
+	fetch(`${edxUrl}/api/user/v1/accounts`, {
 		credentials: 'include',
 		redirect: 'error',
 	})
-		.then(() => true /* no redirects */)
+		.then((res) => {
+			if (res.status >= 400) {
+				throw false
+			}
+
+			return res.json()
+		})
+		.then(({ email }) => {
+			if (whitelist.includes(email)) {
+				return true
+			}
+
+			console.log(`Whitelist doesn't include '${email}'`)
+			return false
+		})
 		.catch(() => false)
 
 export const changePassword: RequestFunction<
