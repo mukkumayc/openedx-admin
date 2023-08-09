@@ -28,7 +28,7 @@ export const useModal = (props?: UseModalProps) => {
 	const [modal, setModal] = useState<Omit<Props, 'setShow'>>({
 		show: false,
 		header,
-		body
+		body,
 	})
 	const showModal = (header: ReactNode, body: ReactNode) =>
 		setModal({ show: true, header, body })

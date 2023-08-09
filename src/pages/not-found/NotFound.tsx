@@ -11,7 +11,8 @@ const NotFound = () => {
 					<Trans
 						i18nKey="pageNotFound"
 						values={{ path: window.location.pathname }}
-						components={{ 1: <code /> }}>
+						components={{ 1: <code /> }}
+					>
 						{`Sorry, the page <1>{{path}}</1> could not be found.`}
 					</Trans>
 				</p>

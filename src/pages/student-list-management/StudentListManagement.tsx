@@ -37,7 +37,7 @@ const StudentsListManagement: React.FC = () => {
 		handleSubmit,
 		watch,
 		setFocus,
-		formState: { isSubmitting }
+		formState: { isSubmitting },
 	} = useForm<FormInput>()
 	const [students, setStudents] = useState<string[] | null>(null)
 	const [modalProps, showModal] = useModal()
@@ -78,7 +78,8 @@ const StudentsListManagement: React.FC = () => {
 								} else {
 									setFocus('users')
 								}
-							})}>
+							})}
+						>
 							{t('Enroll')}
 						</Button>
 					</InputGroup>
@@ -87,7 +88,8 @@ const StudentsListManagement: React.FC = () => {
 						onClick={handleSubmit((values) =>
 							handleStudentsRequest(values, setStudents, showError)
 						)}
-						disabled={isSubmitting}>
+						disabled={isSubmitting}
+					>
 						{t('List students')}
 					</Button>
 				</Card.Body>

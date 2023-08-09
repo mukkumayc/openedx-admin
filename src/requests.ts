@@ -83,7 +83,7 @@ export const removeStudent: RequestFunction<
 export const isAuthenticated = async () =>
 	fetch(`${edxUrl}/account/settings`, {
 		credentials: 'include',
-		redirect: 'error'
+		redirect: 'error',
 	})
 		.then(() => true /* no redirects */)
 		.catch(() => false)

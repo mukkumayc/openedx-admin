@@ -15,7 +15,8 @@ const Actions: React.FC = () => {
 						<Link
 							className="action btn btn-outline-primary"
 							to={path}
-							key={path}>
+							key={path}
+						>
 							{t(description)}
 						</Link>
 					)
@@ -24,7 +25,8 @@ const Actions: React.FC = () => {
 				className="action btn btn-outline-primary"
 				href={`${adminRoomUrl}/upload_registration_file/`}
 				target="_blank"
-				rel="noopener noreferrer">
+				rel="noopener noreferrer"
+			>
 				{t('New users registration')}
 			</a>
 		</section>

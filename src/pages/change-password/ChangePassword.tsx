@@ -11,7 +11,7 @@ const ChangePassword: React.FC = () => {
 			header={t('Change user password')}
 			fields={[
 				{ name: 'user', label: t('Username or email') },
-				{ name: 'password', label: t('New password') }
+				{ name: 'password', label: t('New password') },
 			]}
 			submitBtnText={t('Change')}
 			handler={changePassword}

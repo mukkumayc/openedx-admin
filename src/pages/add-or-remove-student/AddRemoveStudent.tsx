@@ -17,10 +17,10 @@ const AddRemoveStudent: React.FC = () => {
 					type: 'radios',
 					radios: [
 						{ value: 'enroll', label: t('Enroll') },
-						{ value: 'unenroll', label: t('Unenroll') }
+						{ value: 'unenroll', label: t('Unenroll') },
 					],
-					checked: 'enroll'
-				}
+					checked: 'enroll',
+				},
 			]}
 			submitBtnText={t('Submit')}
 			handler={(values) =>

@@ -51,7 +51,7 @@ devDependencies:
   '@commitlint/cli': 17.3.0
   '@commitlint/config-conventional': 17.3.0
   '@commitlint/types': 17.0.0
-  '@mukkumayc/prettier-config': github.com/mukkumayc/prettier-config/1964a804c0f2788ad2dc44c122b232ebafdab3ca_prettier@2.8.0
+  '@mukkumayc/prettier-config': github.com/mukkumayc/prettier-config/efd0d6444391246dbd31353c74caba512b26ec1d_prettier@2.8.0
   '@trivago/prettier-plugin-sort-imports': 3.4.0_prettier@2.8.0
   '@types/compose-function': 0.0.30
   '@types/node': 18.11.9
@@ -4018,9 +4018,9 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/mukkumayc/prettier-config/1964a804c0f2788ad2dc44c122b232ebafdab3ca_prettier@2.8.0:
-    resolution: {tarball: https://codeload.github.com/mukkumayc/prettier-config/tar.gz/1964a804c0f2788ad2dc44c122b232ebafdab3ca}
-    id: github.com/mukkumayc/prettier-config/1964a804c0f2788ad2dc44c122b232ebafdab3ca
+  github.com/mukkumayc/prettier-config/efd0d6444391246dbd31353c74caba512b26ec1d_prettier@2.8.0:
+    resolution: {tarball: https://codeload.github.com/mukkumayc/prettier-config/tar.gz/efd0d6444391246dbd31353c74caba512b26ec1d}
+    id: github.com/mukkumayc/prettier-config/efd0d6444391246dbd31353c74caba512b26ec1d
     name: '@mukkumayc/prettier-config'
     version: 1.0.0
     peerDependencies:

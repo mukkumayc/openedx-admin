@@ -4,7 +4,7 @@ import React, {
 	createContext,
 	useContext,
 	useEffect,
-	useState
+	useState,
 } from 'react'
 
 import { isAuthenticated } from '@/requests'

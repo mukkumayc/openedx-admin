@@ -23,14 +23,14 @@ function FormTemplateWithModal<A extends FieldValues>({
 	header,
 	fields,
 	submitBtnText,
-	handler
+	handler,
 }: Props<A>) {
 	const { t } = useTranslation()
 	const {
 		register,
 		watch,
 		handleSubmit,
-		formState: { isSubmitting }
+		formState: { isSubmitting },
 	} = useForm<A>()
 	const [modalProps, showModal] = useModal()
 

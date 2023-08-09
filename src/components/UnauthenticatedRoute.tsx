@@ -9,7 +9,7 @@ interface Props extends PropsWithChildren {
 const UnauthenticatedRoute: React.FC<Props> = ({
 	children,
 	isAuthenticated,
-	redirectPath
+	redirectPath,
 }: Props) => {
 	if (isAuthenticated) {
 		return <Navigate to={redirectPath} replace />

@@ -67,13 +67,13 @@ const Grades: React.FC = () => {
 				{
 					name: 'specifyUser',
 					label: t('Specify user'),
-					type: 'checkbox'
+					type: 'checkbox',
 				},
 				{
 					name: 'user',
 					label: t('Username or email'),
-					optional: 'specifyUser'
-				}
+					optional: 'specifyUser',
+				},
 			]}
 			submitBtnText={t('Get grades')}
 			{...{ handler, parseResponse }}

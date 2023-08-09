@@ -8,7 +8,7 @@ interface Props extends PropsWithChildren {
 const AuthenticatedRoute: React.FC<Props> = ({
 	children,
 	isAuthenticated,
-	redirectUrl
+	redirectUrl,
 }: Props) => {
 	useEffect(() => {
 		if (!isAuthenticated) {

@@ -21,7 +21,8 @@ const FileLinks: React.FC = () => {
 						href={link}
 						rel="noreferrer"
 						target="_blank"
-						style={{ width: '100%' }}>
+						style={{ width: '100%' }}
+					>
 						{link}
 					</a>
 				</Alert>
@@ -41,8 +42,8 @@ const FileLinks: React.FC = () => {
 				{ name: 'user', label: t('Username or email') },
 				{
 					name: 'course',
-					label: t('Course')
-				}
+					label: t('Course'),
+				},
 			]}
 			submitBtnText={t('Submit')}
 			handler={fileLinks}

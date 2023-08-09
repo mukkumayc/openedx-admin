@@ -15,7 +15,7 @@ const CheckboxList: React.FC<{
 	const { register, handleSubmit, watch, reset } = useForm<{
 		[x: string]: boolean
 	}>({
-		defaultValues: items.reduce((obj, st) => ({ ...obj, [st]: false }), {})
+		defaultValues: items.reduce((obj, st) => ({ ...obj, [st]: false }), {}),
 	})
 
 	const sts = watch(items)
@@ -42,7 +42,8 @@ const CheckboxList: React.FC<{
 						<Button
 							variant="secondary"
 							onClick={() => reset()}
-							{...{ disabled }}>
+							{...{ disabled }}
+						>
 							{t('Cancel')}
 						</Button>
 					</div>

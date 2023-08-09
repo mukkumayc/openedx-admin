@@ -3,7 +3,7 @@ import type {
 	FieldValues,
 	Path,
 	UseFormRegister,
-	UseFormWatch
+	UseFormWatch,
 } from 'react-hook-form'
 
 interface CommonExternalProps<A extends FieldValues> {

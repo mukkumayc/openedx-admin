@@ -22,7 +22,8 @@ const ConfirmModal: React.FC<Props> = (props) => {
 					onClick={() => {
 						setShow(false)
 						confirmHandler()
-					}}>
+					}}
+				>
 					OK
 				</Button>
 			</Modal.Footer>
@@ -36,14 +37,14 @@ export const useConfirmModal = (props?: UseModalProps) => {
 	const { header, body, confirmHandler } = props ?? {
 		header: '',
 		body: '',
-		confirmHandler: () => null
+		confirmHandler: () => null,
 	}
 
 	const [modal, setModal] = useState<Omit<Props, 'setShow'>>({
 		show: false,
 		header,
 		body,
-		confirmHandler
+		confirmHandler,
 	})
 
 	const showModal = (

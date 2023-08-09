@@ -34,7 +34,8 @@ const EnrollmentConfirmationInfo: React.FC<{
 				</Button>
 				<Button
 					variant={action === 'unenroll' ? 'danger' : 'primary'}
-					onClick={() => answer(true)}>
+					onClick={() => answer(true)}
+				>
 					{t('Confirm')}
 				</Button>
 			</div>
@@ -88,7 +89,7 @@ const EnrollmentBody: React.FC<{
 			users.map((user) =>
 				(action === 'enroll' ? addStudent : removeStudent)({
 					user,
-					course
+					course,
 				}).then((res) => {
 					if (isLeft(res)) {
 						setStatuses((statuses) =>
@@ -133,7 +134,7 @@ const EnrollmentModal: React.FC<ModalProps> = ({
 	hide,
 	users,
 	course,
-	action
+	action,
 }) => {
 	const { t } = useTranslation()
 
@@ -154,7 +155,8 @@ const EnrollmentModal: React.FC<ModalProps> = ({
 							{...{ course, users, action, answer }}
 						/>
 					)}
-					onReject={hide}>
+					onReject={hide}
+				>
 					<EnrollmentBody {...{ course, users, action, handleClose: hide }} />
 				</Confirmation>
 				{/* <EnrollmentBody {...{ users, course, action, handleClose }} /> */}
