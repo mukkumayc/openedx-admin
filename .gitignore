@@ -25,3 +25,5 @@ dist-ssr
 
 # rollup visualizer output
 stats.html
+
+whitelist.json
