@@ -10,7 +10,7 @@ import pages from './page-list'
 
 const Routes: React.FC = () => {
 	const [isAuthenticated] = useAuth()
-	const routeProps = { isAuthenticated, redirectUrl: `${edxUrl}/login` }
+	const routeProps = { isAuthenticated, redirectUrl: `${edxUrl}` }
 	return (
 		<Switch>
 			{pages.map((route) => (
