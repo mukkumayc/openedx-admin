@@ -93,7 +93,7 @@ export const isAuthenticated = async () =>
 
 			return res.json()
 		})
-		.then(({ email }) => {
+		.then(([{ email }]) => {
 			if (whitelist.includes(email)) {
 				return true
 			}
